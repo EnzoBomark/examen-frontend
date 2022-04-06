@@ -50,7 +50,7 @@ const RootStack: React.FC = () => {
 
   return (
     <Stack.Navigator screenOptions={options}>
-      {!user && (
+      {user && (
         <Stack.Group>
           <Stack.Screen name={Screen.DrawerStack} component={DrawerStack} />
           <Stack.Screen name={Screen.HomeStack} component={HomeStack} />
@@ -58,7 +58,7 @@ const RootStack: React.FC = () => {
         </Stack.Group>
       )}
 
-      {user && <Stack.Screen name={Screen.AuthStack} component={AuthStack} />}
+      {!user && <Stack.Screen name={Screen.AuthStack} component={AuthStack} />}
     </Stack.Navigator>
   );
 };

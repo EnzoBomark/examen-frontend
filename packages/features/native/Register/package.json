@@ -1,5 +1,5 @@
 {
-  "name": "@racket-native/auth",
+  "name": "@racket-native/register",
   "version": "0.0.1",
   "private": true,
   "devDependencies": {

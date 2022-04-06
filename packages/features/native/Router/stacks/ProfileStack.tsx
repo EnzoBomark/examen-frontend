@@ -2,15 +2,15 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Profile from '@racket-native/profile';
 
+export enum Screen {
+  Profile = 'Profile',
+}
+
 export type ProfileParamList = {
   [Screen.Profile]: undefined;
 };
 
 const Stack = createStackNavigator<ProfileParamList>();
-
-enum Screen {
-  Profile = 'Profile',
-}
 
 const options = { headerShown: false };
 

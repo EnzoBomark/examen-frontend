@@ -4,17 +4,17 @@ import messaging from '@react-native-firebase/messaging';
 import Discover from '@racket-native/discover';
 import Matches from '@racket-native/matches';
 
+export enum Screen {
+  Discover = 'Discover',
+  Matches = 'Matches',
+}
+
 export type HomeParamList = {
   [Screen.Discover]: undefined;
   [Screen.Matches]: undefined;
 };
 
 const Stack = createNativeStackNavigator<HomeParamList>();
-
-export enum Screen {
-  Discover = 'Discover',
-  Matches = 'Matches',
-}
 
 const HomeStack = () => {
   const pushPersmissionStatus = async () => {

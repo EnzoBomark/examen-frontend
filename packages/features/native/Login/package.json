@@ -1,0 +1,14 @@
+{
+  "name": "@racket-native/login",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@racket-components/native": "0.0.1",
+    "@racket-styles/core": "0.0.1",
+    "@racket-styles/assets": "0.0.1",
+    "@racket-styles/native": "0.0.1",
+    "@racket-common/store": "0.0.1",
+    "@types/styled-components": "^5.1.21",
+    "@types/styled-components-react-native": "^5.1.3"
+  }
+}
