@@ -4,6 +4,6 @@
 
 ### Goals
 
-- [ ] Init repo
+- [x] Init repo
 
 ### commit
