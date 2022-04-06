@@ -5,8 +5,6 @@ import { Dimensions } from 'react-native';
 import { Body } from '../text/Body';
 import { Svg } from '../icon/Svg';
 
-type TextInput = NativeInputFunctions & InputAddons & InputType & InputSizing;
-
 const screen = Dimensions.get('screen');
 
 const Container = styled.View<TextInput>`
@@ -45,7 +43,7 @@ const Icon = styled.View`
   left: 16px;
 `;
 
-export const TextInput: React.FC<TextInput> = (props) => {
+export const TextInput: React.FC<TextInput & NativeTextInput> = (props) => {
   const [active, setActive] = React.useState(false);
   const [error, setError] = React.useState(props.error);
 
@@ -55,7 +53,7 @@ export const TextInput: React.FC<TextInput> = (props) => {
 
   return (
     <React.Fragment>
-      {props.label && <InputLabel color="g400">{props.label}</InputLabel>}
+      {props.label && <InputLabel color="g500">{props.label}</InputLabel>}
       <Container {...props} error={error} active={active}>
         {props.icon && (
           <Icon>
@@ -67,6 +65,7 @@ export const TextInput: React.FC<TextInput> = (props) => {
           </Icon>
         )}
         <Inner
+          secureTextEntry={props.password}
           active={active}
           onFocus={() => setActive(true)}
           onBlur={() => setActive(false)}

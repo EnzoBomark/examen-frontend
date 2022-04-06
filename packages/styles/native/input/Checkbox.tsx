@@ -3,7 +3,7 @@ import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { Svg } from '../icon/Svg';
-import { Label } from '../text/Label';
+import { Body } from '../text/Body';
 
 const screen = Dimensions.get('screen');
 
@@ -33,17 +33,17 @@ export const Checkbox: React.FC<Toggle & NativeToggle> = (props) => {
   return (
     <Container {...props} onPress={toggle}>
       <Inner {...props}>
-        {props.icon && <Svg src={props.icon} width="20px" color="g400" />}
+        {props.icon && <Svg src={props.icon} width="18px" color="g400" />}
 
         {props.label && (
           <LabelWrapper {...props}>
-            <Label color="g600">{props.label}</Label>
+            <Body color="g500">{props.label}</Body>
           </LabelWrapper>
         )}
 
         <Svg
           src={props.active ? 'checkboxFill' : 'checkbox'}
-          width="20px"
+          width="18px"
           color={props.active ? 'p600' : 'g400'}
         />
       </Inner>

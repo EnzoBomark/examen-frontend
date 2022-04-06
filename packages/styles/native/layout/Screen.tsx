@@ -28,7 +28,9 @@ export const Screen: React.FC<{ top?: boolean; bottom?: boolean }> = (
   return (
     <Container
       headerHeight={props.top ? top : 0}
-      bottomHeight={props.bottom ? bottom : 0}
+      bottomHeight={
+        props.bottom ? bottom + (insets.bottom || 20) : insets.bottom || 20
+      }
     >
       {props.children}
     </Container>

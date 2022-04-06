@@ -1,12 +1,18 @@
-type SpacerType = {
+type Spacer = {
   size: keyof theme['space'];
 };
 
-type AlignType = {
+type Padding = {
+  size: keyof theme['space'];
+  vertical?: boolean;
+  horizontal?: boolean;
+};
+
+type Align = {
   type: keyof theme['align'];
 };
 
-type JustifyType = {
+type Justify = {
   type: keyof theme['justify'];
 };
 
