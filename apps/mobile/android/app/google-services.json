@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "142163053657",
+    "firebase_url": "https://racket-examen-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "racket-examen",
+    "storage_bucket": "racket-examen.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:142163053657:android:715a82c0c753f569cab548",
+        "android_client_info": {
+          "package_name": "com.racket.examen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "142163053657-esvcj5bu08f2jcdistndmeqmkkidrsf2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCj9xaO4KSag01eS4tOHLXzOfDh466yE0A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "142163053657-esvcj5bu08f2jcdistndmeqmkkidrsf2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "142163053657-m3dcebi0n765urrb9nj81g0t5og4196r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.racket.examen"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
