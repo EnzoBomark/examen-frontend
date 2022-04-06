@@ -1,4 +1,4 @@
 type TextType = {
-  color?: keyof theme['colors'];
+  color?: keyof Theme['colors'];
   bold?: boolean;
 };

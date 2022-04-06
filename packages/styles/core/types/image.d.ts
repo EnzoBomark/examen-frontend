@@ -7,7 +7,7 @@ declare global {
 
   type ImageType = {
     resize?: 'center' | 'stretch' | 'contain' | 'cover';
-    border?: keyof theme['radius'];
+    border?: keyof Theme['radius'];
   };
 
   type ImageSizing = {

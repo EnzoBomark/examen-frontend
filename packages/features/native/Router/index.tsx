@@ -4,15 +4,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import AuthStack from './stacks/AuthStack';
 
+export enum Screen {
+  AuthStack = 'AuthStack',
+}
+
 export type RootParamList = {
   [Screen.AuthStack]: undefined;
 };
 
 const Stack = createStackNavigator<RootParamList>();
-
-enum Screen {
-  AuthStack = 'AuthStack',
-}
 
 const options = { headerShown: false };
 

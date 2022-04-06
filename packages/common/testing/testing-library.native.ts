@@ -40,7 +40,6 @@ const patchQueries = (queryType: string, patchObj: any) =>
     );
 
 const renderWrapperCompat = (...args: any) => {
-  // @ts-ignore
   const renderResult = nativeRender(...args);
 
   const json = renderResult.toJSON();
@@ -60,7 +59,6 @@ const renderWrapperCompat = (...args: any) => {
 };
 
 const withinCompat = (...args: any) => {
-  // @ts-ignore
   const withinResult = nativeWithin(...args);
 
   const byTextFuncs = patchQueries('ByText', withinResult);

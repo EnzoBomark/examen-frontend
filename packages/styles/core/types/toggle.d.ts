@@ -6,7 +6,9 @@ declare global {
     toggle?: Dispatch<SetStateAction<boolean>>;
   };
 
-  type WebToggle = {};
+  type WebToggle = {
+    toggle?: Dispatch<SetStateAction<boolean>>;
+  };
 
   type Toggle = {
     active?: boolean;

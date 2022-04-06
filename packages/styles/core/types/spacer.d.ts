@@ -1,3 +1,3 @@
 type SpacerType = {
-  size: keyof theme['space'];
+  size: keyof Theme['space'];
 };

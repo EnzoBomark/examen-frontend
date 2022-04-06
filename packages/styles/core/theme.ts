@@ -1,4 +1,4 @@
-const theme: theme = {
+const theme: Theme = {
   colors: {
     p50: '#F4F6FC',
     p100: '#F4F6FC',

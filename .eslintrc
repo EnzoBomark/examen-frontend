@@ -1,14 +1,6 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb-typescript",
-    "airbnb",
-    "prettier"
-  ],
+  "plugins": ["workspaces", "react", "@typescript-eslint"],
+  "extends": ["plugin:react/recommended", "prettier"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaFeatures": {
@@ -20,7 +12,6 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["workspaces", "react", "@typescript-eslint"],
   "rules": {
     "react/function-component-definition": [
       2,
@@ -35,15 +26,19 @@
         "extensions": ["js", ".jsx", ".ts", ".tsx"]
       }
     ],
+    "global-require": 0,
     "react/prop-types": 0,
-    "workspaces/no-relative-imports": "error",
-    "workspaces/require-dependency": "error",
-    "workspaces/no-absolute-imports": "error",
+    "import/extensions": 0,
+    "import/no-dynamic-require": 0,
+    "@typescript-eslint/no-shadow": 0,
+    "import/no-extraneous-dependencies": 0,
     "@typescript-eslint/explicit-module-boundary-types": 0,
+    "@typescript-eslint/no-redeclare": 0,
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "global-require": "off",
-    "import/no-dynamic-require": "off"
+    "workspaces/no-relative-imports": "error",
+    "workspaces/require-dependency": "error",
+    "workspaces/no-absolute-imports": "error"
   },
 
   "settings": {

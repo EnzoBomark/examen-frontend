@@ -8,3 +8,4 @@ public
 apps/mobile/metro.config.js
 apps/mobile/android
 apps/mobile/ios
+packages/common/**/*

@@ -1,7 +1,7 @@
 import React, { useContext, Context } from 'react';
 import { Provider, ReactReduxContextValue } from 'react-redux';
 
-export function SingularStoreProvider({
+export const SingularStoreProvider = ({
   context,
   store,
   children,
@@ -9,7 +9,7 @@ export function SingularStoreProvider({
   context: Context<ReactReduxContextValue<any, any>>; // eslint-disable-line @typescript-eslint/no-explicit-any
   store: any; // eslint-disable-line @typescript-eslint/no-explicit-any
   children: any; // eslint-disable-line @typescript-eslint/no-explicit-any
-}) {
+}) => {
   const contextValue = useContext(context);
   if (contextValue && contextValue.store) {
     return children;
@@ -20,4 +20,4 @@ export function SingularStoreProvider({
       {children}
     </Provider>
   );
-}
+};

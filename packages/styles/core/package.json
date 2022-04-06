@@ -4,5 +4,8 @@
   "private": true,
   "peerDependencies": {
     "react": "*"
+  },
+  "dependencies": {
+    "@racket-styles/assets": "0.0.1"
   }
 }

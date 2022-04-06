@@ -10,6 +10,7 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
+    "@racket-core/mobile": "0.0.1",
     "@openspacelabs/react-native-zoomable-view": "^2.0.0",
     "@react-native-clipboard/clipboard": "^1.8.5",
     "@react-native-community/async-storage": "~1.12.1",
