@@ -5,7 +5,7 @@
   "peerDependencies": {
     "react": "*"
   },
-  "dependencies": {
+  "devDependencies": {
     "@racket-styles/assets": "0.0.1"
   }
 }

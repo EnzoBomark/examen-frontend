@@ -2,6 +2,7 @@ import * as React from 'react';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
+import { Spinner } from '../icon/Spinner';
 import { Svg } from '../icon/Svg';
 import { Label } from '../text/Label';
 
@@ -29,20 +30,26 @@ const Icon = styled.View`
   margin-right: ${theme.space.xxs};
 `;
 
-export const ArrowButton: React.FC<ArrowButton & NativeButton> = (props) => (
-  <Container disabled={props.disabled} onPress={props.onPress}>
-    <Inner height={props.height} width={props.width} disabled={props.disabled}>
-      {props.icon && (
-        <Icon>
-          <Svg src={props.icon} color="g400" width="18px" />
-        </Icon>
-      )}
+export const ArrowButton: React.FC<ArrowButton & NativeButton> = (props) => {
+  return (
+    <Container disabled={props.disabled} onPress={props.onPress}>
+      <Inner
+        height={props.height}
+        width={props.width}
+        disabled={props.disabled}
+      >
+        {props.icon && (
+          <Icon>
+            <Svg src={props.icon} color="g400" width="18px" />
+          </Icon>
+        )}
 
-      <Label color="g600">{props.label}</Label>
+        <Label color="g600">{props.label}</Label>
 
-      <Arrow>
-        <Svg src="forward" color="g400" width="12px" />
-      </Arrow>
-    </Inner>
-  </Container>
-);
+        <Arrow>
+          <Svg src="forward" color="g400" width="12px" />
+        </Arrow>
+      </Inner>
+    </Container>
+  );
+};

@@ -1,0 +1,11 @@
+{
+  "name": "@racket-native/matches",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@racket-styles/native": "0.0.1",
+    "@racket-common/store": "0.0.1",
+    "@types/styled-components": "^5.1.21",
+    "@types/styled-components-react-native": "^5.1.3"
+  }
+}

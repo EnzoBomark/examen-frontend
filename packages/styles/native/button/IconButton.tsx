@@ -1,8 +1,11 @@
 import * as React from 'react';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
 import { Spinner } from '../icon/Spinner';
 import { Svg } from '../icon/Svg';
+
+const screen = Dimensions.get('screen');
 
 const Container = styled.TouchableOpacity``;
 

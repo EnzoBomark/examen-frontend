@@ -1,3 +1,3 @@
 type SpinnerType = {
-  color?: keyof Theme['colors'];
+  color?: keyof theme['colors'];
 };

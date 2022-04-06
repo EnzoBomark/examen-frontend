@@ -1,4 +1,4 @@
-type Theme = {
+type theme = {
   colors: {
     p50: string;
     p100: string;

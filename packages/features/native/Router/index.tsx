@@ -2,17 +2,26 @@ import * as React from 'react';
 import * as Native from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import DrawerStack from './stacks/DrawerStack';
+import HomeStack from './stacks/HomeStack';
 import AuthStack from './stacks/AuthStack';
-
-export enum Screen {
-  AuthStack = 'AuthStack',
-}
+import ProfileStack from './stacks/ProfileStack';
 
 export type RootParamList = {
+  [Screen.DrawerStack]: undefined;
+  [Screen.HomeStack]: undefined;
   [Screen.AuthStack]: undefined;
+  [Screen.ProfileStack]: undefined;
 };
 
 const Stack = createStackNavigator<RootParamList>();
+
+enum Screen {
+  DrawerStack = 'DrawerStack',
+  HomeStack = 'HomeStack',
+  AuthStack = 'AuthStack',
+  ProfileStack = 'ProfileStack',
+}
 
 const options = { headerShown: false };
 
@@ -41,7 +50,13 @@ const RootStack: React.FC = () => {
 
   return (
     <Stack.Navigator screenOptions={options}>
-      {/* {!user && <Stack.Group></Stack.Group>} */}
+      {!user && (
+        <Stack.Group>
+          <Stack.Screen name={Screen.DrawerStack} component={DrawerStack} />
+          <Stack.Screen name={Screen.HomeStack} component={HomeStack} />
+          <Stack.Screen name={Screen.ProfileStack} component={ProfileStack} />
+        </Stack.Group>
+      )}
 
       {user && <Stack.Screen name={Screen.AuthStack} component={AuthStack} />}
     </Stack.Navigator>

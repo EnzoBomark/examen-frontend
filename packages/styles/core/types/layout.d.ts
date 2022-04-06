@@ -1,23 +1,23 @@
 type SpacerType = {
-  size: keyof Theme['space'];
+  size: keyof theme['space'];
 };
 
 type AlignType = {
-  type: keyof Theme['align'];
+  type: keyof theme['align'];
 };
 
 type JustifyType = {
-  type: keyof Theme['justify'];
+  type: keyof theme['justify'];
 };
 
 type Row = {
-  justify?: keyof Theme['justify'];
-  align?: keyof Theme['align'];
+  justify?: keyof theme['justify'];
+  align?: keyof theme['align'];
   reversed?: boolean;
 };
 
 type Col = {
-  justify?: keyof Theme['justify'];
-  align?: keyof Theme['align'];
+  justify?: keyof theme['justify'];
+  align?: keyof theme['align'];
   reversed?: boolean;
 };

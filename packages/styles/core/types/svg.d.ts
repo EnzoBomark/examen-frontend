@@ -6,7 +6,7 @@ declare global {
   };
 
   type SvgType = {
-    color?: keyof Theme['colors'];
+    color?: keyof theme['colors'];
   };
 
   type SvgSizing = {

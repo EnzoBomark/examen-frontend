@@ -8,7 +8,7 @@ type Svg = SvgCore & SvgType & SvgSizing;
 export const Svg: React.FC<Svg> = (props) => {
   const icon = Icons[props.src];
 
-  const isColor = (color?: string): color is keyof Theme['colors'] =>
+  const isColor = (color?: string): color is keyof typeof theme.colors =>
     Object.keys(theme.colors).indexOf(color || '') !== -1;
 
   return typeof icon === 'string' ? (

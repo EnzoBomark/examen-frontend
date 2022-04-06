@@ -17,8 +17,8 @@ declare global {
     width?: string;
     height?: string;
     loading?: boolean;
-    color?: keyof Theme['colors'];
-    background?: keyof Theme['colors'];
+    color?: keyof theme['colors'];
+    background?: keyof theme['colors'];
   }
 
   interface Button extends BaseButton {

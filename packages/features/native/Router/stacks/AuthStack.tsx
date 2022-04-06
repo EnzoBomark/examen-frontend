@@ -2,15 +2,15 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Auth from '@racket-native/auth';
 
-export enum Screen {
-  Auth = 'Auth',
-}
-
 export type AuthParamList = {
   [Screen.Auth]: undefined;
 };
 
 const Stack = createStackNavigator<AuthParamList>();
+
+enum Screen {
+  Auth = 'Auth',
+}
 
 const options = { headerShown: false };
 
