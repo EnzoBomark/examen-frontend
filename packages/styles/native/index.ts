@@ -34,9 +34,6 @@ export * from './image/ImageBackground';
 // gradient
 export * from './gradient/Gradient';
 
-// shadow
-export * from './shadow/Shadow';
-
 // list
 export * from './list/StaticList';
 

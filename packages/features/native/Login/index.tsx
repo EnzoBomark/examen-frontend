@@ -1,9 +1,30 @@
 import * as React from 'react';
 import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
+import { loginWithFacebook } from '@racket-traits/auth/facebook';
+import { loginWithGoogle } from '@racket-traits/auth/google';
+import { loginWithApple } from '@racket-traits/auth/apple';
+import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 const Login: React.FC = () => {
   const [remember, setRemember] = React.useState(false);
+
+  const evaluateConnectionLogin = async (
+    fn: () => Promise<FirebaseAuthTypes.UserCredential | undefined>
+  ) => {
+    const data = await fn();
+
+    if (!data) return;
+
+    if (data.additionalUserInfo?.isNewUser) console.log('navigate to register');
+
+    console.log(
+      data.user.displayName,
+      data.user.email,
+      data.user.phoneNumber,
+      data.user.uid
+    );
+  };
 
   return (
     <S.Screen bottom={true} top={true}>
@@ -58,6 +79,7 @@ const Login: React.FC = () => {
         <S.Spacer size="xs" />
 
         <S.Button
+          onPress={() => evaluateConnectionLogin(loginWithGoogle)}
           label="Continue with Google"
           icon="google"
           color="g500"
@@ -68,6 +90,7 @@ const Login: React.FC = () => {
         <S.Spacer size="xs" />
 
         <S.Button
+          onPress={() => evaluateConnectionLogin(loginWithFacebook)}
           label="Continue with Facebook"
           icon="facebook"
           height="46px"
@@ -76,6 +99,8 @@ const Login: React.FC = () => {
         <S.Spacer size="xs" />
 
         <S.Button
+          disabled={true}
+          onPress={() => evaluateConnectionLogin(loginWithApple)}
           label="Continue with Apple"
           icon="apple"
           color="g0"
@@ -92,10 +117,6 @@ const Login: React.FC = () => {
               <S.Body bold={true} color="g1000">
                 Sign up for free
               </S.Body>
-
-              <Native.View style={{ position: 'absolute', left: -5, top: 15 }}>
-                <S.Image src="underline" width="120px" height="30px" />
-              </Native.View>
             </S.Clickable>
           </S.Row>
         </S.Align>

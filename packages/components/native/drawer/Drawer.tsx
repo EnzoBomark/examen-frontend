@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
 import * as Navigation from '@react-navigation/drawer';
+import auth from '@react-native-firebase/auth';
 import theme from '@racket-styles/core/theme';
 import Images from '@racket-styles/assets/images';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -62,7 +63,9 @@ export const Drawer: React.FC<Props> = (props) => {
             </S.Row>
 
             <S.Spacer size="s" />
+          </S.Clickable>
 
+          <S.Clickable onPress={() => auth().signOut()}>
             <S.Row>
               <S.Svg src="sad" width="18px" color="g1000" />
 
