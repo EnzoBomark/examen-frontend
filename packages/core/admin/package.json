@@ -1,0 +1,11 @@
+{
+  "name": "@racket-core/admin",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@racket-common/testing": "0.0.1"
+  },
+  "peerDependencies": {
+    "react": "*"
+  }
+}

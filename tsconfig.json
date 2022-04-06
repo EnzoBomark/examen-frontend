@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "allowJs": false,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "module": "esnext",
+    "strict": true,
+    "target": "esnext",
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "pretty": true,
+    "sourceMap": true
+  },
+  "include": ["apps/**/*", "packages/**/*"]
+}

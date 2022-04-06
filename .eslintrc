@@ -1,0 +1,55 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb-typescript",
+    "airbnb",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "ecmaVersion": 2020,
+      "sourceType": "module"
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["workspaces", "react", "@typescript-eslint"],
+  "rules": {
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": ["js", ".jsx", ".ts", ".tsx"]
+      }
+    ],
+    "react/prop-types": 0,
+    "workspaces/no-relative-imports": "error",
+    "workspaces/require-dependency": "error",
+    "workspaces/no-absolute-imports": "error",
+    "@typescript-eslint/explicit-module-boundary-types": 0,
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "global-require": "off",
+    "import/no-dynamic-require": "off"
+  },
+
+  "settings": {
+    "react": {
+      "pragma": "React",
+      "version": "detect"
+    }
+  }
+}

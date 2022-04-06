@@ -1,0 +1,22 @@
+{
+  "name": "web",
+  "rootDir": "../..",
+  "moduleFileExtensions": [
+    "tsx",
+    "ts",
+    "web.ts",
+    "web.tsx",
+    "web.js",
+    "js",
+    "json",
+    "jsx",
+    "node"
+  ],
+  "testEnvironment": "jsdom",
+  "timers": "fake",
+  "modulePaths": ["<rootDir>/packages/"],
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "\\.(native|ios|android|node)\\.spec\\.(ts|tsx|js|jsx)$"
+  ]
+}

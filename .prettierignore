@@ -1,0 +1,10 @@
+env
+env.development
+env.production
+node_modules
+yarn.lock
+package-lock.json
+public
+apps/mobile/metro.config.js
+apps/mobile/android
+apps/mobile/ios

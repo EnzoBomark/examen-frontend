@@ -1,0 +1,11 @@
+{
+  "name": "@racket-common/store",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@racket-common/redux-wrapper": "0.0.1",
+    "react-redux": "7.2.6",
+    "redux": "^4.1.0",
+    "redux-flipper": "^2.0.1"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@racket-core/mobile",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "react-native-svg": "^12.1.1"
+  },
+  "devDependencies": {
+    "@racket-styles/core": "0.0.1",
+    "@racket-native/router": "0.0.1",
+    "@racket-common/store": "0.0.1",
+    "@racket-common/testing": "0.0.1"
+  },
+  "peerDependencies": {
+    "react": "*"
+  }
+}

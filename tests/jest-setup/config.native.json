@@ -1,0 +1,33 @@
+{
+  "name": "native",
+  "rootDir": "../..",
+  "moduleFileExtensions": [
+    "tsx",
+    "ts",
+    "native.ts",
+    "native.tsx",
+    "native.js",
+    "ios.ts",
+    "ios.tsx",
+    "ios.js",
+    "android.ts",
+    "android.tsx",
+    "android.js",
+    "js",
+    "json",
+    "jsx",
+    "node"
+  ],
+  "setupFiles": [
+    "<rootDir>/node_modules/react-native-gesture-handler/jestSetup.js"
+  ],
+  "preset": "react-native",
+  "modulePaths": ["<rootDir>/packages/"],
+  "testPathIgnorePatterns": [
+    "/node_modules/",
+    "\\.(web|node|ext)\\.spec\\.(js|jsx|ts|tsx)$"
+  ],
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(@react-native|react-native|react-native-vector-icons|react-native-swipe-gestures|@react-navigation|react-native-iphone-x-helper|react-native-keychain)/).*/"
+  ]
+}

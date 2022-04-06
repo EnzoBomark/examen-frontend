@@ -1,0 +1,64 @@
+{
+  "name": "@racket/root",
+  "version": "0.0.1",
+  "author": "Enzo Bomark",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start:web": "yarn workspace @racket-apps/web start",
+    "start:admin": "yarn workspace @racket-apps/admin start",
+    "start:ios": "yarn workspace @racket-apps/mobile ios",
+    "start:android": "yarn workspace @racket-apps/mobile android",
+    "start:packager": "yarn workspace @racket-apps/mobile start",
+    "test": "yarn test:unit:native && yarn test:unit:web",
+    "test:unit:native": "jest --config tests/jest-setup/config.native.json",
+    "test:unit:web": "jest --config tests/jest-setup/config.web.json",
+    "pod:install": "cd apps/mobile/ios && pod install",
+    "type:check": "tsc --pretty --noEmit",
+    "lint:check": "yarn run eslint ./apps/ ./packages/ --ext .js,.jsx,.ts,.tsx --ignore-pattern node_modules/",
+    "prettier:check": "prettier --check .",
+    "prettier:write": "prettier --write .",
+    "prepare": "husky install"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/core/**/*",
+    "packages/common/**/*",
+    "packages/features/**/*",
+    "packages/styles/**/*",
+    "packages/components/**/*",
+    "packages/api/**/*",
+    "packages/*"
+  ],
+  "resolutions": {
+    "react": "17.0.2"
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-native": "^0.67.4",
+    "react-native-svg": "^12.1.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.15.0",
+    "@typescript-eslint/parser": "^5.15.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-inline-import": "^3.0.0",
+    "commitizen": "^4.2.4",
+    "eslint": "^8.11.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.3.0",
+    "eslint-plugin-workspaces": "^0.7.0",
+    "husky": "^7.0.0",
+    "metro-react-native-babel-preset": "^0.69.1",
+    "metro-react-native-babel-transformer": "^0.69.1",
+    "prettier": "2.6.0",
+    "react-native-svg-transformer": "^1.0.0",
+    "react-test-renderer": "17.0.2"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "@racket-common/testing",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/react-native": "^9.0.0"
+  }
+}

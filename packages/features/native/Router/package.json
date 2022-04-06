@@ -1,0 +1,27 @@
+{
+  "name": "@racket-native/router",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@react-native-firebase/auth": "^14.5.1",
+    "@react-native-firebase/messaging": "^14.5.1",
+    "@react-navigation/bottom-tabs": "^6.2.0",
+    "@react-navigation/drawer": "^6.4.1",
+    "@react-navigation/native": "^6.0.8",
+    "@react-navigation/native-stack": "^6.5.0",
+    "@react-navigation/stack": "^6.1.1",
+    "react-native-gesture-handler": "^2.2.0",
+    "react-native-pager-view": "^5.4.15",
+    "react-native-safe-area-context": "^4.2.1",
+    "react-native-screens": "^3.11.1",
+    "react-native-tab-view": "^3.1.1"
+  },
+  "devDependencies": {
+    "@racket-common/config": "0.0.1",
+    "@racket-native/auth": "0.0.1"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  }
+}
