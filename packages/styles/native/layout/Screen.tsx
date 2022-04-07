@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components/native';
-import { Platform } from 'react-native';
+import * as Native from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -21,18 +21,20 @@ export const Screen: React.FC<{ top?: boolean; bottom?: boolean }> = (
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
 
-  const platform = Platform.OS === 'ios';
+  const platform = Native.Platform.OS === 'ios';
   const top = platform ? headerHeight + insets.top : insets.top;
   const bottom = top - insets.top;
 
   return (
-    <Container
-      headerHeight={props.top ? top : 0}
-      bottomHeight={
-        props.bottom ? bottom + (insets.bottom || 20) : insets.bottom || 20
-      }
-    >
-      {props.children}
-    </Container>
+    <Native.TouchableWithoutFeedback onPress={() => Native.Keyboard.dismiss()}>
+      <Container
+        headerHeight={props.top ? top : 0}
+        bottomHeight={
+          props.bottom ? bottom + (insets.bottom || 20) : insets.bottom || 20
+        }
+      >
+        {props.children}
+      </Container>
+    </Native.TouchableWithoutFeedback>
   );
 };

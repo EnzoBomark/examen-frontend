@@ -27,3 +27,8 @@ type Col = {
   align?: keyof theme['align'];
   reversed?: boolean;
 };
+
+type AvoidKeyboard = {
+  behavior?: 'padding' | 'position' | 'height';
+  offset?: number;
+};
