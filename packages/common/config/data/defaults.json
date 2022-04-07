@@ -1,5 +1,5 @@
 {
-  "BASE_URL": "https://localhost:9000/dev",
+  "BASE_URL": "http://localhost:9000/api",
   "SENTRY_DSN": "",
   "SENTRY_ENABLED": "0"
 }
