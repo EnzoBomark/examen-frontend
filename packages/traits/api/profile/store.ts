@@ -19,7 +19,7 @@ const initialState: State = {
 };
 
 const store = createStore<State, Action>({
-  name: 'proSET_PROFILE',
+  name: 'profile',
   reducer: (state = initialState, action) => {
     switch (action.type) {
       case Types.UNLOAD:

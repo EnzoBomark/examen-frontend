@@ -14,7 +14,7 @@ export const useGetProfile = () => {
       .then((res) => dispatch(success(res.data)))
       .catch((err: AxiosError<ResponseError>) => {
         if (err.response) {
-          dispatch(fail(err.response));
+          dispatch(fail(err.response.data));
         }
       });
   };

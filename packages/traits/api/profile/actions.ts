@@ -1,4 +1,3 @@
-import { AxiosResponse } from '../index';
 import { Action, ResponseError, Types, Profile } from './types';
 
 export const unload = (): Action => ({
@@ -14,7 +13,7 @@ export const success = (profile: Profile): Action => ({
   payload: profile,
 });
 
-export const fail = (error: AxiosResponse<ResponseError>): Action => ({
+export const fail = (error: ResponseError): Action => ({
   type: Types.FAIL,
   payload: error,
 });

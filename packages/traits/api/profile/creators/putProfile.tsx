@@ -13,7 +13,7 @@ export const usePutProfile = () => {
       .put<Profile>(`profile`, data)
       .then((res) => dispatch(success(res.data)))
       .catch((err: AxiosError) => {
-        if (err.response) dispatch(fail(err.response));
+        if (err.response) dispatch(fail(err.response.data));
       });
   };
 

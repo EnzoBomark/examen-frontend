@@ -21,13 +21,13 @@ export type ResponseError = {
   statusCode: number;
   error: string;
   message: string;
-  attributes: ErrorFields;
+  attributes?: ErrorFields;
 };
 
 export type State = {
   isLoading: boolean;
   hasLoaded: boolean;
-  hasError?: AxiosResponse<ResponseError>;
+  hasError?: ResponseError;
   data: Profile;
 };
 
@@ -43,7 +43,7 @@ export type Payload = {
   [Types.UNLOAD]: undefined;
   [Types.PENDING]: undefined;
   [Types.SUCCESS]: Profile;
-  [Types.FAIL]: AxiosResponse<ResponseError>;
+  [Types.FAIL]: ResponseError;
   [Types.SET_PROFILE]: Profile;
 };
 
