@@ -7,21 +7,16 @@ import { ParamListBase, RouteProp } from '@react-navigation/native';
 import HomeStack from './HomeStack';
 import ProfileStack from './ProfileStack';
 
-export enum Stack {
-  HomeStack = 'HomeStack',
-  ProfileStack = 'ProfileStack',
-}
-
 export type DrawerParamList = {
-  [Stack.HomeStack]: undefined;
-  [Stack.ProfileStack]: undefined;
+  HomeStack: undefined;
+  ProfileStack: undefined;
 };
 
 const Drawer = createDrawerNavigator();
 
 const icons = (color: keyof theme['colors']) => ({
-  [Stack.HomeStack]: <S.Svg src="homeFill" width="26px" color={color} />,
-  [Stack.ProfileStack]: <S.Svg src="profileFill" width="26px" color={color} />,
+  HomeStack: <S.Svg src="homeFill" width="26px" color={color} />,
+  ProfileStack: <S.Svg src="profileFill" width="26px" color={color} />,
 });
 
 type ScreenOptions = { route: RouteProp<ParamListBase, string> };
@@ -34,18 +29,18 @@ const BottomTabs = () => (
       drawerInactiveTintColor: theme.colors.g400,
       drawerActiveTintColor: theme.colors.p600,
       drawerIcon: ({ color }: { color: string }) =>
-        icons(color as keyof theme['colors'])[route.name as Stack],
+        icons(color as keyof theme['colors'])[route.name as keyof typeof icons],
     })}
     drawerContent={(props) => <C.Drawer {...props} />}
   >
     <Drawer.Screen
-      name={Stack.HomeStack}
+      name="HomeStack"
       component={HomeStack}
       options={{ title: 'Discover' }}
     />
 
     <Drawer.Screen
-      name={Stack.ProfileStack}
+      name="ProfileStack"
       component={ProfileStack}
       options={{ title: 'Profile' }}
     />

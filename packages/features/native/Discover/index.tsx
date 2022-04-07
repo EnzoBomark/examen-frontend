@@ -3,10 +3,10 @@ import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
-import { HomeParamList, Screen } from '@racket-native/router/stacks/HomeStack';
+import { HomeParamList } from '@racket-native/router/stacks/HomeStack';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-type Props = DrawerScreenProps<HomeParamList, Screen.Discover>;
+type Props = DrawerScreenProps<HomeParamList, 'Discover'>;
 
 const Discover: React.FC<Props> = ({ navigation }) => {
   const insets = useSafeAreaInsets();

@@ -4,14 +4,9 @@ import messaging from '@react-native-firebase/messaging';
 import Discover from '@racket-native/discover';
 import Matches from '@racket-native/matches';
 
-export enum Screen {
-  Discover = 'Discover',
-  Matches = 'Matches',
-}
-
 export type HomeParamList = {
-  [Screen.Discover]: undefined;
-  [Screen.Matches]: undefined;
+  Discover: undefined;
+  Matches: undefined;
 };
 
 const Stack = createNativeStackNavigator<HomeParamList>();
@@ -43,11 +38,11 @@ const HomeStack = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={Screen.Discover}
+      initialRouteName="Discover"
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name={Screen.Discover} component={Discover} />
-      <Stack.Screen name={Screen.Matches} component={Matches} />
+      <Stack.Screen name="Discover" component={Discover} />
+      <Stack.Screen name="Matches" component={Matches} />
     </Stack.Navigator>
   );
 };

@@ -3,14 +3,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Login from '@racket-native/login';
 import Register from '@racket-native/register';
 
-export enum Screen {
-  Login = 'Login',
-  Register = 'Register',
-}
-
 export type AuthParamList = {
-  [Screen.Login]: undefined;
-  [Screen.Register]: undefined;
+  Login: undefined;
+  Register: { name?: string; email?: string; phone?: string } | undefined;
 };
 
 const Stack = createStackNavigator<AuthParamList>();
@@ -19,9 +14,9 @@ const options = { headerShown: false };
 
 const AuthStack = () => {
   return (
-    <Stack.Navigator initialRouteName={Screen.Login} screenOptions={options}>
-      <Stack.Screen name={Screen.Login} component={Login} />
-      <Stack.Screen name={Screen.Register} component={Register} />
+    <Stack.Navigator initialRouteName="Login" screenOptions={options}>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
     </Stack.Navigator>
   );
 };
