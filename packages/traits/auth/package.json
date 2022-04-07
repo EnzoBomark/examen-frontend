@@ -12,5 +12,8 @@
     "@react-native-google-signin/google-signin": "^7.2.2",
     "react-native-fbsdk-next": "^7.3.3"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@racket-traits/api": "0.0.1",
+    "@racket-native/router": "0.0.1"
+  }
 }

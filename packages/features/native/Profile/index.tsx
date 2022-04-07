@@ -13,7 +13,7 @@ const Profile: React.FC = () => {
 
           <S.H1 bold={true}>Profile</S.H1>
 
-          <S.TextInput placeholder="Placeholder" label="Label" />
+          <S.TextInput placeholder="Placeholder" label={true} />
 
           <S.Spacer size="s" />
 

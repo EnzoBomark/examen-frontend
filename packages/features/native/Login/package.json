@@ -6,7 +6,9 @@
     "@react-native-firebase/auth": "^14.5.1"
   },
   "devDependencies": {
+    "@racket-traits/api": "0.0.1",
     "@racket-traits/auth": "0.0.1",
+    "@racket-native/router": "0.0.1",
     "@racket-components/native": "0.0.1",
     "@racket-styles/core": "0.0.1",
     "@racket-styles/assets": "0.0.1",

@@ -8,7 +8,7 @@ const Matches: React.FC = () => {
     <S.Screen>
       <S.Padding size="xs">
         <S.Align type="start">
-          <S.TextInput placeholder="Placeholder" label="Label" />
+          <S.TextInput placeholder="Placeholder" />
 
           <S.Spacer size="s" />
 
@@ -20,7 +20,7 @@ const Matches: React.FC = () => {
 
           <S.Spacer size="s" />
 
-          <S.TextInput placeholder="Placeholder" label="Label" />
+          <S.TextInput placeholder="Placeholder" />
 
           <S.Spacer size="s" />
 
