@@ -3,11 +3,11 @@ import { setProfile, unload } from './actions';
 import { Profile } from './types';
 import Store from './store';
 
+export * from './creators/getProfile';
+export * from './creators/postProfile';
+export * from './creators/putProfile';
+
 export const useProfile = () => Store.useSelector(profileSelector);
-
-export { useGetProfile } from './creators/getProfile';
-
-export { usePutProfile } from './creators/putProfile';
 
 export const useSetProfile = () => {
   const dispatch = Store.useDispatch();

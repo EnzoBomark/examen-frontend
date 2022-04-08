@@ -6,11 +6,16 @@ import { loginWithApple } from '@racket-traits/auth/apple';
 import { useEvaluateLogin } from '@racket-traits/auth';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AuthParamList } from '@racket-native/router/stacks/AuthStack';
+import { useEmailLogin } from '@racket-traits/auth/hooks/useEmailLogin';
 
 type Props = StackScreenProps<AuthParamList, 'Login'>;
 
 const Login: React.FC<Props> = ({ navigation }) => {
   const evaluateLogin = useEvaluateLogin();
+  const emailLogin = useEmailLogin();
+
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const [remember, setRemember] = React.useState(false);
 
   return (
@@ -29,16 +34,30 @@ const Login: React.FC<Props> = ({ navigation }) => {
         </S.Padding>
 
         <S.Padding size="xs" vertical={false}>
-          <S.TextInput placeholder="Enter your Email" />
+          <S.TextInput
+            placeholder="Email"
+            label={true}
+            type="email-address"
+            value={email}
+            onTextChange={setEmail}
+          />
 
           <S.Spacer size="xs" />
 
-          <S.TextInput placeholder="Password" password={true} />
+          <S.TextInput
+            placeholder="Password"
+            label={true}
+            password={true}
+            value={password}
+            onTextChange={setPassword}
+            icon="lock"
+          />
 
           <S.Spacer size="xs" />
 
           <S.Row align="center">
             <S.Checkbox
+              disabled={true}
               label="Remember"
               invert={true}
               active={remember}
@@ -47,7 +66,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
             <S.Fill />
 
-            <S.Clickable>
+            <S.Clickable disabled={true}>
               <S.Body color="p600">Forgot Password</S.Body>
             </S.Clickable>
             <S.Spacer size="xs" />
@@ -63,6 +82,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
             color="g500"
             background="g200"
             height="46px"
+            onPress={() => emailLogin(email, password)}
           />
 
           <S.Spacer size="xs" />

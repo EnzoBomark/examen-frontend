@@ -32,12 +32,6 @@ export const useEvaluateLogin = () => {
       phone: data.user.phoneNumber || undefined,
     });
 
-    console.log({
-      name: data.user.displayName || undefined,
-      email: data.user.email || undefined,
-      phone: data.user.phoneNumber || undefined,
-    });
-
     getProfile();
   };
 

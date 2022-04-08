@@ -6,10 +6,12 @@ import auth from '@react-native-firebase/auth';
 import theme from '@racket-styles/core/theme';
 import Images from '@racket-styles/assets/images';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useProfile } from '@racket-traits/api/profile';
 
 type Props = Navigation.DrawerContentComponentProps;
 
 export const Drawer: React.FC<Props> = (props) => {
+  const profile = useProfile();
   const insets = useSafeAreaInsets();
 
   return (
@@ -26,7 +28,7 @@ export const Drawer: React.FC<Props> = (props) => {
 
             <S.Spacer size="xxs" />
 
-            <S.H3 color="g0">Jane Doe</S.H3>
+            <S.H3 color="g0">{profile.data.name}</S.H3>
 
             <S.Spacer size="xxs" />
 
