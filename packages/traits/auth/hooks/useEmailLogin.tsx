@@ -13,10 +13,7 @@ export const useEmailLogin = () => {
     } catch (err) {
       const message = (err as Error).message;
 
-      Alert.alert(
-        'Failed to login',
-        message.slice(message.indexOf(' ') + 1)
-      );
+      Alert.alert('Failed to login', message.slice(message.indexOf(' ') + 1));
     }
   };
   return emailLogin;
