@@ -1,16 +1,15 @@
-import api, { AxiosError } from '../../index';
+import api, { AxiosError } from '../../../index';
 import { fail, pending, success } from '../actions';
-import { Profile } from '../types';
 import store from '../store';
 
-export const usePutProfile = () => {
+export const usePutMatch = () => {
   const dispatch = store.useDispatch();
 
-  const putProfile = (data: Partial<Profile>) => {
+  const putMatch = (id: string, data: Partial<Match>) => {
     dispatch(pending());
 
     return api
-      .put<Profile>(`profile`, data)
+      .put<Match>(`match/${id}`, data)
       .then((res) => dispatch(success(res.data)))
       .catch((err: AxiosError) => {
         if (!err.response) throw err;
@@ -18,5 +17,5 @@ export const usePutProfile = () => {
       });
   };
 
-  return putProfile;
+  return putMatch;
 };

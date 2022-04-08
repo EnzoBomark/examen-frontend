@@ -1,22 +1,20 @@
-import api, { AxiosError } from '../../index';
+import api, { AxiosError } from '../../../index';
 import { fail, pending, success } from '../actions';
-import { Profile } from '../types';
 import store from '../store';
 
-export const usePutProfile = () => {
+export const useGetMatches = () => {
   const dispatch = store.useDispatch();
 
-  const putProfile = (data: Partial<Profile>) => {
+  const getMatches = (page: number) => {
     dispatch(pending());
 
-    return api
-      .put<Profile>(`profile`, data)
+    api
+      .get<Match[]>(`matches`, { params: { page } })
       .then((res) => dispatch(success(res.data)))
-      .catch((err: AxiosError) => {
+      .catch((err: AxiosError<ResponseError>) => {
         if (!err.response) throw err;
         dispatch(fail(err.response.data));
       });
   };
-
-  return putProfile;
+  return getMatches;
 };

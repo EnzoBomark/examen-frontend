@@ -1,4 +1,4 @@
-import { Action, ResponseError, Types, Profile } from './types';
+import { Action, Types, Profile } from './types';
 
 export const unload = (): Action => ({
   type: Types.UNLOAD,
@@ -13,7 +13,7 @@ export const success = (profile: Profile): Action => ({
   payload: profile,
 });
 
-export const fail = (error: ResponseError): Action => ({
+export const fail = (error: ResponseError<Profile>): Action => ({
   type: Types.FAIL,
   payload: error,
 });

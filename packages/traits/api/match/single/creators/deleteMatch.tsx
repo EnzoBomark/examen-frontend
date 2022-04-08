@@ -1,22 +1,20 @@
-import api, { AxiosError } from '../../index';
+import api, { AxiosError } from '../../../index';
 import { fail, pending, success } from '../actions';
-import { Profile } from '../types';
 import store from '../store';
 
-export const usePutProfile = () => {
+export const useDeleteMatch = () => {
   const dispatch = store.useDispatch();
 
-  const putProfile = (data: Partial<Profile>) => {
+  const deleteMatch = (id: string) => {
     dispatch(pending());
 
-    return api
-      .put<Profile>(`profile`, data)
+    api
+      .delete<Match>(`match/${id}`)
       .then((res) => dispatch(success(res.data)))
-      .catch((err: AxiosError) => {
+      .catch((err: AxiosError<ResponseError<Match>>) => {
         if (!err.response) throw err;
         dispatch(fail(err.response.data));
       });
   };
-
-  return putProfile;
+  return deleteMatch;
 };

@@ -1,4 +1,3 @@
-import { AxiosResponse } from '../index';
 import { ActionMap } from '@racket-common/store';
 
 export type Profile = {
@@ -13,21 +12,10 @@ export type Profile = {
   fcm?: string;
 };
 
-export type ErrorFields = {
-  [K in keyof Profile]?: string;
-};
-
-export type ResponseError = {
-  statusCode: number;
-  error: string;
-  message: string;
-  attributes?: ErrorFields;
-};
-
 export type State = {
   isLoading: boolean;
   hasLoaded: boolean;
-  hasError?: ResponseError;
+  hasError?: ResponseError<Profile>;
   data: Profile;
 };
 
@@ -43,7 +31,7 @@ export type Payload = {
   [Types.UNLOAD]: undefined;
   [Types.PENDING]: undefined;
   [Types.SUCCESS]: Profile;
-  [Types.FAIL]: ResponseError;
+  [Types.FAIL]: ResponseError<Profile>;
   [Types.SET_PROFILE]: Profile;
 };
 
