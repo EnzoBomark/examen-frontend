@@ -1,64 +1,53 @@
 import * as React from 'react';
-import * as Native from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
+import auth from '@react-native-firebase/auth';
 import DrawerStack from './stacks/DrawerStack';
 import HomeStack from './stacks/HomeStack';
 import AuthStack from './stacks/AuthStack';
 import ProfileStack from './stacks/ProfileStack';
+import {
+  useProfile,
+  useGetProfile,
+  useUnloadProfile,
+} from '@racket-traits/api/profile';
+import { createStackNavigator } from '@react-navigation/stack';
 
 export type RootParamList = {
-  [Screen.DrawerStack]: undefined;
-  [Screen.HomeStack]: undefined;
-  [Screen.AuthStack]: undefined;
-  [Screen.ProfileStack]: undefined;
+  DrawerStack: undefined;
+  HomeStack: undefined;
+  AuthStack: undefined;
+  ProfileStack: undefined;
 };
 
 const Stack = createStackNavigator<RootParamList>();
 
-enum Screen {
-  DrawerStack = 'DrawerStack',
-  HomeStack = 'HomeStack',
-  AuthStack = 'AuthStack',
-  ProfileStack = 'ProfileStack',
-}
-
 const options = { headerShown: false };
 
 const RootStack: React.FC = () => {
-  const [isLoading, setIsLoading] = React.useState<boolean>(true);
-  const [user, setUser] = React.useState<FirebaseAuthTypes.User | null>(null);
+  const unloadProfile = useUnloadProfile();
+  const getProfile = useGetProfile();
+  const profile = useProfile();
 
-  const loadProfile = () => {
-    auth().onAuthStateChanged((user) => {
-      if (user) setUser(user);
-      if (!user) setUser(null);
-      if (isLoading) setIsLoading(false);
-    });
-  };
+  // auth().signOut();
 
   React.useEffect(() => {
-    loadProfile();
-  }, []);
-
-  if (isLoading)
-    return (
-      <Native.SafeAreaView>
-        <Native.ActivityIndicator />
-      </Native.SafeAreaView>
+    auth().onAuthStateChanged((user) =>
+      user ? getProfile() : unloadProfile()
     );
+  }, []);
 
   return (
     <Stack.Navigator screenOptions={options}>
-      {!user && (
+      {profile.hasLoaded && (
         <Stack.Group>
-          <Stack.Screen name={Screen.DrawerStack} component={DrawerStack} />
-          <Stack.Screen name={Screen.HomeStack} component={HomeStack} />
-          <Stack.Screen name={Screen.ProfileStack} component={ProfileStack} />
+          <Stack.Screen name="DrawerStack" component={DrawerStack} />
+          <Stack.Screen name="HomeStack" component={HomeStack} />
+          <Stack.Screen name="ProfileStack" component={ProfileStack} />
         </Stack.Group>
       )}
 
-      {user && <Stack.Screen name={Screen.AuthStack} component={AuthStack} />}
+      {!profile.hasLoaded && (
+        <Stack.Screen name="AuthStack" component={AuthStack} />
+      )}
     </Stack.Navigator>
   );
 };

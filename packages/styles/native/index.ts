@@ -34,9 +34,6 @@ export * from './image/ImageBackground';
 // gradient
 export * from './gradient/Gradient';
 
-// shadow
-export * from './shadow/Shadow';
-
 // list
 export * from './list/StaticList';
 
@@ -52,6 +49,7 @@ export * from './layout/Blur';
 export * from './layout/Row';
 export * from './layout/Col';
 export * from './layout/UnderLine';
+export * from './layout/AvoidKeyboard';
 
 // modal
 export * from './modal/Modal';

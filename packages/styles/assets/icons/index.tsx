@@ -35,6 +35,7 @@ import offer from './offer.svg';
 import share from './share.svg';
 import sad from './sad.svg';
 import hamburger from './hamburger.svg';
+import lock from './lock.svg';
 
 const Icons = {
   forward,
@@ -74,6 +75,7 @@ const Icons = {
   share,
   sad,
   hamburger,
+  lock,
 };
 
 export default Icons;

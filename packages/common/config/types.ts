@@ -3,6 +3,7 @@ import {
   FLAVOR_PRODUCTION,
   FLAVOR_STAGING,
 } from './constants';
+
 import { defaults } from './data';
 
 export type Config = typeof defaults;

@@ -1,35 +1,26 @@
 import Icons from '@racket-styles/assets/icons';
 
 declare global {
-  type NativeInputFunctions = {
+  type NativeTextInput = {
     value?: string;
+    type?: 'default' | 'email-address' | 'phone-pad';
     onTextChange?: ((event: GestureResponderEvent) => void) | undefined;
   };
 
-  type WebInputFunctions = {
+  type WebTextInput = {
     value?: string;
     onChange?: ((event: GestureResponderEvent) => void) | undefined;
   };
 
-  type InputType = {
+  type TextInput = {
     active?: boolean;
     disabled?: boolean;
-    error?: string;
-  };
-
-  type InputAddons = {
+    error?: string | (string | undefined)[];
     icon?: keyof typeof Icons;
-    label?: string;
+    label?: boolean;
     placeholder?: string;
-  };
-
-  type PasswordAddons = {
-    label?: string;
-    placeholder?: string;
-  };
-
-  type InputSizing = {
     width?: string;
     height?: string;
+    password?: boolean;
   };
 }

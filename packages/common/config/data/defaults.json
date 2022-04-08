@@ -1,10 +1,5 @@
 {
-  "BASE_URL": "https://dev.getracket.se",
+  "BASE_URL": "http://localhost:9000/api",
   "SENTRY_DSN": "",
-  "SENTRY_ENABLED": "1",
-  "AUTH0_AUDIENCE": "https://racket-staging.herokuapp.com",
-  "AUTH0_DOMAIN": "racket-staging.eu.auth0.com",
-  "AUTH0_CLIENT_ID_WEB": "Z4OihMDI6cOaCatoXiBldUFuNk5T4vBV",
-  "AUTH0_CLIENT_ID_NATIVE": "Mf5BvOgTA79mgLHFI2cBlUk9aXRmksAT",
-  "SENDBIRD_APPLICATION_ID": "55738BB7-EA5E-4C37-8EEC-8682C0A0490E"
+  "SENTRY_ENABLED": "0"
 }

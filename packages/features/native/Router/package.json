@@ -17,11 +17,14 @@
     "react-native-tab-view": "^3.1.1"
   },
   "devDependencies": {
+    "@racket-traits/api": "0.0.1",
+    "@racket-components/native": "0.0.1",
     "@racket-styles/core": "0.0.1",
     "@racket-styles/assets": "0.0.1",
     "@racket-styles/native": "0.0.1",
     "@racket-common/config": "0.0.1",
-    "@racket-native/auth": "0.0.1",
+    "@racket-native/register": "0.0.1",
+    "@racket-native/login": "0.0.1",
     "@racket-native/discover": "0.0.1",
     "@racket-native/matches": "0.0.1",
     "@racket-native/profile": "0.0.1"

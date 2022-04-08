@@ -18,17 +18,15 @@ const Card = styled.View`
 export const UpcomingMatchCard: React.FC<Props> = (props) => {
   return (
     <S.Clickable>
-      <S.Shadow>
-        <Card>
-          <S.Padding size="xs">
-            <S.Body bold={true} color="p600">
-              {props.center}
-            </S.Body>
+      <Card style={{ ...theme.shadow }}>
+        <S.Padding size="xs">
+          <S.Body bold={true} color="p600">
+            {props.center}
+          </S.Body>
 
-            <S.Tiny> {props.dateTime}</S.Tiny>
-          </S.Padding>
-        </Card>
-      </S.Shadow>
+          <S.Tiny> {props.dateTime}</S.Tiny>
+        </S.Padding>
+      </Card>
     </S.Clickable>
   );
 };
