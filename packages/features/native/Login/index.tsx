@@ -19,8 +19,8 @@ const Login: React.FC<Props> = ({ navigation }) => {
   const [remember, setRemember] = React.useState(false);
 
   return (
-    <S.Scroll bottom={true} top={true}>
-      <S.AvoidKeyboard>
+    <S.AvoidKeyboard>
+      <S.Screen bottom={true} top={true}>
         <S.Spacer size="xs" />
 
         <S.Padding size="s">
@@ -28,7 +28,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
           <S.Spacer size="xxs" />
 
-          <S.Body color="g400">
+          <S.Body color="g500">
             Long time no see! Let’s login to get started
           </S.Body>
         </S.Padding>
@@ -57,7 +57,6 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
           <S.Row align="center">
             <S.Checkbox
-              disabled={true}
               label="Remember"
               invert={true}
               active={remember}
@@ -66,7 +65,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
             <S.Fill />
 
-            <S.Clickable disabled={true}>
+            <S.Clickable>
               <S.Body color="p600">Forgot Password</S.Body>
             </S.Clickable>
             <S.Spacer size="xs" />
@@ -108,7 +107,6 @@ const Login: React.FC<Props> = ({ navigation }) => {
           <S.Spacer size="xs" />
 
           <S.Button
-            disabled={true}
             onPress={() => evaluateLogin(loginWithApple)}
             label="Continue with Apple"
             icon="apple"
@@ -130,8 +128,8 @@ const Login: React.FC<Props> = ({ navigation }) => {
             </S.Row>
           </S.Align>
         </S.Padding>
-      </S.AvoidKeyboard>
-    </S.Scroll>
+      </S.Screen>
+    </S.AvoidKeyboard>
   );
 };
 

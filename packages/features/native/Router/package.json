@@ -26,6 +26,8 @@
     "@racket-native/register": "0.0.1",
     "@racket-native/login": "0.0.1",
     "@racket-native/discover": "0.0.1",
+    "@racket-native/create-match": "0.0.1",
+    "@racket-native/match": "0.0.1",
     "@racket-native/matches": "0.0.1",
     "@racket-native/profile": "0.0.1"
   },

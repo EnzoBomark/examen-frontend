@@ -2,16 +2,18 @@ import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import messaging from '@react-native-firebase/messaging';
 import Discover from '@racket-native/discover';
-import Matches from '@racket-native/matches';
+import CreateMatch from '@racket-native/create-match';
+import Match from '@racket-native/match';
 
-export type HomeParamList = {
+export type MatchParamList = {
   Discover: undefined;
-  Matches: undefined;
+  CreateMatch: undefined;
+  Match: Match;
 };
 
-const Stack = createNativeStackNavigator<HomeParamList>();
+const Stack = createNativeStackNavigator<MatchParamList>();
 
-const HomeStack = () => {
+const MatchStack = () => {
   const pushPersmissionStatus = async () => {
     const hasPermission = await messaging().hasPermission();
 
@@ -42,9 +44,10 @@ const HomeStack = () => {
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="Discover" component={Discover} />
-      <Stack.Screen name="Matches" component={Matches} />
+      <Stack.Screen name="CreateMatch" component={CreateMatch} />
+      <Stack.Screen name="Match" component={Match} />
     </Stack.Navigator>
   );
 };
 
-export default HomeStack;
+export default MatchStack;

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import auth from '@react-native-firebase/auth';
 import DrawerStack from './stacks/DrawerStack';
-import HomeStack from './stacks/HomeStack';
+import MatchStack from './stacks/MatchStack';
 import AuthStack from './stacks/AuthStack';
 import ProfileStack from './stacks/ProfileStack';
 import {
@@ -13,7 +13,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 export type RootParamList = {
   DrawerStack: undefined;
-  HomeStack: undefined;
+  MatchStack: undefined;
   AuthStack: undefined;
   ProfileStack: undefined;
 };
@@ -40,7 +40,7 @@ const RootStack: React.FC = () => {
       {profile.hasLoaded && (
         <Stack.Group>
           <Stack.Screen name="DrawerStack" component={DrawerStack} />
-          <Stack.Screen name="HomeStack" component={HomeStack} />
+          <Stack.Screen name="MatchStack" component={MatchStack} />
           <Stack.Screen name="ProfileStack" component={ProfileStack} />
         </Stack.Group>
       )}

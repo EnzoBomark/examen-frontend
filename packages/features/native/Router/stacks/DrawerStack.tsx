@@ -4,18 +4,18 @@ import * as C from '@racket-components/native';
 import theme from '@racket-styles/core/theme';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
-import HomeStack from './HomeStack';
+import MatchStack from './MatchStack';
 import ProfileStack from './ProfileStack';
 
 export type DrawerParamList = {
-  HomeStack: undefined;
+  MatchStack: undefined;
   ProfileStack: undefined;
 };
 
 const Drawer = createDrawerNavigator();
 
 const icons = (color: keyof theme['colors']) => ({
-  HomeStack: <S.Svg src="homeFill" width="26px" color={color} />,
+  MatchStack: <S.Svg src="homeFill" width="26px" color={color} />,
   ProfileStack: <S.Svg src="profileFill" width="26px" color={color} />,
 });
 
@@ -34,8 +34,8 @@ const BottomTabs = () => (
     drawerContent={(props) => <C.Drawer {...props} />}
   >
     <Drawer.Screen
-      name="HomeStack"
-      component={HomeStack}
+      name="MatchStack"
+      component={MatchStack}
       options={{ title: 'Discover' }}
     />
 
