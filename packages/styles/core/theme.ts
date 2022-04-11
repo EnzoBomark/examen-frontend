@@ -20,6 +20,7 @@ const theme: theme = {
     s800: '#FF7A00',
     g0: '#ffffff',
     g50: '#F2F2F7',
+    g75: '#EfEfF0',
     g100: '#E5E5EA',
     g200: '#D1D1D6',
     g300: '#C7C7CC',
@@ -74,7 +75,7 @@ const theme: theme = {
   },
 
   radius: {
-    xxs: '8px',
+    xxs: '10px',
     xs: '16px',
     s: '24px',
     m: '32px',
@@ -85,7 +86,7 @@ const theme: theme = {
   },
 
   shadow: {
-    shadowColor: '#C7C7CC',
+    shadowColor: '#B7B7BC',
     shadowOffset: {
       width: 0,
       height: 5,

@@ -2,12 +2,6 @@ type Spacer = {
   size: keyof theme['space'];
 };
 
-type Padding = {
-  size: keyof theme['space'];
-  vertical?: boolean;
-  horizontal?: boolean;
-};
-
 type Align = {
   type: keyof theme['align'];
 };
@@ -32,3 +26,13 @@ type AvoidKeyboard = {
   behavior?: 'padding' | 'position' | 'height';
   offset?: number;
 };
+
+type Space = {
+  size: keyof theme['space'];
+  vertical?: boolean;
+  horizontal?: boolean;
+};
+
+type Padding = Space;
+
+type Margin = Space;

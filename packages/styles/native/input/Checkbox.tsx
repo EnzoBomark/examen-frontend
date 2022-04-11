@@ -12,8 +12,8 @@ const Container = styled.TouchableOpacity``;
 const Inner = styled.View<Partial<Toggle>>`
   position: relative;
   height: ${({ height }) => height || 'auto'};
-  width: ${({ width, label }) =>
-    label ? `${screen.width - 32}px` : width || `auto`};
+  width: ${({ width, label }) => (label ? 'auto' : width || `auto`)};
+  max-width: ${`${screen.width - 32}px`};
   flex-direction: ${({ invert }) => (invert ? 'row-reverse' : 'row')};
   align-items: center;
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};

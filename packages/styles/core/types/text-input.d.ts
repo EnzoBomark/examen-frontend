@@ -23,4 +23,15 @@ declare global {
     height?: string;
     password?: boolean;
   };
+
+  type ListInput = {
+    active?: boolean;
+    disabled?: boolean;
+    error?: string | (string | undefined)[];
+    icon?: keyof typeof Icons;
+    placeholder?: string;
+    label?: string;
+    width?: string;
+    height?: string;
+  };
 }

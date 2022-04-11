@@ -12,7 +12,8 @@ const Container = styled.TouchableOpacity``;
 const Inner = styled.View<OutlineButton>`
   position: relative;
   height: ${({ height }) => height || '50px'};
-  width: ${({ width }) => width || `${screen.width - 32}px`};
+  width: ${({ width }) => width || 'auto'};
+  max-width: ${`${screen.width - 32}px`};
   border-radius: ${theme.radius.xxs};
   flex-direction: row;
   align-items: center;

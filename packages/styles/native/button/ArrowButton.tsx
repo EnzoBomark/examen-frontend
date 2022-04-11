@@ -13,7 +13,8 @@ const Container = styled.TouchableOpacity``;
 const Inner = styled.View<Partial<ArrowButton>>`
   position: relative;
   height: ${({ height }) => height || 'auto'};
-  width: ${({ width }) => width || `${screen.width - 32}px`};
+  width: ${({ width }) => width || 'auto'};
+  max-width: ${`${screen.width - 32}px`};
   border-radius: ${theme.radius.xxs};
   flex-direction: row;
   align-items: center;

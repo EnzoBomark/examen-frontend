@@ -48,6 +48,16 @@ declare global {
     height?: string;
   }
 
+  interface ToggleButton {
+    toggle?;
+    value: boolean;
+    labelOne: string;
+    labelTwo: string;
+    disabled?: boolean;
+    color?: keyof theme['colors'];
+    background?: keyof theme['colors'];
+  }
+
   interface Clickable {
     disabled?: boolean;
   }
