@@ -6,11 +6,33 @@ import { fail, pending, success } from '../actions';
 export const usePostMatch = () => {
   const dispatch = store.useDispatch();
 
-  const postMatch = async () => {
+  const postMatch = async (
+    type: boolean,
+    isBooked: boolean,
+    isPublic: boolean,
+    center: string,
+    dateTime: string,
+    duration: string,
+    court: string,
+    price: string,
+    currency: string,
+    phone: string
+  ) => {
     dispatch(pending());
 
     api
-      .post<Match>(`match`)
+      .post<Match>(`match`, {
+        type: type ? 'single' : 'double',
+        isBooked,
+        isPublic,
+        dateTime,
+        duration,
+        currency,
+        centerId: center,
+        court: court.length ? court : undefined,
+        price: price.length ? price : undefined,
+        phone: phone.length ? phone : undefined,
+      })
       .then((res) => dispatch(success(res.data)))
       .catch((err: AxiosError<ResponseError<Match>>) => {
         if (!err.response) throw err;

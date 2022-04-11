@@ -12,14 +12,15 @@ export enum Types {
   UNLOAD = 'UNLOAD',
   PENDING = 'PENDING',
   SUCCESS = 'SUCCESS',
+  REFRESH = 'REFRESH',
   FAIL = 'FAIL',
-  SET_MATCH = 'SET_MATCH',
 }
 
 export type Payload = {
   [Types.UNLOAD]: undefined;
   [Types.PENDING]: undefined;
   [Types.SUCCESS]: Match[];
+  [Types.REFRESH]: Match[];
   [Types.FAIL]: ResponseError;
 };
 

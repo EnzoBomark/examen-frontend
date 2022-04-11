@@ -1,5 +1,5 @@
 import api, { AxiosError } from '../../../index';
-import { fail, pending, success, unload } from '../actions';
+import { fail, pending, refresh } from '../actions';
 import store from '../store';
 
 export const useRefreshMatches = () => {
@@ -8,11 +8,9 @@ export const useRefreshMatches = () => {
   const refreshMatches = () => {
     dispatch(pending());
 
-    dispatch(unload());
-
     api
       .get<Match[]>(`matches`, { params: { page: 0 } })
-      .then((res) => dispatch(success(res.data)))
+      .then((res) => dispatch(refresh(res.data)))
       .catch((err: AxiosError<ResponseError>) => {
         if (!err.response) throw err;
         dispatch(fail(err.response.data));

@@ -29,9 +29,16 @@ const store = createStore<State, Action>({
           hasLoaded: true,
           isLoading: false,
           page: state.page + 1,
-          data: [
-            ...new Map(action.payload.map((item) => [item.id, item])).values(),
-          ],
+          data: [...state.data, ...action.payload],
+        };
+
+      case Types.REFRESH:
+        return {
+          ...state,
+          hasLoaded: true,
+          isLoading: false,
+          page: 0,
+          data: action.payload,
         };
 
       case Types.FAIL:

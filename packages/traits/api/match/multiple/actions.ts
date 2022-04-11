@@ -8,9 +8,14 @@ export const pending = (): Action => ({
   type: Types.PENDING,
 });
 
-export const success = (match: Match[]): Action => ({
+export const success = (matches: Match[]): Action => ({
   type: Types.SUCCESS,
-  payload: match,
+  payload: matches,
+});
+
+export const refresh = (matches: Match[]): Action => ({
+  type: Types.REFRESH,
+  payload: matches,
 });
 
 export const fail = (error: ResponseError): Action => ({
