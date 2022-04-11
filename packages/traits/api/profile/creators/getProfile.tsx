@@ -1,6 +1,5 @@
 import api, { AxiosError } from '../../index';
 import store from '../store';
-import { Profile } from '../types';
 import { fail, pending, success } from '../actions';
 
 export const useGetProfile = () => {
@@ -10,9 +9,9 @@ export const useGetProfile = () => {
     dispatch(pending());
 
     api
-      .get<Profile>(`profile`)
+      .get<User>(`profile`)
       .then((res) => dispatch(success(res.data)))
-      .catch((err: AxiosError<ResponseError<Profile>>) => {
+      .catch((err: AxiosError<ResponseError<User>>) => {
         if (!err.response) throw err;
         dispatch(fail(err.response.data));
       });

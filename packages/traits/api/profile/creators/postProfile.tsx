@@ -1,9 +1,8 @@
 import { Alert } from 'react-native';
+import { fail, pending, success } from '../actions';
 import auth from '@react-native-firebase/auth';
 import api, { AxiosError } from '../../index';
 import store from '../store';
-import { Profile } from '../types';
-import { fail, pending, success } from '../actions';
 
 export const usePostProfile = () => {
   const dispatch = store.useDispatch();
@@ -21,9 +20,9 @@ export const usePostProfile = () => {
         await auth().createUserWithEmailAndPassword(email, password);
 
       api
-        .post<Profile>(`profile`, { name, email, phone })
+        .post<User>(`profile`, { name, email, phone })
         .then((res) => dispatch(success(res.data)))
-        .catch((err: AxiosError<ResponseError<Profile>>) => {
+        .catch((err: AxiosError<ResponseError<User>>) => {
           if (!err.response) throw err;
 
           Alert.alert(

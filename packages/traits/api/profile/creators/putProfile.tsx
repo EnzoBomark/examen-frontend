@@ -1,16 +1,16 @@
 import api, { AxiosError } from '../../index';
 import { fail, pending, success } from '../actions';
-import { Profile } from '../types';
+
 import store from '../store';
 
 export const usePutProfile = () => {
   const dispatch = store.useDispatch();
 
-  const putProfile = (data: Partial<Profile>) => {
+  const putProfile = (data: Partial<User>) => {
     dispatch(pending());
 
     return api
-      .put<Profile>(`profile`, data)
+      .put<User>(`profile`, data)
       .then((res) => dispatch(success(res.data)))
       .catch((err: AxiosError) => {
         if (!err.response) throw err;
