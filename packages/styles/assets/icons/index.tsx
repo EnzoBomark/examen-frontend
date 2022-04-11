@@ -36,6 +36,14 @@ import share from './share.svg';
 import sad from './sad.svg';
 import hamburger from './hamburger.svg';
 import lock from './lock.svg';
+import lockOpen from './lock-open.svg';
+import currency from './currency.svg';
+import refresh from './refresh.svg';
+import calender from './calender.svg';
+import clock from './clock.svg';
+import notification from './notification.svg';
+import ball from './ball.svg';
+import slider from './slider.svg';
 
 const Icons = {
   forward,
@@ -76,6 +84,14 @@ const Icons = {
   sad,
   hamburger,
   lock,
+  lockOpen,
+  currency,
+  refresh,
+  calender,
+  clock,
+  notification,
+  ball,
+  slider,
 };
 
 export default Icons;
