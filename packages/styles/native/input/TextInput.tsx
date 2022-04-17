@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { Body } from '../text/Body';
 import { Svg } from '../icon/Svg';
+import { Clickable } from '../button/Clickable';
 
 const screen = Dimensions.get('screen');
 

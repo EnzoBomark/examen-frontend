@@ -12,8 +12,10 @@ export const AvoidKeyboard: React.FC<AvoidKeyboard> = (props) => {
   return (
     <Container
       bounces={false}
+      extraHeight={120}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{ flexGrow: 1 }}
+      enableOnAndroid
     >
       {props.children}
     </Container>

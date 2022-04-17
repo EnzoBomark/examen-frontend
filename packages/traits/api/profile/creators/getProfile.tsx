@@ -1,21 +1,19 @@
 import api, { AxiosError } from '../../index';
-import { Profile, ResponseError } from '../types';
+import store from '../store';
 import { fail, pending, success } from '../actions';
-import Redux from '../store';
 
 export const useGetProfile = () => {
-  const dispatch = Redux.useDispatch();
+  const dispatch = store.useDispatch();
 
   const getProfile = () => {
     dispatch(pending());
 
     api
-      .get<Profile>(`profile`)
+      .get<User>(`profile`)
       .then((res) => dispatch(success(res.data)))
-      .catch((err: AxiosError<ResponseError>) => {
-        if (err.response) {
-          dispatch(fail(err.response.data));
-        }
+      .catch((err: AxiosError<ResponseError<User>>) => {
+        if (!err.response) throw err;
+        dispatch(fail(err.response.data));
       });
   };
   return getProfile;

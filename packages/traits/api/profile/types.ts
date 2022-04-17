@@ -1,34 +1,10 @@
-import { AxiosResponse } from '../index';
 import { ActionMap } from '@racket-common/store';
-
-export type Profile = {
-  id: string;
-  name: string;
-  email: string;
-  phone: string;
-  picture?: string;
-  description?: string;
-  skill?: '0' | '1' | '2' | '3' | '4' | '5';
-  isRightHand?: boolean;
-  fcm?: string;
-};
-
-export type ErrorFields = {
-  [K in keyof Profile]?: string;
-};
-
-export type ResponseError = {
-  statusCode: number;
-  error: string;
-  message: string;
-  attributes?: ErrorFields;
-};
 
 export type State = {
   isLoading: boolean;
   hasLoaded: boolean;
-  hasError?: ResponseError;
-  data: Profile;
+  hasError?: ResponseError<User>;
+  data: User;
 };
 
 export enum Types {
@@ -42,9 +18,9 @@ export enum Types {
 export type Payload = {
   [Types.UNLOAD]: undefined;
   [Types.PENDING]: undefined;
-  [Types.SUCCESS]: Profile;
-  [Types.FAIL]: ResponseError;
-  [Types.SET_PROFILE]: Profile;
+  [Types.SUCCESS]: User;
+  [Types.FAIL]: ResponseError<User>;
+  [Types.SET_PROFILE]: User;
 };
 
 export type Action = ActionMap<Payload>[keyof ActionMap<Payload>];

@@ -25,8 +25,8 @@ const Register: React.FC<Props> = ({ navigation, route }) => {
   ]);
 
   return (
-    <S.Scroll bottom={true} top={true}>
-      <S.AvoidKeyboard>
+    <S.AvoidKeyboard>
+      <S.Screen>
         <S.Padding size="s">
           <S.Align type="start">
             <S.Clickable onPress={() => navigation.goBack()}>
@@ -104,27 +104,27 @@ const Register: React.FC<Props> = ({ navigation, route }) => {
             </React.Fragment>
           )}
         </S.Padding>
-      </S.AvoidKeyboard>
 
-      <S.Spacer size="xs" />
+        <S.Spacer size="xs" />
 
-      <S.Fill />
+        <S.Fill />
 
-      <S.Padding size="xs" vertical={false}>
-        <S.Button
-          onPress={() => postProfile(name, email, phone, password)}
-          label="Register account"
-          disabled={
-            !!validate(criteria, {
-              name,
-              email,
-              phone,
-              ...(!hasPassword && { password, passwordRepet }),
-            })?.length
-          }
-        />
-      </S.Padding>
-    </S.Scroll>
+        <S.Padding size="xs" vertical={false}>
+          <S.Button
+            onPress={() => postProfile(name, email, phone, password)}
+            label="Register account"
+            disabled={
+              !!validate(criteria, {
+                name,
+                email,
+                phone,
+                ...(!hasPassword && { password, passwordRepet }),
+              })?.length
+            }
+          />
+        </S.Padding>
+      </S.Screen>
+    </S.AvoidKeyboard>
   );
 };
 

@@ -36,6 +36,11 @@ const special = {
   message: `Should contain at least one spacial character`,
 };
 
+const numeric = {
+  validate: (str: string) => str.search(/^[0-9]*$/) < 0,
+  message: `Should only contain numbers`,
+};
+
 const min = (num: number) => ({
   validate: (str: string) => str.length < num,
   message: `Minimum ${num} characters`,
@@ -59,6 +64,7 @@ export const v = {
   lower,
   digit,
   special,
+  numeric,
   min,
   max,
   match,

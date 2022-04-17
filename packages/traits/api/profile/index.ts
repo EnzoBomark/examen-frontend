@@ -1,6 +1,6 @@
 import { profileSelector } from './selectors';
 import { setProfile, unload } from './actions';
-import { Profile } from './types';
+
 import Store from './store';
 
 export * from './creators/getProfile';
@@ -11,7 +11,7 @@ export const useProfile = () => Store.useSelector(profileSelector);
 
 export const useSetProfile = () => {
   const dispatch = Store.useDispatch();
-  return (profile: Profile) => dispatch(setProfile(profile));
+  return (profile: User) => dispatch(setProfile(profile));
 };
 
 export const useUnloadProfile = () => {

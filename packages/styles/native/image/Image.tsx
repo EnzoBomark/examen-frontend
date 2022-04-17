@@ -16,6 +16,7 @@ export const Inner = styled(FastImage)<Partial<Image>>`
     border ? theme.radius[border] : theme.radius.xs};
   height: 100%;
   width: 100%;
+  background-color: ${theme.colors.g75};
 `;
 
 export const Image: React.FC<Image> = (props) => {

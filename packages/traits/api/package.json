@@ -11,6 +11,7 @@
     "axios": "^0.26.1"
   },
   "devDependencies": {
+    "@racket-traits/lang": "0.0.1",
     "@racket-common/config": "0.0.1",
     "@racket-common/store": "0.0.1"
   }

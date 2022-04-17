@@ -1,6 +1,7 @@
 import * as React from 'react';
-import styled from 'styled-components/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TouchableWithoutFeedback } from 'react-native';
+import styled from 'styled-components/native';
 import Popup from 'react-native-modal';
 import theme from '@racket-styles/core/theme';
 
@@ -17,13 +18,17 @@ const Background = styled.View`
 `;
 
 const Bar = styled.View`
+  align-self: center;
+  position: absolute;
+  top: 5px;
+  left: auto;
+  right: auto;
   background-color: ${theme.colors.g100};
-  margin: 0 auto;
   height: 5px;
   width: 15%;
   border-radius: 10px;
-  margin-bottom: 5px;
 `;
+
 const Foreground = styled.View<{ height?: string }>`
   position: absolute;
   bottom: 0;
@@ -31,7 +36,6 @@ const Foreground = styled.View<{ height?: string }>`
   border-top-right-radius: 20px;
   height: ${({ height }) => height || 'auto'};
   width: 100%;
-  padding: 10px 20px 40px 20px;
   background-color: ${theme.colors.g0};
 `;
 
@@ -79,7 +83,7 @@ const ModalOpenButton: React.FC<{ onPress?: () => void }> = ({
   const { setIsOpen } = React.useContext(ModalContext);
 
   if (!React.isValidElement(children))
-    throw new Error('ModalDismissButton child is not a valid element');
+    throw new Error('ModalOpenButton child is not a valid element');
 
   return React.cloneElement(children, {
     onPress: () => {
@@ -100,6 +104,7 @@ const ModalContents: React.FC<ModalContents> = ({
   onDismiss,
 }) => {
   const { isOpen, setIsOpen } = React.useContext(ModalContext);
+  const insets = useSafeAreaInsets();
 
   return (
     <Popup
@@ -114,9 +119,9 @@ const ModalContents: React.FC<ModalContents> = ({
         <TouchableWithoutFeedback onPress={() => setIsOpen(false)}>
           <Background />
         </TouchableWithoutFeedback>
-        <Foreground height={height}>
-          <Bar />
+        <Foreground height={height} style={{ paddingBottom: insets.bottom }}>
           {children}
+          <Bar />
         </Foreground>
       </ModalContainer>
     </Popup>
