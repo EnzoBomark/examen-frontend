@@ -20,7 +20,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
 
   return (
     <S.AvoidKeyboard>
-      <S.Screen bottom={true} top={true}>
+      <S.Screen>
         <S.Spacer size="xs" />
 
         <S.Padding size="s">

@@ -27,12 +27,10 @@ const RootStack: React.FC = () => {
   const getProfile = useGetProfile();
   const profile = useProfile();
 
-  // auth().signOut();
-
   React.useEffect(() => {
-    auth().onAuthStateChanged((user) =>
-      user ? getProfile() : unloadProfile()
-    );
+    auth().onAuthStateChanged((user) => {
+      user ? getProfile() : unloadProfile();
+    });
   }, []);
 
   return (

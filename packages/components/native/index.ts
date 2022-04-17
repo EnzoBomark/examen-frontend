@@ -8,3 +8,4 @@ export * from './match/CenterModal';
 export * from './match/DateTimeModal';
 export * from './match/DurationModal';
 export * from './match/CurrencyModal';
+export * from './match/JoinMatchCard';

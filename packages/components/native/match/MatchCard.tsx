@@ -5,6 +5,8 @@ import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
+import { useMatchFunctions } from '@racket-traits/api/match';
+import { getTime, getWeekday } from '@racket-traits/misc';
 
 const Card = styled.View`
   width: 100%;
@@ -26,34 +28,29 @@ const CardSpacer = styled.View`
 
 type Navigation = StackNavigationProp<MatchParamList, 'Discover'>;
 
-export const MatchCard: React.FC<Match> = (props) => {
+export const MatchCard: React.FC<Match> = (match) => {
   const navigation = useNavigation<Navigation>();
-  const users = props.users!;
-  const center = props.center?.name;
-  const time = props.dateTime;
-  const admin = users.find((user) => user.usersMatches?.isAdmin)!;
-  const userOne = users.find((user) => user.usersMatches?.position === '0');
-  const userTwo = users.find((user) => user.usersMatches?.position === '1');
-  const userThree = users.find((user) => user.usersMatches?.position === '2');
-  const userFour = users.find((user) => user.usersMatches?.position === '3');
-  const rank = users.map((user) => Number(user.skill)) || [];
+  const { getSkill, isAdmin, isSingle, getAdmin, getUser } =
+    useMatchFunctions();
 
   return (
-    <S.Clickable onPress={() => navigation.navigate('Match', props)}>
+    <S.Clickable onPress={() => navigation.navigate('Match', match)}>
       <Card style={{ ...theme.shadow }}>
         <S.Row justify="between">
-          <S.Padding size="xs" style={{ flex: 1 }}>
+          <S.Padding size="xs" flex={true}>
             <S.Body bold={true} color="p600" numberOfLines={2}>
-              {center}
+              {match.center?.name}
             </S.Body>
 
             <S.Spacer size="xxs" />
 
-            <S.Body>{time}</S.Body>
+            <S.Body>
+              {getTime(match.dateTime)} {getWeekday(match.dateTime)}
+            </S.Body>
 
             <S.Spacer size="xxs" />
 
-            <S.Detail color="g500">{admin.name}</S.Detail>
+            <S.Detail color="g500">{getAdmin(match.users)?.name}</S.Detail>
 
             <S.Spacer size="xs" />
 
@@ -62,38 +59,46 @@ export const MatchCard: React.FC<Match> = (props) => {
 
               <S.Spacer size="xxs" />
 
-              <S.Body>
-                {users.length <= 1
-                  ? `Rank  ${rank[0]}`
-                  : `Rank  ${Math.min(...rank)} - ${Math.max(...rank)}`}
-              </S.Body>
+              <S.Body>{getSkill(match.users)}</S.Body>
             </S.Row>
           </S.Padding>
 
           <S.Padding size="xs">
             <S.Row>
-              <S.Image src={userOne?.picture || ''} width="45px" />
+              <S.Image
+                src={getUser(match.users, '0')?.picture || ''}
+                width="45px"
+              />
               <CardSpacer />
-              <S.Image src={userTwo?.picture || ''} width="45px" />
+              <S.Image
+                src={getUser(match.users, '1')?.picture || ''}
+                width="45px"
+              />
             </S.Row>
             <CardSpacer />
             <S.Row>
-              <S.Image src={userThree?.picture || ''} width="45px" />
+              <S.Image
+                src={getUser(match.users, '2')?.picture || ''}
+                width="45px"
+              />
               <CardSpacer />
-              <S.Image src={userFour?.picture || ''} width="45px" />
+              <S.Image
+                src={getUser(match.users, '3')?.picture || ''}
+                width="45px"
+              />
             </S.Row>
           </S.Padding>
         </S.Row>
 
-        {props.isBooked && (
+        {match.isBooked && (
           <Bottom>
             <S.UnderLine />
             <S.Padding size="xs">
               <S.Row justify="between">
-                <S.Detail bold={true}>Court ({props.court}) booked</S.Detail>
+                <S.Detail bold={true}>Court ({match.court}) booked</S.Detail>
                 <S.Detail>
-                  {Number(props.price) / (props.type === 'single' ? 2 : 4)}{' '}
-                  {props.currency?.toLowerCase()}/person
+                  {Number(match.price) / (isSingle(match) ? 2 : 4)}{' '}
+                  {match.currency?.toLowerCase()}/person
                 </S.Detail>
               </S.Row>
             </S.Padding>
