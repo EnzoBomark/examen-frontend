@@ -1,6 +1,7 @@
 import * as React from 'react';
-import styled from 'styled-components/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TouchableWithoutFeedback } from 'react-native';
+import styled from 'styled-components/native';
 import Popup from 'react-native-modal';
 import theme from '@racket-styles/core/theme';
 
@@ -103,6 +104,7 @@ const ModalContents: React.FC<ModalContents> = ({
   onDismiss,
 }) => {
   const { isOpen, setIsOpen } = React.useContext(ModalContext);
+  const insets = useSafeAreaInsets();
 
   return (
     <Popup
@@ -117,7 +119,7 @@ const ModalContents: React.FC<ModalContents> = ({
         <TouchableWithoutFeedback onPress={() => setIsOpen(false)}>
           <Background />
         </TouchableWithoutFeedback>
-        <Foreground height={height}>
+        <Foreground height={height} style={{ paddingBottom: insets.bottom }}>
           {children}
           <Bar />
         </Foreground>

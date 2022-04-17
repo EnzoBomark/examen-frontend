@@ -29,6 +29,7 @@ type AvoidKeyboard = {
 
 type Space = {
   size: keyof theme['space'];
+  flex?: boolean;
   vertical?: boolean;
   horizontal?: boolean;
 };

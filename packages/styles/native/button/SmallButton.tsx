@@ -13,7 +13,8 @@ const Container = styled.TouchableOpacity``;
 const Inner = styled.View<SmallButton>`
   position: relative;
   height: ${({ height }) => height || '36px'};
-  width: ${({ width }) => width || `${screen.width / 3.5}px`};
+  width: ${({ width }) => width || 'auto'};
+  min-width: ${`${screen.width / 3 - 28}px`};
   border-radius: ${theme.radius.xxs};
   flex-direction: row;
   align-items: center;

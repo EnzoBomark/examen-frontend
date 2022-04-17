@@ -36,7 +36,7 @@ export const IconButton: React.FC<IconButton & NativeButton> = (props) => {
           <Spinner color={props.color} />
         ) : (
           props.icon && (
-            <Svg src={props.icon} color={props.color} width="24px" />
+            <Svg src={props.icon} color={props.color} width="20px" />
           )
         )}
       </Inner>

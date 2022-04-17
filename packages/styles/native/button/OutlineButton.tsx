@@ -20,7 +20,7 @@ const Inner = styled.View<OutlineButton>`
   justify-content: center;
   border-width: 1px;
   border-color: ${({ background }) =>
-    background ? theme.colors[background] : theme.colors.p600};
+    background ? theme.colors[background] : theme.colors.g200};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
   padding: 0 16px;
 `;
