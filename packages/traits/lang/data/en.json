@@ -1,0 +1,31 @@
+{
+  "time": {
+    "yesterday": "Yesterday",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday"
+  },
+  "discover": {
+    "see_all": "See all",
+    "show_upcoming_matches": "Show upcoming matches",
+    "upcoming_matches": "Upcoming matches"
+  },
+  "match": {
+    "member": "Member",
+    "members": "Members",
+    "abort_match": "Abort match",
+    "leave_match": "Leave match",
+    "are_you_sure": "Are you sure?",
+    "pay": "Pay",
+    "invite": "Invite",
+    "chat": "Chat",
+    "share": "Share",
+    "rank": "Rank"
+  }
+}
