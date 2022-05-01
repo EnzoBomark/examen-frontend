@@ -1,20 +1,7 @@
-import { profileSelector } from './selectors';
-import { setProfile, unload } from './actions';
+export * from './creators/fetchProfile';
+export * from './creators/createProfile';
+export * from './creators/updateProfile';
 
-import Store from './store';
-
-export * from './creators/getProfile';
-export * from './creators/postProfile';
-export * from './creators/putProfile';
-
-export const useProfile = () => Store.useSelector(profileSelector);
-
-export const useSetProfile = () => {
-  const dispatch = Store.useDispatch();
-  return (profile: User) => dispatch(setProfile(profile));
-};
-
-export const useUnloadProfile = () => {
-  const dispatch = Store.useDispatch();
-  return () => dispatch(unload());
-};
+export * from './handlers/useProfile';
+export * from './handlers/unloadProfile';
+export * from './handlers/setProfile';

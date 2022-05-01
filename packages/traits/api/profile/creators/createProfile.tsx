@@ -4,10 +4,10 @@ import auth from '@react-native-firebase/auth';
 import api, { AxiosError } from '../../index';
 import store from '../store';
 
-export const usePostProfile = () => {
+export const useCreateProfile = () => {
   const dispatch = store.useDispatch();
 
-  const postProfile = async (
+  const createProfile = async (
     name: string,
     email: string,
     phone: string,
@@ -42,5 +42,5 @@ export const usePostProfile = () => {
       );
     }
   };
-  return postProfile;
+  return createProfile;
 };

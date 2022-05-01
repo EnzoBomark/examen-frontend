@@ -1,3 +1,7 @@
+// chat
+export * from './chat/ChatBubble';
+export * from './chat/Input';
+
 // drawer
 export * from './drawer/Drawer';
 

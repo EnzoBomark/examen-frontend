@@ -46,6 +46,7 @@ import ball from './ball.svg';
 import slider from './slider.svg';
 import stopwatch from './stopwatch.svg';
 import menu from './menu.svg';
+import send from './send.svg';
 
 const Icons = {
   forward,
@@ -96,6 +97,7 @@ const Icons = {
   slider,
   stopwatch,
   menu,
+  send,
 };
 
 export default Icons;

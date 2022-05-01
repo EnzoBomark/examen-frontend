@@ -2,10 +2,10 @@ import api, { AxiosError } from '../../../index';
 import { fail, pending, success } from '../actions';
 import store from '../store';
 
-export const useGetCenter = () => {
+export const useFetchCenter = () => {
   const dispatch = store.useDispatch();
 
-  const getCenter = (id: string) => {
+  const fetchCenter = (id: string) => {
     dispatch(pending());
 
     api
@@ -16,5 +16,5 @@ export const useGetCenter = () => {
         dispatch(fail(err.response.data));
       });
   };
-  return getCenter;
+  return fetchCenter;
 };

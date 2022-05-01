@@ -10,6 +10,7 @@ export * from './button/ToggleButton';
 
 // input
 export * from './input/TextInput';
+export * from './input/TextArea';
 export * from './input/ListInput';
 export * from './input/Checkbox';
 export * from './input/Radio';
@@ -42,6 +43,7 @@ export * from './list/StaticSubList';
 export * from './list/List';
 
 // layout
+export * from './layout/Background';
 export * from './layout/Screen';
 export * from './layout/Scroll';
 export * from './layout/Spacer';

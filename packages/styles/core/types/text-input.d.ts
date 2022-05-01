@@ -24,6 +24,16 @@ declare global {
     password?: boolean;
   };
 
+  type TextArea = {
+    active?: boolean;
+    disabled?: boolean;
+    error?: string | (string | undefined)[];
+    label?: boolean;
+    placeholder?: string;
+    width?: string;
+    height?: string;
+  };
+
   type ListInput = {
     active?: boolean;
     disabled?: boolean;

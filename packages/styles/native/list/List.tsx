@@ -6,14 +6,16 @@ import { Spacer } from '../layout/Spacer';
 import { UnderLine } from '../layout/UnderLine';
 
 type List = {
+  inverted?: boolean | null | undefined;
   data: ReadonlyArray<unknown>;
   renderItem: Native.ListRenderItem<any>;
   onRefresh?: () => void;
   onEndReached?: (info: { distanceFromEnd: number }) => void;
-  horizontal?: boolean;
+  padding?: number;
   headerHeight?: number;
   fullScreen?: boolean;
   underline?: boolean;
+  spacer?: keyof theme['space'];
 };
 
 const Separator = styled(UnderLine)`
@@ -25,13 +27,13 @@ const EnableScroll = styled.TouchableOpacity``;
 export const List: React.FC<List> = (props) => {
   const separator = () => (
     <EnableScroll activeOpacity={1}>
-      {props.underline ? <Separator /> : <Spacer size="xs" />}
+      {props.underline ? <Separator /> : <Spacer size={props.spacer || 'xs'} />}
     </EnableScroll>
   );
 
   const wrapper = () => (
     <EnableScroll>
-      <Spacer size="xs" />
+      <Spacer size={props.spacer || 'xs'} />
     </EnableScroll>
   );
 
@@ -48,9 +50,10 @@ export const List: React.FC<List> = (props) => {
       ListFooterComponent={wrapper}
       ItemSeparatorComponent={separator}
       contentContainerStyle={{
-        paddingVertical: 16,
-        paddingTop: props.headerHeight,
-        paddingHorizontal: props.horizontal ? 0 : 16,
+        paddingTop: props.inverted ? 0 : props.headerHeight,
+        paddingBottom: props.inverted ? props.headerHeight : 0,
+        paddingVertical: props.padding || 16,
+        paddingHorizontal: props.padding || 16,
         minHeight: props.fullScreen ? '100%' : 0,
       }}
     />

@@ -1,13 +1,5 @@
-import { matchesSelector } from './selectors';
-import { unload } from './actions';
-import Store from './store';
+export * from './handlers/unloadMatches';
+export * from './handlers/useMatches';
 
-export * from './creators/getMatches';
+export * from './creators/fetchMatches';
 export * from './creators/refreshMatches';
-
-export const useMatches = () => Store.useSelector(matchesSelector);
-
-export const useUnloadMatches = () => {
-  const dispatch = Store.useDispatch();
-  return () => dispatch(unload());
-};

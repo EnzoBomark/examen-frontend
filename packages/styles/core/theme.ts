@@ -2,7 +2,7 @@ const theme: theme = {
   colors: {
     p50: '#F4F6FC',
     p100: '#F4F6FC',
-    p200: '#E3F1FF',
+    p200: '#EEF3FB',
     p300: '#C3E1FF',
     p400: '#95CAFF',
     p500: '#60AFFF',

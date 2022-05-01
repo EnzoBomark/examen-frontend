@@ -1,3 +1,7 @@
+type Background = {
+  color: keyof theme['colors'];
+};
+
 type Spacer = {
   size: keyof theme['space'];
 };

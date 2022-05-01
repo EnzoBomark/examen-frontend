@@ -27,5 +27,10 @@
     "chat": "Chat",
     "share": "Share",
     "rank": "Rank"
+  },
+  "chat": {
+    "member": "Member",
+    "members": "Members",
+    "send_message": "Send message"
   }
 }

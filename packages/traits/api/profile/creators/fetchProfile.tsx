@@ -2,10 +2,10 @@ import api, { AxiosError } from '../../index';
 import store from '../store';
 import { fail, pending, success } from '../actions';
 
-export const useGetProfile = () => {
+export const useFetchProfile = () => {
   const dispatch = store.useDispatch();
 
-  const getProfile = () => {
+  const fetchProfile = () => {
     dispatch(pending());
 
     api
@@ -16,5 +16,5 @@ export const useGetProfile = () => {
         dispatch(fail(err.response.data));
       });
   };
-  return getProfile;
+  return fetchProfile;
 };
