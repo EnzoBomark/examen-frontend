@@ -36,7 +36,7 @@ export const MatchCard: React.FC<Match> = (match) => {
     <S.Clickable onPress={() => navigation.navigate('Match', match)}>
       <Card style={{ ...theme.shadow }}>
         <S.Row justify="between">
-          <S.Padding size="xs" flex={true}>
+          <S.Padding size="xs" flexBox={true}>
             <S.Body bold={true} color="p600" numberOfLines={2}>
               {match.center?.name}
             </S.Body>

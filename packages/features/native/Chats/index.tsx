@@ -29,22 +29,12 @@ const Chats: React.FC<Props> = ({ navigation }) => {
     <React.Fragment>
       <S.List
         headerHeight={headerHeight}
+        onEndReached={() => fetchChats(chats.page)}
+        onRefresh={refreshChats}
         data={chats.data}
-        renderItem={({ item }) => (
-          <S.Clickable
-            onPress={() => {
-              setChat(item);
-              navigation.navigate('Chat');
-            }}
-          >
-            <S.Body>{item.id}</S.Body>
-          </S.Clickable>
-        )}
-      />
-
-      <S.Button
-        label="Join Chat"
-        onPress={() => resignChat('4808cdd9-7508-436f-a311-0a3ad115f152')}
+        renderItem={({ item }) => <C.ChatCard {...item} />}
+        fullScreen={true}
+        spacer="xxs"
       />
 
       <S.Header setHeaderHeight={setHeaderHeight}>

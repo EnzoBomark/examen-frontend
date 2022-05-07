@@ -42,6 +42,13 @@ export const List: React.FC<List> = (props) => {
       {...props}
       nestedScrollEnabled
       refreshing={false}
+      refreshControl={
+        <Native.RefreshControl
+          tintColor="transparent"
+          titleColor="transparent"
+          refreshing={false}
+        />
+      }
       onEndReachedThreshold={0.2}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}

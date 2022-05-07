@@ -1,4 +1,4 @@
-package com.mobile;
+package com.racket.examen;
 
 import com.facebook.react.ReactActivity;
 

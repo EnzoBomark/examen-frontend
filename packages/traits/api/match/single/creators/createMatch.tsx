@@ -42,7 +42,6 @@ export const usePostMatch = () => {
           'Something went wrong, try again or contact support'
         );
 
-        console.log(err.response.data);
         dispatch(fail(err.response.data));
       });
   };

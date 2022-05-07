@@ -22,7 +22,9 @@ export const useCreateProfile = () => {
       api
         .post<User>(`profile`, { name, email, phone })
         .then((res) => dispatch(success(res.data)))
-        .catch((err: AxiosError<ResponseError<User>>) => {
+        .catch(async (err: AxiosError<ResponseError<User>>) => {
+          await auth().currentUser?.delete();
+
           if (!err.response) throw err;
 
           Alert.alert(
@@ -30,7 +32,6 @@ export const useCreateProfile = () => {
             'Something went wrong, try again or contact support'
           );
 
-          auth().currentUser?.delete();
           dispatch(fail(err.response.data));
         });
     } catch (err) {

@@ -54,18 +54,9 @@ const store = createStore<State, Action>({
           ...state,
           data: {
             ...state.data,
-            messages: action.payload,
-          },
-        };
-
-      case Types.ADD_MESSAGE:
-        return {
-          ...state,
-          data: {
-            ...state.data,
             messages: [
               ...new Map(
-                [...state.data.messages, action.payload].map((item) => [
+                [...action.payload, ...state.data.messages].map((item) => [
                   item.key,
                   item,
                 ])

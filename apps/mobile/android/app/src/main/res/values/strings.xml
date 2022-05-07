@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">mobile</string>
+    <string name="app_name">racket</string>
+    <string name="facebook_app_id">658270665278969</string>
+    <string name="facebook_client_token">4ac83c1bb8a9eedb321008913c5a7f23</string>
 </resources>

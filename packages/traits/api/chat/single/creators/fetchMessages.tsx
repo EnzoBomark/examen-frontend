@@ -5,13 +5,12 @@ import store from '../store';
 
 export const useFetchMessages = () => {
   const dispatch = store.useDispatch();
-  const chat = useChat();
 
-  const fetchMessages = async () => {
+  const fetchMessages = async (chat: Chat) => {
     try {
-      const messagesRef = database().ref(`/chat_rooms/${chat.data.id}`);
+      const messagesRef = database().ref(`/chat_rooms/${chat.id}`);
 
-      const current = chat.data.messages;
+      const current = chat.messages;
 
       const startingPoint = current.length
         ? current[current.length - 1].key
@@ -37,7 +36,7 @@ export const useFetchMessages = () => {
         return undefined;
       });
 
-      const statusRef = database().ref(`/chat_rooms_status/${chat.data.id}`);
+      const statusRef = database().ref(`/chat_rooms_status/${chat.id}`);
 
       const statusSnapShot = await statusRef.once('value');
 

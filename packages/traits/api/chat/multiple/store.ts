@@ -29,7 +29,11 @@ const store = createStore<State, Action>({
           hasLoaded: true,
           isLoading: false,
           page: state.page + 1,
-          data: [...state.data, ...action.payload],
+          data: [
+            ...new Map(
+              [...state.data, ...action.payload].map((item) => [item.id, item])
+            ).values(),
+          ],
         };
 
       case Types.REFRESH:
@@ -46,6 +50,25 @@ const store = createStore<State, Action>({
           ...state,
           isLoading: false,
           hasError: action.payload,
+        };
+
+      case Types.ADD_MESSAGES:
+        return {
+          ...state,
+          data: state.data.map((chat) =>
+            chat.id === action.payload.chat.id
+              ? {
+                  ...chat,
+                  messages: [
+                    ...new Map(
+                      [...action.payload.messages, ...chat.messages].map(
+                        (item) => [item.key, item]
+                      )
+                    ).values(),
+                  ],
+                }
+              : chat
+          ),
         };
 
       default:

@@ -28,11 +28,6 @@ export const initMessages = (messages: Message[]): Action => ({
   payload: messages,
 });
 
-export const addMessage = (message: Message): Action => ({
-  type: Types.ADD_MESSAGE,
-  payload: message,
-});
-
 export const updateReadStatuses = (readStatuses: ReadStatus[]): Action => ({
   type: Types.UPDATE_READ_STATUSES,
   payload: readStatuses,

@@ -64,6 +64,7 @@ type theme = {
   };
 
   space: {
+    xxxs: string;
     xxs: string;
     xs: string;
     s: string;

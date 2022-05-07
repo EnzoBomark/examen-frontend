@@ -5,6 +5,11 @@ import { Blur } from '../layout/Blur';
 import { UnderLine } from '../layout/UnderLine';
 import theme from '@racket-styles/core/theme';
 
+const blurType = Native.Platform.select({
+  ios: 'thinMaterialLight',
+  android: 'light',
+}) as 'thinMaterialLight' | 'light';
+
 type Header = {
   setHeaderHeight?: (num: number) => void;
 };
@@ -31,7 +36,7 @@ export const ModalHeader: React.FC<Header> = (props) => {
 
   return (
     <Container onLayout={getHeight}>
-      <Inner blurType="thinMaterialLight">{props.children}</Inner>
+      <Inner blurType={blurType}>{props.children}</Inner>
       <UnderLine />
     </Container>
   );

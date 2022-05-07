@@ -9,7 +9,6 @@ import {
   useChat,
   useFetchMessages,
   useMarkAsRead,
-  useSendMessage,
 } from '@racket-traits/api/chat';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
@@ -24,7 +23,6 @@ const Chat: React.FC<Props> = ({ navigation }) => {
   const chat = useChat();
   const markAsRead = useMarkAsRead();
   const fetchMessages = useFetchMessages();
-  const sendMessage = useSendMessage();
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
 
   // Poll update read status every min
@@ -33,12 +31,9 @@ const Chat: React.FC<Props> = ({ navigation }) => {
   // Create firebase chat listener for messages
   React.useEffect(() => {
     markAsRead();
-    database()
-      .ref(`/chat_rooms/${chat.data.id}`)
-      .on('value', () => fetchMessages());
+    fetchMessages(chat.data);
 
     return () => {
-      database().ref(`/chat_rooms/${chat.data.id}`).off();
       markAsRead();
     };
   }, []);
@@ -47,11 +42,12 @@ const Chat: React.FC<Props> = ({ navigation }) => {
     <React.Fragment>
       <S.Background color="g0">
         <S.List
-          headerHeight={headerHeight}
           inverted
           padding={4}
           spacer="xxs"
+          headerHeight={headerHeight}
           data={formatMessages(chat.data)}
+          onEndReached={() => fetchMessages(chat.data)}
           renderItem={({ item }) => <C.ChatBubble {...item} />}
         />
       </S.Background>
