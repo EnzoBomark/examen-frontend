@@ -4,6 +4,9 @@ export * from './chat/ChatUserCard';
 export * from './chat/ChatCard';
 export * from './chat/Input';
 
+// community
+export * from './community/UserCard';
+
 // drawer
 export * from './drawer/Drawer';
 

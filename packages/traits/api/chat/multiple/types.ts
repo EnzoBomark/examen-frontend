@@ -14,8 +14,9 @@ export enum Types {
   SUCCESS = 'SUCCESS',
   REFRESH = 'REFRESH',
   FAIL = 'FAIL',
-  PUSH_CHAT = 'PUSH_CHAT',
+  SET_CHAT = 'SET_CHAT',
   PUSH_MESSAGES = 'PUSH_MESSAGES',
+  UPDATE_READ_STATUS = 'PUSH_READ_STATUS',
 }
 
 export type Payload = {
@@ -24,7 +25,11 @@ export type Payload = {
   [Types.SUCCESS]: Chat[];
   [Types.REFRESH]: Chat[];
   [Types.FAIL]: ResponseError;
-  [Types.PUSH_CHAT]: Chat;
+  [Types.SET_CHAT]: Chat;
+  [Types.UPDATE_READ_STATUS]: {
+    readStatus: ReadStatus[];
+    chat: Chat;
+  };
   [Types.PUSH_MESSAGES]: {
     messages: Message[];
     chat: Chat;

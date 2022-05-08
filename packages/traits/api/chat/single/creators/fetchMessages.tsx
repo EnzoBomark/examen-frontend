@@ -1,11 +1,9 @@
 import database from '@react-native-firebase/database';
-import { useChat } from '../handlers/useChat';
-import { fail, initMessages, updateReadStatuses } from '../actions';
+import { fail, initMessages } from '../actions';
 import store from '../store';
 
 export const useFetchMessages = () => {
   const dispatch = store.useDispatch();
-
   const fetchMessages = async (chat: Chat) => {
     try {
       const messagesRef = database().ref(`/chat_rooms/${chat.id}`);
@@ -36,23 +34,7 @@ export const useFetchMessages = () => {
         return undefined;
       });
 
-      const statusRef = database().ref(`/chat_rooms_status/${chat.id}`);
-
-      const statusSnapShot = await statusRef.once('value');
-
-      const readStatus: ReadStatus[] = [];
-
-      statusSnapShot.forEach((status) => {
-        readStatus.push({
-          id: status.val().uid,
-          isRead: status.val().is_read,
-        });
-
-        return undefined;
-      });
-
       dispatch(initMessages(messages, chat));
-      dispatch(updateReadStatuses(readStatus));
     } catch (err) {
       dispatch(
         fail({

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import * as Native from 'react-native';
-import * as Hooks from '@racket-traits/hooks';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
-import { formatMessages } from '@racket-traits/misc';
 import {
   useChat,
+  useChatFunctions,
   useFetchMessages,
   useMarkAsRead,
   useResignChat,
@@ -13,22 +12,19 @@ import {
 } from '@racket-traits/api/chat';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
-import { useTranslation } from '@racket-traits/lang';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type Props = StackScreenProps<ChatParamList, 'Chat'>;
 
 const Chat: React.FC<Props> = ({ navigation }) => {
+  const [headerHeight, setHeaderHeight] = React.useState(0);
   const insets = useSafeAreaInsets();
-  const { chat: t } = useTranslation();
   const chat = useChat();
   const unloadChat = useUnloadChat();
   const markAsRead = useMarkAsRead();
   const resignChat = useResignChat();
   const fetchMessages = useFetchMessages();
-  const [headerHeight, setHeaderHeight] = React.useState(0);
-
-  Hooks.useInterval(() => markAsRead(), 10000);
+  const { getLabel, getMemberCount, formatMessages } = useChatFunctions();
 
   React.useEffect(() => {
     if (!chat.hasLoaded) navigation.navigate('Chats');
@@ -40,7 +36,7 @@ const Chat: React.FC<Props> = ({ navigation }) => {
 
   React.useEffect(() => {
     markAsRead();
-  }, []);
+  }, [chat.data.messages.length]);
 
   return (
     <React.Fragment>
@@ -74,14 +70,15 @@ const Chat: React.FC<Props> = ({ navigation }) => {
               </S.Clickable>
             </S.Absolute>
 
-            <S.H5>{chat.data.users.map((u) => u.name).join(', ')}</S.H5>
-            <S.Detail color="g500">
-              {chat.data.users?.length}{' '}
-              {chat.data.users?.length === 1 ? t.member : t.members}
-            </S.Detail>
+            <S.H5>{getLabel(chat.data)}</S.H5>
+            <S.Detail color="g500">{getMemberCount(chat.data)}</S.Detail>
 
             <S.Absolute right="0">
-              <S.Clickable onPress={() => resignChat(chat.data.id)}>
+              <S.Clickable
+                onPress={() => {
+                  resignChat(chat.data);
+                }}
+              >
                 <S.Svg src="info" width="20px" color="g1000" />
               </S.Clickable>
             </S.Absolute>

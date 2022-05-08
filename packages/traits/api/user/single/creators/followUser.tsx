@@ -1,26 +1,24 @@
 import api, { AxiosError } from '../../../index';
-import { useSetChat } from '../../multiple/handlers/setChat';
+import { useSetFollow } from '../../multiple';
 import { fail, pending, success } from '../actions';
 import store from '../store';
 
-export const useCreateChat = () => {
+export const useFollowUser = () => {
   const dispatch = store.useDispatch();
-  const setChat = useSetChat();
-  const createChat = (users: User[]) => {
+  const setFollow = useSetFollow();
+  const followUser = (user: User) => {
     dispatch(pending());
 
     api
-      .post<Chat>(`chat`, {
-        userIds: users.map((u) => u.id),
-      })
+      .put<User>(`profile/follow/${user.id}`)
       .then((res) => {
+        setFollow(user);
         dispatch(success(res.data));
-        setChat(res.data);
       })
       .catch((err: AxiosError<ResponseError<Chat>>) => {
         if (!err.response) throw err;
         dispatch(fail(err.response.data));
       });
   };
-  return createChat;
+  return followUser;
 };

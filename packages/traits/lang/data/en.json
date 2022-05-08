@@ -31,6 +31,8 @@
   "chat": {
     "member": "Member",
     "members": "Members",
-    "send_message": "Send message"
+    "send_message": "Send message",
+    "user_left": "User left",
+    "prefix": "You: "
   }
 }

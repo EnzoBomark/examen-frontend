@@ -17,3 +17,13 @@ type Chat = {
   id: string;
   type: 'match' | 'group' | 'user';
 };
+
+type FormattedMessage = {
+  isPrevSameId: boolean;
+  isMe: boolean;
+  message: string;
+  time: string;
+  name?: string;
+  picture?: string;
+  date?: string;
+};

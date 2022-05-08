@@ -7,11 +7,13 @@ import { ParamListBase, RouteProp } from '@react-navigation/native';
 import MatchStack from './MatchStack';
 import ProfileStack from './ProfileStack';
 import ChatStack from './ChatStack';
+import CommunityStack from './CommunityStack';
 
 export type DrawerParamList = {
   MatchStack: undefined;
   ProfileStack: undefined;
   ChatStack: undefined;
+  CommunityStack: undefined;
 };
 
 const Drawer = createDrawerNavigator();
@@ -20,6 +22,7 @@ const icons = (color: keyof theme['colors']) => ({
   MatchStack: <S.Svg src="house" width="24px" color={color} />,
   ProfileStack: <S.Svg src="profile" width="24px" color={color} />,
   ChatStack: <S.Svg src="chat" width="24px" color={color} />,
+  CommunityStack: <S.Svg src="community" width="24px" color={color} />,
 });
 
 type ScreenOptions = { route: RouteProp<ParamListBase, string> };
@@ -52,6 +55,12 @@ const BottomTabs = () => (
       name="ChatStack"
       component={ChatStack}
       options={{ title: 'Chat' }}
+    />
+
+    <Drawer.Screen
+      name="CommunityStack"
+      component={CommunityStack}
+      options={{ title: 'Community' }}
     />
   </Drawer.Navigator>
 );

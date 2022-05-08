@@ -31,6 +31,8 @@
   "chat": {
     "member": "Spelare",
     "members": "Spelare",
-    "send_message": "Skicka meddelande"
+    "send_message": "Skicka meddelande",
+    "user_left": "Användare lämnat",
+    "prefix": "Du: "
   }
 }

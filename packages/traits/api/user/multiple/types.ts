@@ -14,6 +14,7 @@ export enum Types {
   SUCCESS = 'SUCCESS',
   REFRESH = 'REFRESH',
   FAIL = 'FAIL',
+  RESIGN_FOLLOW = 'RESIGN_FOLLOW',
 }
 
 export type Payload = {
@@ -22,6 +23,7 @@ export type Payload = {
   [Types.SUCCESS]: User[];
   [Types.REFRESH]: User[];
   [Types.FAIL]: ResponseError;
+  [Types.RESIGN_FOLLOW]: { user: User; profile: User };
 };
 
 export type Action = ActionMap<Payload>[keyof ActionMap<Payload>];

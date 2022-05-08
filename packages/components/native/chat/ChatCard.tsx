@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
 import { useChatFunctions, useSetChat } from '@racket-traits/api/chat';
-import { getTime, getDate } from '@racket-traits/misc';
+import { getTime, getDate } from '@racket-traits/utils';
 
 const Card = styled.View`
   height: 56px;
@@ -40,7 +40,7 @@ type Navigation = StackNavigationProp<ChatParamList, 'Chats'>;
 export const ChatCard: React.FC<Chat> = (chat) => {
   const setChat = useSetChat();
   const navigation = useNavigation<Navigation>();
-  const {} = useChatFunctions();
+  const { getLabel, getPrefix, getReadStatus } = useChatFunctions();
 
   return (
     <S.Clickable
@@ -56,17 +56,19 @@ export const ChatCard: React.FC<Chat> = (chat) => {
           width="34px"
         />
 
+        <S.Absolute top="8px" left="8px">
+          {!getReadStatus(chat) && <Dot />}
+        </S.Absolute>
+
         <S.Spacer size="xs" />
 
         <S.Col>
-          <S.Label color="g1000">
-            {chat.users.map((u) => u.name).join(', ')}
-          </S.Label>
+          <S.Label color="g1000">{getLabel(chat)}</S.Label>
 
           {!!chat.messages.length ? (
             <S.Row style={{ width: '100%' }}>
               <Message color="g400" numberOfLines={1}>
-                {chat.messages[0]?.message}
+                {getPrefix(chat.messages[0], chat.users)}
               </Message>
 
               <S.Spacer size="xxs" />

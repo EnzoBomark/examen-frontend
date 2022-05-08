@@ -1,4 +1,5 @@
 import { createStore } from '@racket-common/store';
+import { alter, resign, unique } from '@racket-traits/utils';
 import { Action, State, Types } from './types';
 
 const initialState: State = {
@@ -28,12 +29,8 @@ const store = createStore<State, Action>({
           ...state,
           hasLoaded: true,
           isLoading: false,
-          page: state.page + 1,
-          data: [
-            ...new Map(
-              [...state.data, ...action.payload].map((item) => [item.id, item])
-            ).values(),
-          ],
+          page: action.payload.length ? state.page + 1 : state.page,
+          data: unique(state.data, action.payload, 'id'),
         };
 
       case Types.REFRESH:
@@ -52,33 +49,26 @@ const store = createStore<State, Action>({
           hasError: action.payload,
         };
 
-      case Types.PUSH_CHAT:
+      case Types.SET_CHAT:
         return {
           ...state,
-          data: [
-            ...new Map(
-              [action.payload, ...state.data].map((item) => [item.id, item])
-            ).values(),
-          ],
+          data: resign(state.data, action.payload, 'id'),
         };
 
       case Types.PUSH_MESSAGES:
         return {
           ...state,
-          data: state.data.map((chat) =>
-            chat.id === action.payload.chat.id
-              ? {
-                  ...chat,
-                  messages: [
-                    ...new Map(
-                      [...action.payload.messages, ...chat.messages].map(
-                        (item) => [item.key, item]
-                      )
-                    ).values(),
-                  ],
-                }
-              : chat
-          ),
+          data: alter(state.data, action.payload.chat, 'id', (chat) => ({
+            messages: unique(action.payload.messages, chat.messages, 'key'),
+          })),
+        };
+
+      case Types.UPDATE_READ_STATUS:
+        return {
+          ...state,
+          data: alter(state.data, action.payload.chat, 'id', (chat) => ({
+            readStatus: action.payload.readStatus,
+          })),
         };
 
       default:

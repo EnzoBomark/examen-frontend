@@ -9,6 +9,7 @@ type List = {
   inverted?: boolean | null | undefined;
   data: ReadonlyArray<unknown>;
   renderItem: Native.ListRenderItem<any>;
+  refreshing?: boolean;
   onRefresh?: () => void;
   onEndReached?: (info: { distanceFromEnd: number }) => void;
   padding?: number;
@@ -40,15 +41,8 @@ export const List: React.FC<List> = (props) => {
   return (
     <Native.FlatList
       {...props}
+      refreshing={props.refreshing || false}
       nestedScrollEnabled
-      refreshing={false}
-      refreshControl={
-        <Native.RefreshControl
-          tintColor="transparent"
-          titleColor="transparent"
-          refreshing={false}
-        />
-      }
       onEndReachedThreshold={0.2}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
