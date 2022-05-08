@@ -8,7 +8,7 @@ import Match from '@racket-native/match';
 export type MatchParamList = {
   Discover: undefined;
   CreateMatch: undefined;
-  Match: Match;
+  Match: undefined;
 };
 
 const Stack = createStackNavigator<MatchParamList>();

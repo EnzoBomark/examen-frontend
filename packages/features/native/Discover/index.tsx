@@ -41,7 +41,9 @@ const Discover: React.FC<Props> = ({ navigation }) => {
       />
 
       <S.Header setHeaderHeight={setHeaderHeight}>
-        <S.Padding size="xs">
+        <S.Padding size="xs" vertical={false}>
+          <S.Spacer size="xs" />
+
           <S.Row align="center">
             <S.Clickable onPress={() => navigation.openDrawer()}>
               <S.Svg src="hamburger" width="24px" color="g1000" />
@@ -93,11 +95,13 @@ const Discover: React.FC<Props> = ({ navigation }) => {
           </S.Row>
         </S.Padding>
 
-        {accordion && (
-          <S.List
+        {accordion ? (
+          <S.HorizontalList
             data={dummy}
             renderItem={({ item }) => <C.UpcomingMatchCard {...item} />}
           />
+        ) : (
+          <S.Spacer size="xs" />
         )}
       </S.Header>
     </React.Fragment>

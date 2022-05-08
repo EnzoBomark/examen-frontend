@@ -54,6 +54,8 @@ const store = createStore<State, Action>({
       case Types.SET_MATCH:
         return {
           ...state,
+          hasLoaded: true,
+          isLoading: false,
           data: action.payload,
         };
 

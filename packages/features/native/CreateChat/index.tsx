@@ -3,7 +3,7 @@ import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
-import { useChat, useCreateChat } from '@racket-traits/api/chat';
+import { useCreateChat, useUnloadChat } from '@racket-traits/api/chat';
 import {
   useFetchUsers,
   useRefreshUsers,
@@ -13,7 +13,6 @@ import {
 type Props = StackScreenProps<ChatParamList, 'CreateChat'>;
 
 const CreateChat: React.FC<Props> = ({ navigation }) => {
-  const chat = useChat();
   const users = useUsers();
   const fetchUsers = useFetchUsers();
   const createChat = useCreateChat();
@@ -21,10 +20,6 @@ const CreateChat: React.FC<Props> = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const [selectedUsers, setSelectedUsers] = React.useState<User[]>([]);
   const [query, setQuery] = React.useState('');
-
-  React.useEffect(() => {
-    if (!chat.isLoading && chat.hasLoaded) navigation.navigate('Chat');
-  }, [chat]);
 
   React.useEffect(() => {
     if (!users.hasLoaded) fetchUsers(query, users.page);
@@ -38,6 +33,7 @@ const CreateChat: React.FC<Props> = ({ navigation }) => {
     <React.Fragment>
       <S.List
         headerHeight={headerHeight}
+        fullScreen={true}
         onEndReached={() => fetchUsers(query, users.page)}
         onRefresh={() => refreshUsers(query)}
         data={users.data}
@@ -48,7 +44,6 @@ const CreateChat: React.FC<Props> = ({ navigation }) => {
             isAdded={selectedUsers.some((u) => u.id === item.id)}
           />
         )}
-        fullScreen={true}
       />
 
       <S.Header setHeaderHeight={setHeaderHeight}>
@@ -68,7 +63,9 @@ const CreateChat: React.FC<Props> = ({ navigation }) => {
                 label="Create chat"
                 icon="add"
                 disabled={!selectedUsers.length}
-                onPress={() => createChat(selectedUsers)}
+                onPress={() =>
+                  createChat(selectedUsers, () => navigation.navigate('Chat'))
+                }
               />
             </S.Absolute>
           </S.Row>

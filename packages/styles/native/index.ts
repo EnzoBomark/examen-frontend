@@ -40,6 +40,7 @@ export * from './gradient/Gradient';
 // list
 export * from './list/StaticList';
 export * from './list/StaticSubList';
+export * from './list/HorizontalList';
 export * from './list/List';
 
 // layout

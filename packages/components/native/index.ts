@@ -10,6 +10,9 @@ export * from './community/UserCard';
 // drawer
 export * from './drawer/Drawer';
 
+// profile
+export * from './profile/ProfileCard';
+
 // match
 export * from './match/UpcomingMatchCard';
 export * from './match/MatchCard';
