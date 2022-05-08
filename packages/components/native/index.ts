@@ -1,5 +1,6 @@
 // chat
 export * from './chat/ChatBubble';
+export * from './chat/ChatUserCard';
 export * from './chat/ChatCard';
 export * from './chat/Input';
 

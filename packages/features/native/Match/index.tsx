@@ -21,7 +21,7 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
       <S.Scroll>
         <S.AvoidKeyboard>
           <S.Screen headerHeight={headerHeight}>
-            <S.Padding size="xs" vertical={false} flex={true}>
+            <S.Padding size="xs" vertical={false} flexBox={true}>
               <S.Spacer size="xs" />
 
               <C.JoinMatchCard {...match} />

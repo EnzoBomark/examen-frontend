@@ -17,8 +17,8 @@ export const formatMessages = (chat: Chat) => {
       const nextMessage = chat.messages[index + 1];
 
       // Time span is 1 day
-      const isPrevSameSpan = prevMessage?.time + 86_400_000 > message.time;
-      const isNextSameSpan = message.time + 86_400_000 > nextMessage?.time;
+      const isPrevSameSpan = prevMessage?.time + 86400000 > message.time;
+      const isNextSameSpan = message.time + 86400000 > nextMessage?.time;
 
       const isPrevSameId = prevMessage
         ? prevMessage?.uid === message?.uid

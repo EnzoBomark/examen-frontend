@@ -24,7 +24,7 @@ export type Payload = {
   [Types.SUCCESS]: Chat;
   [Types.FAIL]: ResponseError<Chat>;
   [Types.SET_CHAT]: Chat;
-  [Types.INIT_MESSAGES]: Message[];
+  [Types.INIT_MESSAGES]: { messages: Message[]; verification: string };
   [Types.UPDATE_READ_STATUSES]: ReadStatus[];
   [Types.MARK_AS_READ]: ReadStatus;
 };

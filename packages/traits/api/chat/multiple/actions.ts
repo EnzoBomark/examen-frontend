@@ -23,7 +23,12 @@ export const fail = (error: ResponseError): Action => ({
   payload: error,
 });
 
-export const addMessages = (messages: Message[], chat: Chat): Action => ({
-  type: Types.ADD_MESSAGES,
+export const pushMessages = (messages: Message[], chat: Chat): Action => ({
+  type: Types.PUSH_MESSAGES,
   payload: { messages, chat },
+});
+
+export const pushChat = (chat: Chat): Action => ({
+  type: Types.PUSH_CHAT,
+  payload: chat,
 });

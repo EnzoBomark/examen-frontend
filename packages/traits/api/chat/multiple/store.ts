@@ -52,7 +52,17 @@ const store = createStore<State, Action>({
           hasError: action.payload,
         };
 
-      case Types.ADD_MESSAGES:
+      case Types.PUSH_CHAT:
+        return {
+          ...state,
+          data: [
+            ...new Map(
+              [action.payload, ...state.data].map((item) => [item.id, item])
+            ).values(),
+          ],
+        };
+
+      case Types.PUSH_MESSAGES:
         return {
           ...state,
           data: state.data.map((chat) =>

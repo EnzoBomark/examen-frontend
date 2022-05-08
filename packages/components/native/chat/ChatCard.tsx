@@ -9,20 +9,12 @@ import { useChatFunctions, useSetChat } from '@racket-traits/api/chat';
 import { getTime, getDate } from '@racket-traits/misc';
 
 const Card = styled.View`
-  flex: 1;
   height: 56px;
   width: 100%;
   border-radius: ${theme.radius.xs};
   background-color: ${theme.colors.p100};
   padding: 10px 12px;
   flex-direction: row;
-`;
-
-const Bottom = styled.View`
-  width: 100%;
-  border-bottom-left-radius: ${theme.radius.xs};
-  border-bottom-right-radius: ${theme.radius.xs};
-  background-color: ${theme.colors.g50};
 `;
 
 const Message = styled(S.Detail)`

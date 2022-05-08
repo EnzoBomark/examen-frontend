@@ -1,4 +1,3 @@
-import database from '@react-native-firebase/database';
 import * as React from 'react';
 import * as Native from 'react-native';
 import * as Hooks from '@racket-traits/hooks';
@@ -9,6 +8,8 @@ import {
   useChat,
   useFetchMessages,
   useMarkAsRead,
+  useResignChat,
+  useUnloadChat,
 } from '@racket-traits/api/chat';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
@@ -21,21 +22,24 @@ const Chat: React.FC<Props> = ({ navigation }) => {
   const insets = useSafeAreaInsets();
   const { chat: t } = useTranslation();
   const chat = useChat();
+  const unloadChat = useUnloadChat();
   const markAsRead = useMarkAsRead();
+  const resignChat = useResignChat();
   const fetchMessages = useFetchMessages();
-  const [headerHeight, setHeaderHeight] = React.useState<number>(0);
+  const [headerHeight, setHeaderHeight] = React.useState(0);
 
-  // Poll update read status every min
-  Hooks.useInterval(() => markAsRead(), 10_000);
+  Hooks.useInterval(() => markAsRead(), 10000);
 
-  // Create firebase chat listener for messages
+  React.useEffect(() => {
+    if (!chat.hasLoaded) navigation.navigate('Chats');
+  }, [chat]);
+
+  React.useEffect(() => {
+    if (chat.data.messages.length) fetchMessages(chat.data);
+  }, [chat.data]);
+
   React.useEffect(() => {
     markAsRead();
-    fetchMessages(chat.data);
-
-    return () => {
-      markAsRead();
-    };
   }, []);
 
   return (
@@ -65,7 +69,7 @@ const Chat: React.FC<Props> = ({ navigation }) => {
         <S.Padding size="xs">
           <S.Align type="center">
             <S.Absolute left="0">
-              <S.Clickable onPress={() => navigation.navigate('Chats')}>
+              <S.Clickable onPress={unloadChat}>
                 <S.Svg src="leftArrow" width="20px" color="g1000" />
               </S.Clickable>
             </S.Absolute>
@@ -77,7 +81,7 @@ const Chat: React.FC<Props> = ({ navigation }) => {
             </S.Detail>
 
             <S.Absolute right="0">
-              <S.Clickable>
+              <S.Clickable onPress={() => resignChat(chat.data.id)}>
                 <S.Svg src="info" width="20px" color="g1000" />
               </S.Clickable>
             </S.Absolute>

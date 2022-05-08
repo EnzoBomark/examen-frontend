@@ -51,7 +51,7 @@ export const useFetchMessages = () => {
         return undefined;
       });
 
-      dispatch(initMessages(messages));
+      dispatch(initMessages(messages, chat));
       dispatch(updateReadStatuses(readStatus));
     } catch (err) {
       dispatch(

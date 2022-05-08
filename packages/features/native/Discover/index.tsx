@@ -50,7 +50,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
             <S.Fill />
 
             <S.Clickable onPress={() => navigation.navigate('CreateMatch')}>
-              <S.Svg src="plus" width="24px" color="g1000" />
+              <S.Svg src="add" width="24px" color="g1000" />
             </S.Clickable>
 
             <S.Spacer size="xs" />

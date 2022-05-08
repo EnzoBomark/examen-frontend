@@ -13,7 +13,7 @@ export const Container = styled.View<Partial<Image>>`
 
 export const Inner = styled(FastImage)<Partial<Image>>`
   border-radius: ${({ border }) =>
-    border ? theme.radius[border] : theme.radius.xs};
+    border ? theme.radius[border] : theme.radius.xxs};
   height: 100%;
   width: 100%;
   background-color: ${theme.colors.g75};

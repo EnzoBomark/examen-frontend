@@ -61,11 +61,12 @@ const Login: React.FC<Props> = ({ navigation }) => {
               invert={true}
               active={remember}
               toggle={setRemember}
+              disabled={true}
             />
 
             <S.Fill />
 
-            <S.Clickable>
+            <S.Clickable disabled={true}>
               <S.Body color="p600">Forgot Password</S.Body>
             </S.Clickable>
             <S.Spacer size="xs" />
@@ -113,6 +114,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
             color="g0"
             background="g1000"
             height="46px"
+            disabled={true}
           />
           <S.Spacer size="m" />
           <S.Align type="center">

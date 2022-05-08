@@ -1,5 +1,5 @@
 import database from '@react-native-firebase/database';
-import { fail, addMessages } from '../actions';
+import { fail, pushMessages } from '../actions';
 import store from '../store';
 
 export const useFetchLastMessages = () => {
@@ -27,7 +27,7 @@ export const useFetchLastMessages = () => {
         return undefined;
       });
 
-      dispatch(addMessages(messages, chat));
+      dispatch(pushMessages(messages, chat));
     } catch (err) {
       dispatch(
         fail({

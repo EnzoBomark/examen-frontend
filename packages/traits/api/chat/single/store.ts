@@ -46,6 +46,8 @@ const store = createStore<State, Action>({
       case Types.SET_CHAT:
         return {
           ...state,
+          hasLoaded: true,
+          isLoading: false,
           data: action.payload,
         };
 
@@ -54,14 +56,16 @@ const store = createStore<State, Action>({
           ...state,
           data: {
             ...state.data,
-            messages: [
-              ...new Map(
-                [...action.payload, ...state.data.messages].map((item) => [
-                  item.key,
-                  item,
-                ])
-              ).values(),
-            ],
+            messages:
+              state.data.id === action.payload.verification
+                ? [
+                    ...new Map(
+                      [...action.payload.messages, ...state.data.messages].map(
+                        (item) => [item.key, item]
+                      )
+                    ).values(),
+                  ]
+                : state.data.messages,
           },
         };
 

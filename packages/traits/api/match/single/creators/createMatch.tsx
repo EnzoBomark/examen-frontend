@@ -3,10 +3,10 @@ import api, { AxiosError } from '../../../index';
 import store from '../store';
 import { fail, pending, success } from '../actions';
 
-export const usePostMatch = () => {
+export const useCreateMatch = () => {
   const dispatch = store.useDispatch();
 
-  const postMatch = async (
+  const createMatch = async (
     type: boolean,
     isBooked: boolean,
     isPublic: boolean,
@@ -45,5 +45,5 @@ export const usePostMatch = () => {
         dispatch(fail(err.response.data));
       });
   };
-  return postMatch;
+  return createMatch;
 };

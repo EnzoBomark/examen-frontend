@@ -5,14 +5,14 @@ import validate, { v } from '@racket-traits/validation';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
 import { useProfile } from '@racket-traits/api/profile';
-import { useMatch, usePostMatch } from '@racket-traits/api/match';
+import { useMatch, useCreateMatch } from '@racket-traits/api/match';
 
 type Props = StackScreenProps<MatchParamList, 'CreateMatch'>;
 
 const CreateMatch: React.FC<Props> = ({ navigation }) => {
   const profile = useProfile();
   const match = useMatch();
-  const postMatch = usePostMatch();
+  const createMatch = useCreateMatch();
 
   React.useEffect(() => {
     if (!match.isLoading && match.hasLoaded)
@@ -123,7 +123,7 @@ const CreateMatch: React.FC<Props> = ({ navigation }) => {
           <S.Button
             loading={match.isLoading}
             onPress={() =>
-              postMatch(
+              createMatch(
                 type,
                 isBooked,
                 isPublic,

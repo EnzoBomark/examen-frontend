@@ -4,11 +4,13 @@ import styled from 'styled-components/native';
 import { Blur } from '../layout/Blur';
 import { UnderLine } from '../layout/UnderLine';
 import theme from '@racket-styles/core/theme';
+import { Padding } from '../layout/Padding';
 
-const blurType = Native.Platform.select({
-  ios: 'thinMaterialLight',
-  android: 'light',
-}) as 'thinMaterialLight' | 'light';
+const Ios = styled(Blur)``;
+
+const Android = styled.View`
+  background-color: ${theme.colors.g50};
+`;
 
 type Header = {
   setHeaderHeight?: (num: number) => void;
@@ -17,15 +19,15 @@ type Header = {
 const Container = styled.View`
   border-top-right-radius: ${theme.radius.xxs};
   border-top-left-radius: ${theme.radius.xxs};
-  overflow: hidden;
   position: absolute;
+  overflow: hidden;
   top: 0;
   right: 0;
   left: 0;
 `;
 
-const Inner = styled(Blur)`
-  padding: ${theme.space.xs};
+const Inner = styled(Padding)`
+  background-color: transparent;
 `;
 
 export const ModalHeader: React.FC<Header> = (props) => {
@@ -36,7 +38,15 @@ export const ModalHeader: React.FC<Header> = (props) => {
 
   return (
     <Container onLayout={getHeight}>
-      <Inner blurType={blurType}>{props.children}</Inner>
+      {Native.Platform.OS === 'ios' ? (
+        <Ios blurType="thinMaterialLight">
+          <Inner size="xs">{props.children}</Inner>
+        </Ios>
+      ) : (
+        <Android>
+          <Inner size="xs">{props.children}</Inner>
+        </Android>
+      )}
       <UnderLine />
     </Container>
   );

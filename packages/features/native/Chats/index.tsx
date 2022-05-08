@@ -6,8 +6,6 @@ import {
   useFetchChats,
   useChats,
   useRefreshChats,
-  useSetChat,
-  useResignChat,
 } from '@racket-traits/api/chat';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
 
@@ -16,8 +14,6 @@ type Props = DrawerScreenProps<ChatParamList, 'Chats'>;
 const Chats: React.FC<Props> = ({ navigation }) => {
   const chats = useChats();
   const fetchChats = useFetchChats();
-  const resignChat = useResignChat();
-  const setChat = useSetChat();
   const refreshChats = useRefreshChats();
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
 
@@ -39,9 +35,15 @@ const Chats: React.FC<Props> = ({ navigation }) => {
 
       <S.Header setHeaderHeight={setHeaderHeight}>
         <S.Padding size="xs">
-          <S.Clickable onPress={() => navigation.openDrawer()}>
-            <S.Svg src="hamburger" width="24px" color="g1000" />
-          </S.Clickable>
+          <S.Row justify="between">
+            <S.Clickable onPress={() => navigation.openDrawer()}>
+              <S.Svg src="hamburger" width="24px" color="g1000" />
+            </S.Clickable>
+
+            <S.Clickable onPress={() => navigation.navigate('CreateChat')}>
+              <S.Svg src="addChat" width="24px" color="g1000" />
+            </S.Clickable>
+          </S.Row>
         </S.Padding>
       </S.Header>
     </React.Fragment>

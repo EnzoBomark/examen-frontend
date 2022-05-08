@@ -17,9 +17,9 @@ export type DrawerParamList = {
 const Drawer = createDrawerNavigator();
 
 const icons = (color: keyof theme['colors']) => ({
-  MatchStack: <S.Svg src="homeFill" width="24px" color={color} />,
-  ProfileStack: <S.Svg src="profileFill" width="24px" color={color} />,
-  ChatStack: <S.Svg src="chatFill" width="21px" color={color} />,
+  MatchStack: <S.Svg src="house" width="24px" color={color} />,
+  ProfileStack: <S.Svg src="profile" width="24px" color={color} />,
+  ChatStack: <S.Svg src="chat" width="24px" color={color} />,
 });
 
 type ScreenOptions = { route: RouteProp<ParamListBase, string> };

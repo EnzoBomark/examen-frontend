@@ -23,9 +23,9 @@ export const setChat = (chat: Chat): Action => ({
   payload: chat,
 });
 
-export const initMessages = (messages: Message[]): Action => ({
+export const initMessages = (messages: Message[], chat: Chat): Action => ({
   type: Types.INIT_MESSAGES,
-  payload: messages,
+  payload: { messages, verification: chat.id },
 });
 
 export const updateReadStatuses = (readStatuses: ReadStatus[]): Action => ({

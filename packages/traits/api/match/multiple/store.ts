@@ -49,6 +49,7 @@ const store = createStore<State, Action>({
         return {
           ...state,
           isLoading: false,
+          hasLoaded: true,
           hasError: action.payload,
         };
 
