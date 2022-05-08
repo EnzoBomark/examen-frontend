@@ -1,4 +1,5 @@
 import { createStore } from '@racket-common/store';
+import { resign, unique } from '@racket-traits/utils';
 import { Action, State, Types } from './types';
 
 const initialState: State = {
@@ -58,13 +59,19 @@ const store = createStore<State, Action>({
             ...state.data,
             messages:
               state.data.id === action.payload.verification
-                ? [
-                    ...new Map(
-                      [...action.payload.messages, ...state.data.messages].map(
-                        (item) => [item.key, item]
-                      )
-                    ).values(),
-                  ]
+                ? unique(action.payload.messages, state.data.messages, 'key')
+                : state.data.messages,
+          },
+        };
+
+      case Types.ADD_MESSAGE:
+        return {
+          ...state,
+          data: {
+            ...state.data,
+            messages:
+              state.data.id === action.payload.verification
+                ? unique(state.data.messages, action.payload.messages, 'key')
                 : state.data.messages,
           },
         };

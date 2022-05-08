@@ -7,7 +7,7 @@ import CreateChat from '@racket-native/create-chat';
 import {
   useChats,
   useFetchLastMessages,
-  useFetchMessages,
+  useFetchReadStatus,
 } from '@racket-traits/api/chat';
 
 export type ChatParamList = {
@@ -21,21 +21,27 @@ const Stack = createStackNavigator<ChatParamList>();
 const ChatStack = () => {
   const chats = useChats();
   const fetchLastMessages = useFetchLastMessages();
-  const fetchMessages = useFetchMessages();
+  const fetchReadStatus = useFetchReadStatus();
 
   React.useEffect(() => {
     chats.data.forEach((chat) => {
       database()
         .ref(`/chat_rooms/${chat.id}`)
         .on('value', () => {
-          fetchMessages(chat);
           fetchLastMessages(chat);
+        });
+
+      database()
+        .ref(`/chat_rooms_status/${chat.id}`)
+        .on('value', () => {
+          fetchReadStatus(chat);
         });
     });
 
     return () => {
       chats.data.forEach((chat) => {
         database().ref(`/chat_rooms/${chat.id}`).off();
+        database().ref(`/chat_rooms_status/${chat.id}`).off();
       });
     };
   }, [chats.data.length]);

@@ -5,11 +5,11 @@ import store from '../store';
 export const useRefreshUsers = () => {
   const dispatch = store.useDispatch();
 
-  const refreshUsers = () => {
+  const refreshUsers = (name: string) => {
     dispatch(pending());
 
     api
-      .get<User[]>(`users`, { params: { page: 0 } })
+      .get<User[]>(`users`, { params: { name, page: 0 } })
       .then((res) => dispatch(refresh(res.data)))
       .catch((err: AxiosError<ResponseError>) => {
         if (!err.response) throw err;

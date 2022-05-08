@@ -28,7 +28,15 @@ export const pushMessages = (messages: Message[], chat: Chat): Action => ({
   payload: { messages, chat },
 });
 
-export const pushChat = (chat: Chat): Action => ({
-  type: Types.PUSH_CHAT,
+export const setChat = (chat: Chat): Action => ({
+  type: Types.SET_CHAT,
   payload: chat,
+});
+
+export const updateReadStatus = (
+  readStatus: ReadStatus[],
+  chat: Chat
+): Action => ({
+  type: Types.UPDATE_READ_STATUS,
+  payload: { readStatus, chat },
 });

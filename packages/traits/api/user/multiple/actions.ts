@@ -22,3 +22,8 @@ export const fail = (error: ResponseError): Action => ({
   type: Types.FAIL,
   payload: error,
 });
+
+export const resignFollow = (user: User, profile: User): Action => ({
+  type: Types.RESIGN_FOLLOW,
+  payload: { user, profile },
+});

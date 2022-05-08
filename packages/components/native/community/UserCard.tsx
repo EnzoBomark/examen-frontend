@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as S from '@racket-styles/native';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
+import { useUserFunctions, useFollowUser } from '@racket-traits/api/user';
 
 const Card = styled.View`
   height: 56px;
@@ -19,13 +20,10 @@ const Skill = styled(S.Detail)`
   max-width: 70%;
 `;
 
-type Props = {
-  user: User;
-  isAdded: boolean;
-  addUser: React.Dispatch<React.SetStateAction<User[]>>;
-};
+export const UserCard: React.FC<User> = (user) => {
+  const followUser = useFollowUser();
+  const { isFriends } = useUserFunctions();
 
-export const ChatUserCard: React.FC<Props> = ({ user, addUser, isAdded }) => {
   return (
     <Card style={{ ...theme.shadow }}>
       <S.Image src={user.picture || ''} width="36px" />
@@ -41,16 +39,12 @@ export const ChatUserCard: React.FC<Props> = ({ user, addUser, isAdded }) => {
       </S.Col>
 
       <S.SmallButton
-        onPress={() =>
-          isAdded
-            ? addUser((prev) => prev.filter((u) => u.id !== user.id))
-            : addUser((prev) => [...prev, user])
-        }
+        onPress={() => followUser(user)}
         height="30px"
-        label={isAdded ? 'Added' : 'Add'}
+        label={isFriends(user) ? 'Following' : 'Follow'}
         background="g100"
         color="g400"
-        icon={isAdded ? 'circleCheck' : 'circleAdd'}
+        icon={isFriends(user) ? 'circleCheck' : 'circleAdd'}
       />
     </Card>
   );

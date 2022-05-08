@@ -6,16 +6,19 @@ import {
   useFetchChats,
   useChats,
   useRefreshChats,
+  useChatFunctions,
 } from '@racket-traits/api/chat';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
 
 type Props = DrawerScreenProps<ChatParamList, 'Chats'>;
 
 const Chats: React.FC<Props> = ({ navigation }) => {
+  const [headerHeight, setHeaderHeight] = React.useState(0);
   const chats = useChats();
   const fetchChats = useFetchChats();
   const refreshChats = useRefreshChats();
-  const [headerHeight, setHeaderHeight] = React.useState<number>(0);
+  const { sortChats } = useChatFunctions();
+  const [query, setQuery] = React.useState('');
 
   React.useEffect(() => {
     if (!chats.hasLoaded) fetchChats(chats.page);
@@ -26,8 +29,8 @@ const Chats: React.FC<Props> = ({ navigation }) => {
       <S.List
         headerHeight={headerHeight}
         onEndReached={() => fetchChats(chats.page)}
-        onRefresh={refreshChats}
-        data={chats.data}
+        onRefresh={() => refreshChats()}
+        data={sortChats(chats.data, query)}
         renderItem={({ item }) => <C.ChatCard {...item} />}
         fullScreen={true}
         spacer="xxs"
@@ -44,6 +47,16 @@ const Chats: React.FC<Props> = ({ navigation }) => {
               <S.Svg src="addChat" width="24px" color="g1000" />
             </S.Clickable>
           </S.Row>
+
+          <S.Spacer size="s" />
+
+          <S.TextInput
+            placeholder="Search"
+            height="38px"
+            icon="search"
+            value={query}
+            onTextChange={setQuery}
+          />
         </S.Padding>
       </S.Header>
     </React.Fragment>

@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
 import { useMatchFunctions } from '@racket-traits/api/match';
-import { getTime, getWeekday } from '@racket-traits/misc';
+import { getTime, getWeekday } from '@racket-traits/utils';
 
 const Card = styled.View`
   width: 100%;

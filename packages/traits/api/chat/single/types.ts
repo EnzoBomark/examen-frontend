@@ -14,7 +14,7 @@ export enum Types {
   FAIL = 'FAIL',
   SET_CHAT = 'SET_CHAT',
   INIT_MESSAGES = 'INIT_MESSAGES',
-  UPDATE_READ_STATUSES = 'UPDATE_READ_STATUSES',
+  ADD_MESSAGE = 'ADD_MESSAGE',
   MARK_AS_READ = 'MARK_AS_READ',
 }
 
@@ -25,7 +25,7 @@ export type Payload = {
   [Types.FAIL]: ResponseError<Chat>;
   [Types.SET_CHAT]: Chat;
   [Types.INIT_MESSAGES]: { messages: Message[]; verification: string };
-  [Types.UPDATE_READ_STATUSES]: ReadStatus[];
+  [Types.ADD_MESSAGE]: { messages: Message[]; verification: string };
   [Types.MARK_AS_READ]: ReadStatus;
 };
 

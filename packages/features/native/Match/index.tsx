@@ -4,7 +4,7 @@ import * as C from '@racket-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
 import { useMatchFunctions, useUnloadMatch } from '@racket-traits/api/match';
-import { getTime, getDate, getWeekday } from '@racket-traits/misc';
+import { getTime, getDate, getWeekday } from '@racket-traits/utils';
 import { useTranslation } from '@racket-traits/lang';
 
 type Props = StackScreenProps<MatchParamList, 'Match'>;

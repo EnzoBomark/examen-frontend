@@ -15,6 +15,9 @@ const initialState: State = {
     skill: undefined,
     isRightHand: undefined,
     fcm: undefined,
+    usersMatches: undefined,
+    followers: [],
+    followings: [],
   },
 };
 

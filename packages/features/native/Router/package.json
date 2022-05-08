@@ -32,6 +32,7 @@
     "@racket-native/chat": "0.0.1",
     "@racket-native/match": "0.0.1",
     "@racket-native/matches": "0.0.1",
-    "@racket-native/profile": "0.0.1"
+    "@racket-native/profile": "0.0.1",
+    "@racket-native/community": "0.0.1"
   }
 }

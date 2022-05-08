@@ -1,4 +1,5 @@
 import { createStore } from '@racket-common/store';
+import { alter, resign, unique } from '@racket-traits/utils';
 import { Action, State, Types } from './types';
 
 const initialState: State = {
@@ -29,16 +30,7 @@ const store = createStore<State, Action>({
           hasLoaded: true,
           isLoading: false,
           page: action.payload.length ? state.page + 1 : state.page,
-          data: action.payload
-            ? [
-                ...new Map(
-                  [...state.data, ...action.payload].map((item) => [
-                    item.id,
-                    item,
-                  ])
-                ).values(),
-              ]
-            : state.data,
+          data: unique(state.data, action.payload, 'id'),
         };
 
       case Types.REFRESH:
@@ -56,6 +48,14 @@ const store = createStore<State, Action>({
           isLoading: false,
           hasLoaded: true,
           hasError: action.payload,
+        };
+
+      case Types.RESIGN_FOLLOW:
+        return {
+          ...state,
+          data: alter(state.data, action.payload.user, 'id', (user) => ({
+            followers: resign(user.followers, action.payload.profile, 'id'),
+          })),
         };
 
       default:

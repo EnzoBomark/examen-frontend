@@ -18,26 +18,29 @@ const CreateChat: React.FC<Props> = ({ navigation }) => {
   const fetchUsers = useFetchUsers();
   const createChat = useCreateChat();
   const refreshUsers = useRefreshUsers();
+  const [headerHeight, setHeaderHeight] = React.useState(0);
+  const [selectedUsers, setSelectedUsers] = React.useState<User[]>([]);
+  const [query, setQuery] = React.useState('');
 
   React.useEffect(() => {
     if (!chat.isLoading && chat.hasLoaded) navigation.navigate('Chat');
   }, [chat]);
 
   React.useEffect(() => {
-    if (!users.hasLoaded) fetchUsers(users.page);
+    if (!users.hasLoaded) fetchUsers(query, users.page);
   }, []);
 
-  const [headerHeight, setHeaderHeight] = React.useState(0);
-  const [selectedUsers, setSelectedUsers] = React.useState<User[]>([]);
-  const [query, setQuery] = React.useState<string>('');
+  React.useEffect(() => {
+    if (users.hasLoaded) refreshUsers(query);
+  }, [query]);
 
   return (
     <React.Fragment>
       <S.List
         headerHeight={headerHeight}
-        onEndReached={() => fetchUsers(users.page)}
-        onRefresh={refreshUsers}
-        data={users.data.filter((u) => u.name.includes(query))}
+        onEndReached={() => fetchUsers(query, users.page)}
+        onRefresh={() => refreshUsers(query)}
+        data={users.data}
         renderItem={({ item }) => (
           <C.ChatUserCard
             user={item}

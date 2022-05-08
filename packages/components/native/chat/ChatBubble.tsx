@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
-import { FormattedMessage, getTime, getDate } from '@racket-traits/misc';
+import { FormattedMessage, getTime, getDate } from '@racket-traits/utils';
 import styled from 'styled-components/native';
 import theme from '@racket-styles/core/theme';
 

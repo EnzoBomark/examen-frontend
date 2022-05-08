@@ -14,4 +14,6 @@ type User = {
   isRightHand?: boolean;
   fcm?: string;
   usersMatches?: UsersMatches;
+  followings: User[];
+  followers: User[];
 };

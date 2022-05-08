@@ -1,0 +1,11 @@
+{
+  "name": "@racket-traits/utils",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "private": true,
+  "peerDependencies": {
+    "react": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

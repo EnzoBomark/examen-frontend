@@ -1,4 +1,5 @@
 import { createStore } from '@racket-common/store';
+import { unique } from '@racket-traits/utils';
 import { Action, State, Types } from './types';
 
 const initialState: State = {
@@ -28,8 +29,8 @@ const store = createStore<State, Action>({
           ...state,
           hasLoaded: true,
           isLoading: false,
-          page: state.page + 1,
-          data: [...state.data, ...action.payload],
+          page: action.payload.length ? state.page + 1 : state.page,
+          data: unique(state.data, action.payload, 'id'),
         };
 
       case Types.REFRESH:
