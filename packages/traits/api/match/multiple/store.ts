@@ -29,7 +29,11 @@ const store = createStore<State, Action>({
           hasLoaded: true,
           isLoading: false,
           page: state.page + 1,
-          data: [...state.data, ...action.payload],
+          data: [
+            ...new Map(
+              [...state.data, ...action.payload].map((item) => [item.id, item])
+            ).values(),
+          ],
         };
 
       case Types.REFRESH:
@@ -45,6 +49,7 @@ const store = createStore<State, Action>({
         return {
           ...state,
           isLoading: false,
+          hasLoaded: true,
           hasError: action.payload,
         };
 

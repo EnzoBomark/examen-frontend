@@ -4,9 +4,10 @@ import DrawerStack from './stacks/DrawerStack';
 import MatchStack from './stacks/MatchStack';
 import AuthStack from './stacks/AuthStack';
 import ProfileStack from './stacks/ProfileStack';
+import ChatStack from './stacks/ChatStack';
 import {
   useProfile,
-  useGetProfile,
+  useFetchProfile,
   useUnloadProfile,
 } from '@racket-traits/api/profile';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -16,6 +17,7 @@ export type RootParamList = {
   MatchStack: undefined;
   AuthStack: undefined;
   ProfileStack: undefined;
+  ChatStack: undefined;
 };
 
 const Stack = createStackNavigator<RootParamList>();
@@ -24,12 +26,12 @@ const options = { headerShown: false };
 
 const RootStack: React.FC = () => {
   const unloadProfile = useUnloadProfile();
-  const getProfile = useGetProfile();
+  const fetchProfile = useFetchProfile();
   const profile = useProfile();
 
   React.useEffect(() => {
     auth().onAuthStateChanged((user) => {
-      user ? getProfile() : unloadProfile();
+      user ? fetchProfile() : unloadProfile();
     });
   }, []);
 
@@ -40,6 +42,7 @@ const RootStack: React.FC = () => {
           <Stack.Screen name="DrawerStack" component={DrawerStack} />
           <Stack.Screen name="MatchStack" component={MatchStack} />
           <Stack.Screen name="ProfileStack" component={ProfileStack} />
+          <Stack.Screen name="ChatStack" component={ChatStack} />
         </Stack.Group>
       )}
 

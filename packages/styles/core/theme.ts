@@ -2,7 +2,7 @@ const theme: theme = {
   colors: {
     p50: '#F4F6FC',
     p100: '#F4F6FC',
-    p200: '#E3F1FF',
+    p200: '#EEF3FB',
     p300: '#C3E1FF',
     p400: '#95CAFF',
     p500: '#60AFFF',
@@ -64,7 +64,8 @@ const theme: theme = {
   },
 
   space: {
-    xxs: '8px',
+    xxxs: '8px',
+    xxs: '12px',
     xs: '16px',
     s: '24px',
     m: '32px',
@@ -91,7 +92,7 @@ const theme: theme = {
       width: 0,
       height: 5,
     },
-    shadowOpacity: 0.36,
+    shadowOpacity: 0.16,
     shadowRadius: 6.68,
     elevation: 11,
   },

@@ -4,7 +4,7 @@ import * as C from '@racket-components/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
 import {
-  useGetMatches,
+  useFetchMatches,
   useMatches,
   useRefreshMatches,
 } from '@racket-traits/api/match';
@@ -20,20 +20,20 @@ const dummy = [
 
 const Discover: React.FC<Props> = ({ navigation }) => {
   const matches = useMatches();
-  const getMatches = useGetMatches();
+  const fetchMatches = useFetchMatches();
   const refreshMatches = useRefreshMatches();
   const [accordion, setAccordion] = React.useState(false);
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
 
   React.useEffect(() => {
-    if (!matches.hasLoaded) getMatches(matches.page);
+    if (!matches.hasLoaded) fetchMatches(matches.page);
   }, []);
 
   return (
     <React.Fragment>
       <S.List
         headerHeight={headerHeight}
-        onEndReached={() => getMatches(matches.page)}
+        onEndReached={() => fetchMatches(matches.page)}
         onRefresh={refreshMatches}
         data={matches.data}
         renderItem={({ item }) => <C.MatchCard {...item} />}
@@ -50,7 +50,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
             <S.Fill />
 
             <S.Clickable onPress={() => navigation.navigate('CreateMatch')}>
-              <S.Svg src="plus" width="24px" color="g1000" />
+              <S.Svg src="add" width="24px" color="g1000" />
             </S.Clickable>
 
             <S.Spacer size="xs" />
@@ -96,7 +96,6 @@ const Discover: React.FC<Props> = ({ navigation }) => {
         {accordion && (
           <S.List
             data={dummy}
-            horizontal={true}
             renderItem={({ item }) => <C.UpcomingMatchCard {...item} />}
           />
         )}

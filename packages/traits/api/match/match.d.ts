@@ -15,18 +15,3 @@ type Match = {
   center?: Center;
   users?: User[];
 };
-
-type ExtendedMatch = {
-  centerName?: string;
-  centerAddress?: string;
-  userOne?: User;
-  userTwo?: User;
-  userThree?: User;
-  userFour?: User;
-  admin?: User;
-  skill?: number[];
-  isPlayer?: boolean;
-  isAdmin?: boolean;
-  isSingle?: boolean;
-  isMe?: (user: User) => boolean;
-} & Match;

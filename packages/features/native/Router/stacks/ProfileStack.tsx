@@ -10,12 +10,10 @@ const Stack = createStackNavigator<ProfileParamList>();
 
 const options = { headerShown: false };
 
-const ProfileStack = () => {
-  return (
-    <Stack.Navigator initialRouteName="Profile" screenOptions={options}>
-      <Stack.Screen name="Profile" component={Profile} />
-    </Stack.Navigator>
-  );
-};
+const ProfileStack = () => (
+  <Stack.Navigator initialRouteName="Profile" screenOptions={options}>
+    <Stack.Screen name="Profile" component={Profile} />
+  </Stack.Navigator>
+);
 
 export default ProfileStack;

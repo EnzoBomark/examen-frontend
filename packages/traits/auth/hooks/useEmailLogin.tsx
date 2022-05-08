@@ -1,15 +1,15 @@
 import { Alert } from 'react-native';
 import auth from '@react-native-firebase/auth';
-import { useGetProfile } from '@racket-traits/api/profile';
+import { useFetchProfile } from '@racket-traits/api/profile';
 
 export const useEmailLogin = () => {
-  const getProfile = useGetProfile();
+  const fetchProfile = useFetchProfile();
 
   const emailLogin = async (email: string, password: string) => {
     try {
       await auth().signInWithEmailAndPassword(email, password);
 
-      getProfile();
+      fetchProfile();
     } catch (err) {
       const message = (err as Error).message;
 

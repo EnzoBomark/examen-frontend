@@ -3,12 +3,12 @@ import * as S from '@racket-styles/native';
 import validate, { v } from '@racket-traits/validation';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AuthParamList } from '@racket-native/router/stacks/AuthStack';
-import { usePostProfile } from '@racket-traits/api/profile';
+import { useCreateProfile } from '@racket-traits/api/profile';
 
 type Props = StackScreenProps<AuthParamList, 'Register'>;
 
 const Register: React.FC<Props> = ({ navigation, route }) => {
-  const postProfile = usePostProfile();
+  const createProfile = useCreateProfile();
   const hasPassword = route.params;
   const [name, setName] = React.useState(route.params?.name || '');
   const [email, setEmail] = React.useState(route.params?.email || '');
@@ -111,7 +111,7 @@ const Register: React.FC<Props> = ({ navigation, route }) => {
 
         <S.Padding size="xs" vertical={false}>
           <S.Button
-            onPress={() => postProfile(name, email, phone, password)}
+            onPress={() => createProfile(name, email, phone, password)}
             label="Register account"
             disabled={
               !!validate(criteria, {

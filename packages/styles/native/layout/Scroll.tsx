@@ -1,3 +1,11 @@
-import styled from 'styled-components/native';
+import * as React from 'react';
+import * as Native from 'react-native';
 
-export const Scroll = styled.ScrollView``;
+export const Scroll: React.FC = ({ children }) => (
+  <Native.ScrollView
+    showsVerticalScrollIndicator={false}
+    showsHorizontalScrollIndicator={false}
+  >
+    {children}
+  </Native.ScrollView>
+);

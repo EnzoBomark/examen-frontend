@@ -11,7 +11,6 @@ const initialState: State = {
     type: 'double',
     duration: '90',
     currency: 'SEK',
-    skill: undefined,
     court: undefined,
     price: undefined,
     phone: undefined,

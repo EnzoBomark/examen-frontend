@@ -27,5 +27,10 @@
     "chat": "Chatt",
     "share": "Dela",
     "rank": "Rank"
+  },
+  "chat": {
+    "member": "Spelare",
+    "members": "Spelare",
+    "send_message": "Skicka meddelande"
   }
 }

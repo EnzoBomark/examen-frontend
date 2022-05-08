@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import messaging from '@react-native-firebase/messaging';
 import Discover from '@racket-native/discover';
 import CreateMatch from '@racket-native/create-match';
@@ -11,7 +11,7 @@ export type MatchParamList = {
   Match: Match;
 };
 
-const Stack = createNativeStackNavigator<MatchParamList>();
+const Stack = createStackNavigator<MatchParamList>();
 
 const MatchStack = () => {
   const pushPersmissionStatus = async () => {

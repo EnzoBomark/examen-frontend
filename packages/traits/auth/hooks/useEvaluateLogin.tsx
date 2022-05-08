@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { useGetProfile, useProfile } from '@racket-traits/api/profile';
+import { useFetchProfile, useProfile } from '@racket-traits/api/profile';
 import { AuthParamList } from '@racket-native/router/stacks/AuthStack';
 
 type Navigation = StackNavigationProp<AuthParamList, 'Login'>;
@@ -12,7 +12,7 @@ type RegisterProps = { name?: string; email?: string; phone?: string };
 export const useEvaluateLogin = () => {
   const navigation = useNavigation<Navigation>();
   const [registerProps, setRegisterProps] = React.useState<RegisterProps>();
-  const getProfile = useGetProfile();
+  const fetchProfile = useFetchProfile();
   const profile = useProfile();
 
   React.useEffect(() => {
@@ -32,7 +32,7 @@ export const useEvaluateLogin = () => {
       phone: data.user.phoneNumber || undefined,
     });
 
-    getProfile();
+    fetchProfile();
   };
 
   return evaluateLogin;

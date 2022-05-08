@@ -1,3 +1,7 @@
+type Background = {
+  color: keyof theme['colors'];
+};
+
 type Spacer = {
   size: keyof theme['space'];
 };
@@ -29,7 +33,7 @@ type AvoidKeyboard = {
 
 type Space = {
   size: keyof theme['space'];
-  flex?: boolean;
+  flexBox?: boolean;
   vertical?: boolean;
   horizontal?: boolean;
 };

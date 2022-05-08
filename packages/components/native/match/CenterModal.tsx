@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
-import { useCenters, useGetCenters } from '@racket-traits/api/center';
+import { useCenters, useFetchCenters } from '@racket-traits/api/center';
 
 type Props = {
   setCenter: (center: string) => void;
@@ -11,7 +11,7 @@ export const CenterModal: React.FC<Props> = (props) => {
   const [label, setLabel] = React.useState('Choose center');
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const centers = useCenters();
-  const getCenters = useGetCenters();
+  const getCenters = useFetchCenters();
 
   React.useEffect(() => {
     if (!centers.hasLoaded) getCenters(centers.page);

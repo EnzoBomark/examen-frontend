@@ -4,7 +4,6 @@ import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { Body } from '../text/Body';
 import { Svg } from '../icon/Svg';
-import { Clickable } from '../button/Clickable';
 
 const screen = Dimensions.get('screen');
 
@@ -80,6 +79,7 @@ export const TextInput: React.FC<TextInput & NativeTextInput> = (props) => {
           placeholder={active ? undefined : props.placeholder}
           value={props.value}
           onChangeText={props.onTextChange}
+          placeholderTextColor={theme.colors.g400}
         />
       </Container>
       {!!error && (

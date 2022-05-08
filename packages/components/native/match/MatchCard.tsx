@@ -30,14 +30,13 @@ type Navigation = StackNavigationProp<MatchParamList, 'Discover'>;
 
 export const MatchCard: React.FC<Match> = (match) => {
   const navigation = useNavigation<Navigation>();
-  const { getSkill, isAdmin, isSingle, getAdmin, getUser } =
-    useMatchFunctions();
+  const { getSkill, isSingle, getAdmin, getUser } = useMatchFunctions();
 
   return (
     <S.Clickable onPress={() => navigation.navigate('Match', match)}>
       <Card style={{ ...theme.shadow }}>
         <S.Row justify="between">
-          <S.Padding size="xs" flex={true}>
+          <S.Padding size="xs" flexBox={true}>
             <S.Body bold={true} color="p600" numberOfLines={2}>
               {match.center?.name}
             </S.Body>
