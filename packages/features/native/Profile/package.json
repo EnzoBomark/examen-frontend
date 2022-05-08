@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "devDependencies": {
+    "@racket-traits/api": "0.0.1",
+    "@racket-components/native": "0.0.1",
+    "@racket-native/router": "0.0.1",
     "@racket-styles/native": "0.0.1",
     "@racket-common/store": "0.0.1",
     "@types/styled-components": "^5.1.21",
