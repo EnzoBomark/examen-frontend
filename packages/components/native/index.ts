@@ -12,6 +12,9 @@ export * from './drawer/Drawer';
 
 // profile
 export * from './profile/ProfileCard';
+export * from './profile/ProfileBioCard';
+export * from './profile/ProfileStatsCard';
+export * from './profile/ProfileSettingsCard';
 
 // match
 export * from './match/UpcomingMatchCard';

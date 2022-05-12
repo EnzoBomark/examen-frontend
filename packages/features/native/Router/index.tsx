@@ -11,6 +11,7 @@ import {
   useUnloadProfile,
 } from '@racket-traits/api/profile';
 import { createStackNavigator } from '@react-navigation/stack';
+import { useUnloadAppState } from '@racket-traits/api/all';
 
 export type RootParamList = {
   DrawerStack: undefined;
@@ -25,13 +26,13 @@ const Stack = createStackNavigator<RootParamList>();
 const options = { headerShown: false };
 
 const RootStack: React.FC = () => {
-  const unloadProfile = useUnloadProfile();
+  const unloadAppState = useUnloadAppState();
   const fetchProfile = useFetchProfile();
   const profile = useProfile();
 
   React.useEffect(() => {
     auth().onAuthStateChanged((user) => {
-      user ? fetchProfile() : unloadProfile();
+      user ? fetchProfile() : unloadAppState();
     });
   }, []);
 

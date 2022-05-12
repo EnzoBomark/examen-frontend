@@ -79,11 +79,11 @@ export const JoinMatchCard: React.FC<Match> = (match) => {
       {user && <NameTag numberOfLines={1}>{user.name}</NameTag>}
       <S.Spacer size="xxs" />
       {user ? (
-        <S.Image src={user?.picture || ''} width="54px" />
+        <S.ProfilePicture user={user} width="54px" />
       ) : (
         <S.IconButton
           disabled={isPlayer}
-          icon={match.isPublic ? 'plus' : 'lock'}
+          icon={match.isPublic ? 'add' : 'lock'}
         />
       )}
       <S.Spacer size="xxs" />

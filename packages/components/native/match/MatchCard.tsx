@@ -70,26 +70,30 @@ export const MatchCard: React.FC<Match> = (match) => {
 
           <S.Padding size="xs">
             <S.Row>
-              <S.Image
-                src={getUser(match.users, '0')?.picture || ''}
+              <S.ProfilePicture
+                user={getUser(match.users, '0')}
                 width="45px"
+                icon={match.isPublic ? 'add' : 'lock'}
               />
               <CardSpacer />
-              <S.Image
-                src={getUser(match.users, '1')?.picture || ''}
+              <S.ProfilePicture
+                user={getUser(match.users, '1')}
                 width="45px"
+                icon={match.isPublic ? 'add' : 'lock'}
               />
             </S.Row>
             <CardSpacer />
             <S.Row>
-              <S.Image
-                src={getUser(match.users, '2')?.picture || ''}
+              <S.ProfilePicture
+                user={getUser(match.users, '2')}
                 width="45px"
+                icon={match.isPublic ? 'add' : 'lock'}
               />
               <CardSpacer />
-              <S.Image
-                src={getUser(match.users, '3')?.picture || ''}
+              <S.ProfilePicture
+                user={getUser(match.users, '3')}
                 width="45px"
+                icon={match.isPublic ? 'add' : 'lock'}
               />
             </S.Row>
           </S.Padding>

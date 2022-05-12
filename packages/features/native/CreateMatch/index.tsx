@@ -15,8 +15,7 @@ const CreateMatch: React.FC<Props> = ({ navigation }) => {
   const createMatch = useCreateMatch();
 
   React.useEffect(() => {
-    if (!match.isLoading && match.hasLoaded)
-      navigation.navigate('Match', match.data);
+    if (!match.isLoading && match.hasLoaded) navigation.navigate('Match');
   }, [match]);
 
   const [type, setType] = React.useState(false);

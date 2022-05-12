@@ -7,6 +7,7 @@ import {
   useFetchMatches,
   useMatches,
   useRefreshMatches,
+  useUnloadMatch,
 } from '@racket-traits/api/match';
 
 type Props = DrawerScreenProps<MatchParamList, 'Discover'>;
@@ -22,6 +23,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
   const matches = useMatches();
   const fetchMatches = useFetchMatches();
   const refreshMatches = useRefreshMatches();
+  const unloadMatch = useUnloadMatch();
   const [accordion, setAccordion] = React.useState(false);
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
 
@@ -51,7 +53,12 @@ const Discover: React.FC<Props> = ({ navigation }) => {
 
             <S.Fill />
 
-            <S.Clickable onPress={() => navigation.navigate('CreateMatch')}>
+            <S.Clickable
+              onPress={() => {
+                unloadMatch();
+                navigation.navigate('CreateMatch');
+              }}
+            >
               <S.Svg src="add" width="24px" color="g1000" />
             </S.Clickable>
 

@@ -9,6 +9,7 @@ type Props = DrawerScreenProps<ProfileParamList, 'Profile'>;
 
 const Profile: React.FC<Props> = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = React.useState(0);
+  const [showSettings, setShowSetting] = React.useState(false);
   const profile = useProfile();
 
   return (
@@ -20,6 +21,45 @@ const Profile: React.FC<Props> = ({ navigation }) => {
               <S.Spacer size="xs" />
 
               <C.ProfileCard {...profile.data} />
+
+              <S.Spacer size="s" />
+
+              <S.ToggleButton
+                labelOne="Stats"
+                labelTwo="Settings"
+                toggle={setShowSetting}
+                value={showSettings}
+              />
+
+              <S.Spacer size="s" />
+
+              {!showSettings && (
+                <React.Fragment>
+                  <C.ProfileBioCard {...profile.data} />
+
+                  <S.Spacer size="s" />
+
+                  <S.Wrap>
+                    <C.ProfileStatsCard
+                      header={'17'}
+                      detail={'Matches played'}
+                    />
+
+                    <C.ProfileStatsCard header={'92%'} detail={'Win rate'} />
+                    <C.ProfileStatsCard header={'24'} detail={'Friends'} />
+                    <C.ProfileStatsCard
+                      header={'3'}
+                      detail={'Upcoming matches'}
+                    />
+                  </S.Wrap>
+                </React.Fragment>
+              )}
+
+              {showSettings && (
+                <React.Fragment>
+                  <C.ProfileSettingsCard />
+                </React.Fragment>
+              )}
 
               <S.Spacer size="s" />
             </S.Padding>
