@@ -22,7 +22,7 @@ const Inner = styled(FastImage)<Partial<Image>>`
   background-color: ${theme.colors.g75};
 `;
 
-const NoImage = styled.View<Partial<Image>>`
+const NoUser = styled.View<Partial<Image>>`
   align-items: center;
   justify-content: center;
   border-radius: ${({ border }) =>
@@ -30,6 +30,16 @@ const NoImage = styled.View<Partial<Image>>`
   height: 100%;
   width: 100%;
   background-color: ${theme.colors.g75};
+`;
+
+const NoImage = styled.View<Partial<Image>>`
+  align-items: center;
+  justify-content: center;
+  border-radius: ${({ border }) =>
+    border ? theme.radius[border] : theme.radius.xs};
+  height: 100%;
+  width: 100%;
+  background-color: ${theme.colors.p300};
 `;
 
 const Prefix = styled(H1)<{ width: number }>`
@@ -46,11 +56,11 @@ export const ProfilePicture: React.FC<Image> = (props) => {
         width={props.width}
         onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
       >
-        <NoImage border={props.border}>
+        <NoUser border={props.border}>
           {props.icon && (
             <Svg src={props.icon} width={`${width / 3}px`} color="g200" />
           )}
-        </NoImage>
+        </NoUser>
       </Container>
     );
 
@@ -62,7 +72,7 @@ export const ProfilePicture: React.FC<Image> = (props) => {
         onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
       >
         <NoImage border={props.border}>
-          <Prefix width={width} color="g200">
+          <Prefix width={width} color="p500">
             {props.user.name[0]}
           </Prefix>
         </NoImage>

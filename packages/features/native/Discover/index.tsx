@@ -3,6 +3,7 @@ import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
+import { useProfile } from '@racket-traits/api/profile';
 import {
   useFetchMatches,
   useMatches,
@@ -20,10 +21,11 @@ const dummy = [
 ];
 
 const Discover: React.FC<Props> = ({ navigation }) => {
+  const profile = useProfile();
   const matches = useMatches();
+  const unloadMatch = useUnloadMatch();
   const fetchMatches = useFetchMatches();
   const refreshMatches = useRefreshMatches();
-  const unloadMatch = useUnloadMatch();
   const [accordion, setAccordion] = React.useState(false);
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
 
@@ -65,7 +67,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
             <S.Spacer size="xs" />
 
             <S.Clickable onPress={() => navigation.navigate('ProfileStack')}>
-              <S.Image src="TEST" width="44px" />
+              <S.ProfilePicture user={profile.data} width="44px" />
             </S.Clickable>
           </S.Row>
 
