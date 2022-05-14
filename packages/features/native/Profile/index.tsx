@@ -4,6 +4,14 @@ import * as C from '@racket-components/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { ProfileParamList } from '@racket-native/router/stacks/ProfileStack';
 import { useProfile } from '@racket-traits/api/profile';
+import {
+  useHistory,
+  useFetchHistory,
+} from '@racket-traits/api/user/misc/history';
+import {
+  useFetchUpcoming,
+  useUpcoming,
+} from '@racket-traits/api/user/misc/upcoming';
 
 type Props = DrawerScreenProps<ProfileParamList, 'Profile'>;
 
@@ -11,6 +19,16 @@ const Profile: React.FC<Props> = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const [showSettings, setShowSetting] = React.useState(false);
   const profile = useProfile();
+  const history = useHistory();
+  const fetchHistory = useFetchHistory();
+
+  const upcoming = useUpcoming();
+  const fetchUpcoming = useFetchUpcoming();
+
+  React.useEffect(() => {
+    if (!history.hasLoaded) fetchHistory(profile.data, history.page);
+    if (!upcoming.hasLoaded) fetchUpcoming(profile.data, upcoming.page);
+  }, []);
 
   return (
     <React.Fragment>
@@ -41,14 +59,16 @@ const Profile: React.FC<Props> = ({ navigation }) => {
 
                   <S.Wrap>
                     <C.ProfileStatsCard
-                      header={'17'}
+                      header={history.count.toString()}
                       detail={'Matches played'}
                     />
 
                     <C.ProfileStatsCard header={'92%'} detail={'Win rate'} />
+
                     <C.ProfileStatsCard header={'24'} detail={'Friends'} />
+
                     <C.ProfileStatsCard
-                      header={'3'}
+                      header={upcoming.count.toString()}
                       detail={'Upcoming matches'}
                     />
                   </S.Wrap>
