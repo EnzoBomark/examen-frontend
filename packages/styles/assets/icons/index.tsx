@@ -43,6 +43,8 @@ import ball from './ball.svg';
 import slider from './slider.svg';
 import stopwatch from './stopwatch.svg';
 import menu from './menu.svg';
+import bookmark from './bookmark.svg';
+import bookmarkFill from './bookmark-fill.svg';
 
 const Icons = {
   forward,
@@ -90,6 +92,8 @@ const Icons = {
   slider,
   stopwatch,
   menu,
+  bookmark,
+  bookmarkFill,
 };
 
 export default Icons;

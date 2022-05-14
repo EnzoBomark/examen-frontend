@@ -4,6 +4,9 @@ export * from './chat/ChatUserCard';
 export * from './chat/ChatCard';
 export * from './chat/Input';
 
+// center
+export * from './center/CenterInfo';
+
 // community
 export * from './community/UserCard';
 

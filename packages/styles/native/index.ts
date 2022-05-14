@@ -45,6 +45,7 @@ export * from './list/HorizontalList';
 export * from './list/List';
 
 // layout
+export * from './layout/Center';
 export * from './layout/Background';
 export * from './layout/Wrap';
 export * from './layout/Screen';
