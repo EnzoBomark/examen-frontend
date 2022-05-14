@@ -22,3 +22,8 @@ export const fail = (error: ResponseError): Action => ({
   type: Types.FAIL,
   payload: error,
 });
+
+export const resignBookmark = (center: Center, profile: User): Action => ({
+  type: Types.RESIGN_BOOKMARK,
+  payload: { center, profile },
+});

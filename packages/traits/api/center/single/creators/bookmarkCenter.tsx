@@ -1,19 +1,19 @@
 import api, { AxiosError } from '../../../axios';
-import { useSetFollow } from '../../multiple';
+import { useSetBookmark } from '../../multiple';
 import { fail, pending, success } from '../actions';
 import store from '../store';
 
-export const useFollowUser = () => {
+export const useBookmarkCenter = () => {
   const dispatch = store.useDispatch();
-  const setFollow = useSetFollow();
+  const setFollow = useSetBookmark();
 
-  const followUser = (user: User) => {
+  const bookmarkCenter = (center: Center) => {
     dispatch(pending());
 
     api
-      .put<User>(`profile/follow/${user.id}`)
+      .put<Center>(`profile/center/${center.id}`)
       .then((res) => {
-        setFollow(user);
+        setFollow(center);
         dispatch(success(res.data));
       })
       .catch((err: AxiosError<ResponseError<Chat>>) => {
@@ -21,5 +21,5 @@ export const useFollowUser = () => {
         dispatch(fail(err.response.data));
       });
   };
-  return followUser;
+  return bookmarkCenter;
 };

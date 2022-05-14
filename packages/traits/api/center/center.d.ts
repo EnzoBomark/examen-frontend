@@ -5,6 +5,7 @@ type Center = {
   address: string;
   contactUrl: string;
   bookingUrl: string;
-  cityId?: string;
+  cityId: string;
   city?: City;
+  users: User[];
 };

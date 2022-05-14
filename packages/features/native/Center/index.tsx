@@ -5,12 +5,15 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import { ProfileParamList } from '@racket-native/router/stacks/ProfileStack';
 import { useCenter } from '@racket-traits/api/center';
 import { useCenterFunctions } from '@racket-traits/api/center/useCenterFunctions';
+import { useBookmarkCenter } from '@racket-traits/api/center/single/creators/bookmarkCenter';
 
 type Props = DrawerScreenProps<ProfileParamList, 'Centers'>;
 
 const Center: React.FC<Props> = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = React.useState(0);
+  const { isBookmarked } = useCenterFunctions();
   const center = useCenter();
+  const bookmarkCenter = useBookmarkCenter();
 
   return (
     <React.Fragment>
@@ -33,10 +36,10 @@ const Center: React.FC<Props> = ({ navigation }) => {
 
             <S.Fill />
 
-            <S.Clickable onPress={() => null}>
+            <S.Clickable onPress={() => bookmarkCenter(center.data)}>
               <S.Svg
-                src={true ? 'bookmarkFill' : 'bookmark'}
-                color={true ? 's600' : 'g400'}
+                src={isBookmarked(center.data) ? 'bookmarkFill' : 'bookmark'}
+                color={isBookmarked(center.data) ? 's600' : 'g400'}
                 width="26px"
               />
             </S.Clickable>

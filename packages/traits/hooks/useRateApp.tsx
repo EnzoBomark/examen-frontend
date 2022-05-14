@@ -23,8 +23,8 @@ export const rate = async () => {
       { lastAsked: 0, hasRated: false },
       ({ lastAsked }) => ({ lastAsked, hasRated: true })
     );
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    throw err;
   }
 };
 

@@ -12,6 +12,8 @@ const initialState: State = {
     address: '',
     contactUrl: '',
     bookingUrl: '',
+    cityId: '',
+    users: [],
   },
 };
 

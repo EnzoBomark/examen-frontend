@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
-import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
 import { useCenterFunctions } from '@racket-traits/api/center/useCenterFunctions';
 
@@ -54,6 +53,7 @@ export const CenterInfo: React.FC<Center> = (center) => {
         <S.Spacer size="xl" />
 
         <S.Button
+          disabled={!center.address}
           label={'Maps'}
           icon="infoDrop"
           width={`${screen.width / 1.5}px`}
@@ -63,6 +63,7 @@ export const CenterInfo: React.FC<Center> = (center) => {
         <S.Spacer size="xs" />
 
         <S.Button
+          disabled={!center.bookingUrl}
           label={'Booking'}
           icon="ball"
           width={`${screen.width / 1.5}px`}
@@ -72,6 +73,7 @@ export const CenterInfo: React.FC<Center> = (center) => {
         <S.Spacer size="xs" />
 
         <S.Button
+          disabled={!center.contactUrl}
           label={'Contact'}
           icon="info"
           width={`${screen.width / 1.5}px`}
