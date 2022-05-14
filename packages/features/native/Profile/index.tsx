@@ -1,19 +1,25 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
-import { useFocusEffect } from '@react-navigation/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { ProfileParamList } from '@racket-native/router/stacks/ProfileStack';
 import { useProfile } from '@racket-traits/api/profile';
 import {
   useHistory,
-  useFetchHistory,
-  useRefreshHistory,
+  useCountHistory,
 } from '@racket-traits/api/user/misc/history';
 import {
-  useFetchUpcoming,
   useUpcoming,
+  useCountUpcoming,
 } from '@racket-traits/api/user/misc/upcoming';
+import {
+  useFollowers,
+  useCountFollowers,
+} from '@racket-traits/api/user/misc/followers';
+import {
+  useFollowings,
+  useCountFollowings,
+} from '@racket-traits/api/user/misc/followings';
 
 type Props = DrawerScreenProps<ProfileParamList, 'Profile'>;
 
@@ -21,10 +27,21 @@ const Profile: React.FC<Props> = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const [showSettings, setShowSetting] = React.useState(false);
   const profile = useProfile();
+  const countHistory = useCountHistory();
+  const countUpcoming = useCountUpcoming();
+  const countFollowers = useCountFollowers();
+  const countFollowings = useCountFollowings();
   const history = useHistory();
-  const refreshHistory = useRefreshHistory();
   const upcoming = useUpcoming();
-  const fetchUpcoming = useFetchUpcoming();
+  const followers = useFollowers();
+  const followings = useFollowings();
+
+  React.useEffect(() => {
+    countHistory(profile.data);
+    countUpcoming(profile.data);
+    countFollowers(profile.data);
+    countFollowings(profile.data);
+  }, []);
 
   return (
     <React.Fragment>
@@ -54,18 +71,31 @@ const Profile: React.FC<Props> = ({ navigation }) => {
                   <S.Spacer size="s" />
 
                   <S.Wrap>
+                    <C.ProfileStatsCard header={'92%'} detail={'Win rate'} />
+
+                    <C.ProfileStatsCard
+                      header={upcoming.count.toString()}
+                      detail={'Upcoming matches'}
+                    />
+
                     <C.ProfileStatsCard
                       header={history.count.toString()}
                       detail={'Matches played'}
                     />
 
-                    <C.ProfileStatsCard header={'92%'} detail={'Win rate'} />
-
-                    <C.ProfileStatsCard header={'24'} detail={'Friends'} />
+                    <C.ProfileStatsCard
+                      header={'0'}
+                      detail={'Bookmarked centers'}
+                    />
 
                     <C.ProfileStatsCard
-                      header={upcoming.count.toString()}
-                      detail={'Upcoming matches'}
+                      header={followings.count.toString()}
+                      detail={'Following'}
+                    />
+
+                    <C.ProfileStatsCard
+                      header={followers.count.toString()}
+                      detail={'Followers'}
                     />
                   </S.Wrap>
                 </React.Fragment>

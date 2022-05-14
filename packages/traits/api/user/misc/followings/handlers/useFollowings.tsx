@@ -1,4 +1,4 @@
 import { followingsSelector } from '../selectors';
 import Store from '../store';
 
-export const useHistory = () => Store.useSelector(followingsSelector);
+export const useFollowings = () => Store.useSelector(followingsSelector);

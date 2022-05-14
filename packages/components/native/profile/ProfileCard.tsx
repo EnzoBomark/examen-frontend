@@ -55,12 +55,20 @@ export const ProfileCard: React.FC<User> = (user) => {
         <S.Spacer size="xxs" />
 
         <S.Detail color="g400">Date of Birth</S.Detail>
-        <S.Body color="g500">{user.birthDate ? user.birthDate : '-'}</S.Body>
+        <S.Body color="g500">
+          {user.birthDate
+            ? new Date(user.birthDate)
+                .toLocaleDateString()
+                .split('-')
+                .reverse()
+                .join(' ')
+            : '-'}
+        </S.Body>
 
         <S.Spacer size="xxs" />
 
         <S.Detail color="g400">Main city</S.Detail>
-        <S.Body color="g500">{user.birthDate ? user.birthDate : '-'}</S.Body>
+        <S.Body color="g500">{'todo'}</S.Body>
 
         <S.Fill />
       </S.Col>
