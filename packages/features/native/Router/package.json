@@ -36,6 +36,7 @@
     "@racket-native/settings": "0.0.1",
     "@racket-native/match-history": "0.0.1",
     "@racket-native/centers": "0.0.1",
+    "@racket-native/center": "0.0.1",
     "@racket-native/community": "0.0.1"
   }
 }

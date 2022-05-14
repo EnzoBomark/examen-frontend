@@ -44,6 +44,12 @@ const store = createStore<State, Action>({
           hasError: action.payload,
         };
 
+      case Types.SET_CENTER:
+        return {
+          ...state,
+          data: action.payload,
+        };
+
       default:
         return state;
     }

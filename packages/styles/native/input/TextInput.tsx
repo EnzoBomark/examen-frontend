@@ -50,6 +50,37 @@ export const TextInput: React.FC<TextInput & NativeTextInput> = (props) => {
 
   const error = showError ? props.error : undefined;
 
+  if (props.static)
+    return (
+      <React.Fragment>
+        <Container {...props} error={props.error}>
+          {props.icon && (
+            <Icon>
+              <Svg
+                src={props.icon}
+                color={active ? 'g500' : 'g400'}
+                width="18px"
+              />
+            </Icon>
+          )}
+          <Inner
+            pointerEvents="none"
+            editable={false}
+            selectTextOnFocus={false}
+            selectionColor={theme.colors.g700}
+            icon={props.icon}
+            placeholder={active ? undefined : props.placeholder}
+            value={props.value}
+          />
+        </Container>
+        {!!props.error && (
+          <ErrorLabel color={active ? 'g400' : 'error'}>
+            {props.error}
+          </ErrorLabel>
+        )}
+      </React.Fragment>
+    );
+
   return (
     <React.Fragment>
       {props.label && active && (

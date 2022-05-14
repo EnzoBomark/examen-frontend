@@ -5,13 +5,9 @@ import MatchStack from './stacks/MatchStack';
 import AuthStack from './stacks/AuthStack';
 import ProfileStack from './stacks/ProfileStack';
 import ChatStack from './stacks/ChatStack';
-import {
-  useProfile,
-  useFetchProfile,
-  useUnloadProfile,
-} from '@racket-traits/api/profile';
+import { useProfile, useFetchProfile } from '@racket-traits/api/profile';
 import { createStackNavigator } from '@react-navigation/stack';
-import { useUnloadAppState } from '@racket-traits/api/all';
+import { useUnloadAppState } from '@racket-traits/api/core';
 
 export type RootParamList = {
   DrawerStack: undefined;

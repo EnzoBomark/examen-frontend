@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
-import validate, { v } from '@racket-traits/validation';
+import criteria, { v } from '@racket-traits/validation';
 import { StackScreenProps } from '@react-navigation/stack';
 import { AuthParamList } from '@racket-native/router/stacks/AuthStack';
 import { useCreateProfile } from '@racket-traits/api/profile';
@@ -16,13 +16,15 @@ const Register: React.FC<Props> = ({ navigation, route }) => {
   const [password, setPassword] = React.useState('');
   const [passwordRepet, setPasswordRepet] = React.useState('');
 
-  const criteria = new Map([
-    [{ name }, [v.min(3), v.max(20)]],
-    [{ email }, [v.isEmail]],
-    [{ phone }, [v.isPhone]],
-    [{ password }, [v.min(8), v.max(30), v.upper, v.lower, v.digit]],
-    [{ passwordRepet }, [v.match(password)]],
-  ]);
+  const validate = criteria(
+    new Map([
+      [{ name }, [v.min(3), v.max(20)]],
+      [{ email }, [v.isEmail]],
+      [{ phone }, [v.isPhone]],
+      [{ password }, [v.min(8), v.max(30), v.upper, v.lower, v.digit]],
+      [{ passwordRepet }, [v.match(password)]],
+    ])
+  );
 
   return (
     <S.AvoidKeyboard>
@@ -36,7 +38,7 @@ const Register: React.FC<Props> = ({ navigation, route }) => {
 
           <S.Spacer size="xxs" />
 
-          <S.H1 bold={true}>Register</S.H1>
+          <S.H1 bold>Register</S.H1>
 
           <S.Spacer size="xxs" />
 
@@ -45,33 +47,33 @@ const Register: React.FC<Props> = ({ navigation, route }) => {
 
         <S.Padding size="xs" vertical={false}>
           <S.TextInput
-            error={validate(criteria, { name })}
+            label
             placeholder="Nickname"
-            label={true}
             value={name}
             onTextChange={setName}
+            error={validate({ name })}
           />
 
           <S.Spacer size="xs" />
 
           <S.TextInput
-            error={validate(criteria, { email })}
+            label
             placeholder="Email"
-            label={true}
             type="email-address"
             value={email}
             onTextChange={setEmail}
+            error={validate({ email })}
           />
 
           <S.Spacer size="xs" />
 
           <S.TextInput
-            error={validate(criteria, { phone })}
+            label
             placeholder="Phone number"
-            label={true}
             type="phone-pad"
             value={phone}
             onTextChange={setPhone}
+            error={validate({ phone })}
           />
 
           <S.Spacer size="xs" />
@@ -79,24 +81,24 @@ const Register: React.FC<Props> = ({ navigation, route }) => {
           {!hasPassword && (
             <React.Fragment>
               <S.TextInput
-                error={validate(criteria, { password })}
+                label
+                password
                 placeholder="Password"
-                label={true}
-                password={true}
                 value={password}
                 onTextChange={setPassword}
+                error={validate({ password })}
                 icon="lock"
               />
 
               <S.Spacer size="xs" />
 
               <S.TextInput
-                error={validate(criteria, { passwordRepet })}
+                label
+                password
                 placeholder="Password repet"
-                label={true}
-                password={true}
                 value={passwordRepet}
                 onTextChange={setPasswordRepet}
+                error={validate({ passwordRepet })}
                 icon="lock"
               />
 
@@ -114,7 +116,7 @@ const Register: React.FC<Props> = ({ navigation, route }) => {
             onPress={() => createProfile(name, email, phone, password)}
             label="Register account"
             disabled={
-              !!validate(criteria, {
+              !!validate({
                 name,
                 email,
                 phone,

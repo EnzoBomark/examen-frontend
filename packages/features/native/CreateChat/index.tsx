@@ -3,7 +3,7 @@ import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
-import { useCreateChat, useUnloadChat } from '@racket-traits/api/chat';
+import { useCreateChat } from '@racket-traits/api/chat';
 import {
   useFetchUsers,
   useRefreshUsers,
@@ -32,8 +32,8 @@ const CreateChat: React.FC<Props> = ({ navigation }) => {
   return (
     <React.Fragment>
       <S.List
+        fullScreen
         headerHeight={headerHeight}
-        fullScreen={true}
         onEndReached={() => fetchUsers(query, users.page)}
         onRefresh={() => refreshUsers(query)}
         data={users.data}

@@ -12,6 +12,7 @@ export enum Types {
   PENDING = 'PENDING',
   SUCCESS = 'SUCCESS',
   FAIL = 'FAIL',
+  SET_CENTER = 'SET_CENTER',
 }
 
 export type Payload = {
@@ -19,6 +20,7 @@ export type Payload = {
   [Types.PENDING]: undefined;
   [Types.SUCCESS]: Center;
   [Types.FAIL]: ResponseError<Center>;
+  [Types.SET_CENTER]: Center;
 };
 
 export type Action = ActionMap<Payload>[keyof ActionMap<Payload>];

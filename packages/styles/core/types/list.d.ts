@@ -1,3 +1,3 @@
-interface StaticList {
+type StaticList = {
   items: ReadonlyArray<JSX.Element | null>;
-}
+};
