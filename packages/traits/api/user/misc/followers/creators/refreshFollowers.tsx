@@ -1,9 +1,11 @@
 import api, { AxiosError } from '../../../../axios';
-import { count, fail, pending, refresh } from '../actions';
+import { fail, pending, refresh } from '../actions';
 import store from '../store';
+import { useCountFollowers } from './countFollowers';
 
 export const useRefreshFollowers = () => {
   const dispatch = store.useDispatch();
+  const countFollowers = useCountFollowers();
 
   const refreshFollowers = (user: User) => {
     dispatch(pending());
@@ -16,13 +18,7 @@ export const useRefreshFollowers = () => {
         dispatch(fail(err.response.data));
       });
 
-    api
-      .get<{ count: number }>(`user/${user.id}/followers/count`)
-      .then((res) => dispatch(count(res.data.count)))
-      .catch((err: AxiosError<ResponseError>) => {
-        if (!err.response) throw err;
-        dispatch(fail(err.response.data));
-      });
+    countFollowers(user);
   };
   return refreshFollowers;
 };

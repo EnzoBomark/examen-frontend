@@ -1,5 +1,6 @@
-export * from './handlers/unloadfollowers';
-export * from './handlers/usefollowers';
+export * from './handlers/unloadFollowers';
+export * from './handlers/useFollowers';
 
-export * from './creators/fetchfollowers';
-export * from './creators/refreshfollowers';
+export * from './creators/countFollowers';
+export * from './creators/fetchFollowers';
+export * from './creators/refreshFollowers';

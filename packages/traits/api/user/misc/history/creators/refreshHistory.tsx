@@ -1,9 +1,11 @@
 import api, { AxiosError } from '../../../../axios';
-import { count, fail, pending, refresh } from '../actions';
+import { fail, pending, refresh } from '../actions';
 import store from '../store';
+import { useCountHistory } from './countHistory';
 
 export const useRefreshHistory = () => {
   const dispatch = store.useDispatch();
+  const countHistory = useCountHistory();
 
   const refreshHistory = (user: User) => {
     dispatch(pending());
@@ -16,13 +18,7 @@ export const useRefreshHistory = () => {
         dispatch(fail(err.response.data));
       });
 
-    api
-      .get<{ count: number }>(`user/${user.id}/history/count`)
-      .then((res) => dispatch(count(res.data.count)))
-      .catch((err: AxiosError<ResponseError>) => {
-        if (!err.response) throw err;
-        dispatch(fail(err.response.data));
-      });
+    countHistory(user);
   };
   return refreshHistory;
 };

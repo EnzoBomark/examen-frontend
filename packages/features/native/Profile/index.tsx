@@ -1,12 +1,14 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { ProfileParamList } from '@racket-native/router/stacks/ProfileStack';
 import { useProfile } from '@racket-traits/api/profile';
 import {
   useHistory,
   useFetchHistory,
+  useRefreshHistory,
 } from '@racket-traits/api/user/misc/history';
 import {
   useFetchUpcoming,
@@ -20,15 +22,9 @@ const Profile: React.FC<Props> = ({ navigation }) => {
   const [showSettings, setShowSetting] = React.useState(false);
   const profile = useProfile();
   const history = useHistory();
-  const fetchHistory = useFetchHistory();
-
+  const refreshHistory = useRefreshHistory();
   const upcoming = useUpcoming();
   const fetchUpcoming = useFetchUpcoming();
-
-  React.useEffect(() => {
-    if (!history.hasLoaded) fetchHistory(profile.data, history.page);
-    if (!upcoming.hasLoaded) fetchUpcoming(profile.data, upcoming.page);
-  }, []);
 
   return (
     <React.Fragment>

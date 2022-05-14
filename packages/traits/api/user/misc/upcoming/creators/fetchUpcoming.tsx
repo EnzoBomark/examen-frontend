@@ -1,9 +1,11 @@
 import api, { AxiosError } from '../../../../axios';
 import { count, fail, pending, success } from '../actions';
 import store from '../store';
+import { useCountUpcoming } from './countUpcoming';
 
 export const useFetchUpcoming = () => {
   const dispatch = store.useDispatch();
+  const countUpcoming = useCountUpcoming();
 
   const fetchUpcoming = (user: User, page: number) => {
     dispatch(pending());
@@ -16,13 +18,7 @@ export const useFetchUpcoming = () => {
         dispatch(fail(err.response.data));
       });
 
-    api
-      .get<{ count: number }>(`user/${user.id}/upcoming/count`)
-      .then((res) => dispatch(count(res.data.count)))
-      .catch((err: AxiosError<ResponseError>) => {
-        if (!err.response) throw err;
-        dispatch(fail(err.response.data));
-      });
+    countUpcoming(user);
   };
   return fetchUpcoming;
 };
