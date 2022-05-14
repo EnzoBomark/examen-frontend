@@ -2,10 +2,10 @@ import api, { AxiosError } from '../../../../axios';
 import { fail, pending, success } from '../actions';
 import store from '../store';
 
-export const useFetchUpcoming = () => {
+export const useFetchWinRate = () => {
   const dispatch = store.useDispatch();
 
-  const fetchUpcoming = (user: User) => {
+  const fetchWinRate = (user: User) => {
     dispatch(pending());
 
     api
@@ -16,5 +16,5 @@ export const useFetchUpcoming = () => {
         dispatch(fail(err.response.data));
       });
   };
-  return fetchUpcoming;
+  return fetchWinRate;
 };

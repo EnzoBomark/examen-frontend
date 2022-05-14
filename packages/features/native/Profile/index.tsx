@@ -20,6 +20,14 @@ import {
   useFollowings,
   useCountFollowings,
 } from '@racket-traits/api/user/misc/followings';
+import {
+  useCenters,
+  useCountCenters,
+} from '@racket-traits/api/user/misc/centers';
+import {
+  useFetchWinRate,
+  useWinRate,
+} from '@racket-traits/api/user/misc/win-rate';
 
 type Props = DrawerScreenProps<ProfileParamList, 'Profile'>;
 
@@ -27,16 +35,22 @@ const Profile: React.FC<Props> = ({ navigation }) => {
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const [showSettings, setShowSetting] = React.useState(false);
   const profile = useProfile();
+  const winRate = useWinRate();
+  const fetchWinRate = useFetchWinRate();
+  const countCenters = useCountCenters();
   const countHistory = useCountHistory();
   const countUpcoming = useCountUpcoming();
   const countFollowers = useCountFollowers();
   const countFollowings = useCountFollowings();
+  const centers = useCenters();
   const history = useHistory();
   const upcoming = useUpcoming();
   const followers = useFollowers();
   const followings = useFollowings();
 
   React.useEffect(() => {
+    fetchWinRate(profile.data);
+    countCenters(profile.data);
     countHistory(profile.data);
     countUpcoming(profile.data);
     countFollowers(profile.data);
@@ -71,7 +85,10 @@ const Profile: React.FC<Props> = ({ navigation }) => {
                   <S.Spacer size="s" />
 
                   <S.Wrap>
-                    <C.ProfileStatsCard header={'92%'} detail={'Win rate'} />
+                    <C.ProfileStatsCard
+                      header={winRate.data ? `${winRate.data}%` : '-'}
+                      detail={'Win rate'}
+                    />
 
                     <C.ProfileStatsCard
                       header={upcoming.count.toString()}
@@ -84,7 +101,7 @@ const Profile: React.FC<Props> = ({ navigation }) => {
                     />
 
                     <C.ProfileStatsCard
-                      header={'0'}
+                      header={centers.count.toString()}
                       detail={'Bookmarked centers'}
                     />
 
