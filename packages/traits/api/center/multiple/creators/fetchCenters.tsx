@@ -1,15 +1,15 @@
-import api, { AxiosError } from '../../../index';
+import api, { AxiosError } from '../../../axios';
 import { fail, pending, success } from '../actions';
 import store from '../store';
 
 export const useFetchCenters = () => {
   const dispatch = store.useDispatch();
 
-  const fetchCenters = (page: number) => {
+  const fetchCenters = (query: string, page: number) => {
     dispatch(pending());
 
     api
-      .get<Center[]>(`centers`, { params: { page } })
+      .get<Center[]>(`centers`, { params: { query, page } })
       .then((res) => dispatch(success(res.data)))
       .catch((err: AxiosError<ResponseError>) => {
         if (!err.response) throw err;

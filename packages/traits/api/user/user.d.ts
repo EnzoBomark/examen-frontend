@@ -9,11 +9,12 @@ type User = {
   email: string;
   phone: string;
   picture?: string;
+  birthDate?: string;
   description?: string;
-  skill?: '0' | '1' | '2' | '3' | '4' | '5';
   isRightHand?: boolean;
   fcm?: string;
+  skill?: '0' | '1' | '2' | '3' | '4' | '5';
   usersMatches?: UsersMatches;
-  followings: User[];
   followers: User[];
+  followings: User[];
 };

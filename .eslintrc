@@ -39,7 +39,8 @@
     "react/jsx-uses-vars": "error",
     "workspaces/no-relative-imports": "error",
     "workspaces/require-dependency": "error",
-    "workspaces/no-absolute-imports": "error"
+    "workspaces/no-absolute-imports": "error",
+    "no-console": "warn"
   },
 
   "settings": {

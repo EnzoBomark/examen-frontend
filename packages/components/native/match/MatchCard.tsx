@@ -5,7 +5,7 @@ import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
-import { useMatchFunctions } from '@racket-traits/api/match';
+import { useMatchFunctions, useSetMatch } from '@racket-traits/api/match';
 import { getTime, getWeekday } from '@racket-traits/utils';
 
 const Card = styled.View`
@@ -30,10 +30,16 @@ type Navigation = StackNavigationProp<MatchParamList, 'Discover'>;
 
 export const MatchCard: React.FC<Match> = (match) => {
   const navigation = useNavigation<Navigation>();
+  const setMatch = useSetMatch();
   const { getSkill, isSingle, getAdmin, getUser } = useMatchFunctions();
 
   return (
-    <S.Clickable onPress={() => navigation.navigate('Match', match)}>
+    <S.Clickable
+      onPress={() => {
+        setMatch(match);
+        navigation.navigate('Match');
+      }}
+    >
       <Card style={{ ...theme.shadow }}>
         <S.Row justify="between">
           <S.Padding size="xs" flexBox={true}>
@@ -64,26 +70,30 @@ export const MatchCard: React.FC<Match> = (match) => {
 
           <S.Padding size="xs">
             <S.Row>
-              <S.Image
-                src={getUser(match.users, '0')?.picture || ''}
+              <S.ProfilePicture
+                user={getUser(match.users, '0')}
                 width="45px"
+                icon={match.isPublic ? 'add' : 'lock'}
               />
               <CardSpacer />
-              <S.Image
-                src={getUser(match.users, '1')?.picture || ''}
+              <S.ProfilePicture
+                user={getUser(match.users, '1')}
                 width="45px"
+                icon={match.isPublic ? 'add' : 'lock'}
               />
             </S.Row>
             <CardSpacer />
             <S.Row>
-              <S.Image
-                src={getUser(match.users, '2')?.picture || ''}
+              <S.ProfilePicture
+                user={getUser(match.users, '2')}
                 width="45px"
+                icon={match.isPublic ? 'add' : 'lock'}
               />
               <CardSpacer />
-              <S.Image
-                src={getUser(match.users, '3')?.picture || ''}
+              <S.ProfilePicture
+                user={getUser(match.users, '3')}
                 width="45px"
+                icon={match.isPublic ? 'add' : 'lock'}
               />
             </S.Row>
           </S.Padding>

@@ -1,4 +1,4 @@
-import api, { AxiosError } from '../../../index';
+import api, { AxiosError } from '../../../axios';
 import { useSetChat } from '../../multiple/handlers/setChat';
 import { fail, pending, success } from '../actions';
 import store from '../store';
@@ -6,7 +6,8 @@ import store from '../store';
 export const useCreateChat = () => {
   const dispatch = store.useDispatch();
   const setChat = useSetChat();
-  const createChat = (users: User[]) => {
+
+  const createChat = (users: User[], callback: () => void) => {
     dispatch(pending());
 
     api
@@ -16,6 +17,7 @@ export const useCreateChat = () => {
       .then((res) => {
         dispatch(success(res.data));
         setChat(res.data);
+        callback();
       })
       .catch((err: AxiosError<ResponseError<Chat>>) => {
         if (!err.response) throw err;

@@ -3,10 +3,12 @@ import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
+import { useProfile } from '@racket-traits/api/profile';
 import {
   useFetchMatches,
   useMatches,
   useRefreshMatches,
+  useUnloadMatch,
 } from '@racket-traits/api/match';
 
 type Props = DrawerScreenProps<MatchParamList, 'Discover'>;
@@ -19,7 +21,9 @@ const dummy = [
 ];
 
 const Discover: React.FC<Props> = ({ navigation }) => {
+  const profile = useProfile();
   const matches = useMatches();
+  const unloadMatch = useUnloadMatch();
   const fetchMatches = useFetchMatches();
   const refreshMatches = useRefreshMatches();
   const [accordion, setAccordion] = React.useState(false);
@@ -41,7 +45,9 @@ const Discover: React.FC<Props> = ({ navigation }) => {
       />
 
       <S.Header setHeaderHeight={setHeaderHeight}>
-        <S.Padding size="xs">
+        <S.Padding size="xs" vertical={false}>
+          <S.Spacer size="xs" />
+
           <S.Row align="center">
             <S.Clickable onPress={() => navigation.openDrawer()}>
               <S.Svg src="hamburger" width="24px" color="g1000" />
@@ -49,14 +55,19 @@ const Discover: React.FC<Props> = ({ navigation }) => {
 
             <S.Fill />
 
-            <S.Clickable onPress={() => navigation.navigate('CreateMatch')}>
+            <S.Clickable
+              onPress={() => {
+                unloadMatch();
+                navigation.navigate('CreateMatch');
+              }}
+            >
               <S.Svg src="add" width="24px" color="g1000" />
             </S.Clickable>
 
             <S.Spacer size="xs" />
 
             <S.Clickable onPress={() => navigation.navigate('ProfileStack')}>
-              <S.Image src="TEST" width="44px" />
+              <S.ProfilePicture user={profile.data} width="44px" />
             </S.Clickable>
           </S.Row>
 
@@ -93,11 +104,13 @@ const Discover: React.FC<Props> = ({ navigation }) => {
           </S.Row>
         </S.Padding>
 
-        {accordion && (
-          <S.List
+        {accordion ? (
+          <S.HorizontalList
             data={dummy}
             renderItem={({ item }) => <C.UpcomingMatchCard {...item} />}
           />
+        ) : (
+          <S.Spacer size="xs" />
         )}
       </S.Header>
     </React.Fragment>

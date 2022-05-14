@@ -22,6 +22,7 @@ declare global {
     width?: string;
     height?: string;
     password?: boolean;
+    static?: boolean;
   };
 
   type TextArea = {

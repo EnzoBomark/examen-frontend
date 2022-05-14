@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 
-const Matches: React.FC = () => {
+const MatchHistory: React.FC = () => {
   const [bool, setBool] = React.useState<boolean>(false);
 
   return (
@@ -70,4 +70,4 @@ const Matches: React.FC = () => {
   );
 };
 
-export default Matches;
+export default MatchHistory;

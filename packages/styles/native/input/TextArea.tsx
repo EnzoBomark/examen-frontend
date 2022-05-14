@@ -26,8 +26,7 @@ const Container = styled.View<TextInput>`
 `;
 
 const Inner = styled.TextInput<TextInput>`
-  padding-right: 16px;
-  padding-left: 16px;
+  padding: 4px 16px 8px 16px;
   color: ${({ active }) => (active ? theme.colors.g700 : theme.colors.g600)};
   width: 100%;
   height: 100%;

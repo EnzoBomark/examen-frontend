@@ -12,6 +12,8 @@ const initialState: State = {
     address: '',
     contactUrl: '',
     bookingUrl: '',
+    cityId: '',
+    users: [],
   },
 };
 
@@ -42,6 +44,12 @@ const store = createStore<State, Action>({
           ...state,
           isLoading: false,
           hasError: action.payload,
+        };
+
+      case Types.SET_CENTER:
+        return {
+          ...state,
+          data: action.payload,
         };
 
       default:

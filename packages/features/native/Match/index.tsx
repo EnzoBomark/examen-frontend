@@ -3,18 +3,17 @@ import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
-import { useMatchFunctions, useUnloadMatch } from '@racket-traits/api/match';
+import { useMatch, useMatchFunctions } from '@racket-traits/api/match';
 import { getTime, getDate, getWeekday } from '@racket-traits/utils';
 import { useTranslation } from '@racket-traits/lang';
 
 type Props = StackScreenProps<MatchParamList, 'Match'>;
 
-const Match: React.FC<Props> = ({ navigation, route }) => {
-  const [headerHeight, setHeaderHeight] = React.useState(0);
+const Match: React.FC<Props> = ({ navigation }) => {
   const { getSkill, isAdmin, isSingle } = useMatchFunctions();
+  const [headerHeight, setHeaderHeight] = React.useState(0);
   const { match: t } = useTranslation();
-  const unloadMatch = useUnloadMatch();
-  const match = route.params;
+  const match = useMatch();
 
   return (
     <React.Fragment>
@@ -24,12 +23,12 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
             <S.Padding size="xs" vertical={false} flexBox={true}>
               <S.Spacer size="xs" />
 
-              <C.JoinMatchCard {...match} />
+              <C.JoinMatchCard {...match.data} />
 
               <S.Spacer size="s" />
 
               <S.Padding size="xxs" vertical={false}>
-                <S.Row>
+                <S.Row justify="center">
                   <S.SmallButton icon="chat" label={t.chat} />
                   <S.Spacer size="xs" />
                   <S.SmallButton icon="community" label={t.invite} />
@@ -47,7 +46,7 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
                 <S.Row align="center">
                   <S.Svg src="infoDrop" width="20px" color="g400" />
                   <S.Spacer size="xxs" />
-                  <S.Body>{match.center?.address}</S.Body>
+                  <S.Body>{match.data.center?.address}</S.Body>
                 </S.Row>
 
                 <S.Spacer size="xs" />
@@ -56,12 +55,13 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
                   <S.Svg src="clock" width="20px" color="g400" />
                   <S.Spacer size="xxs" />
                   <S.Body>
-                    {getTime(match.dateTime)} {getWeekday(match.dateTime)}
+                    {getTime(match.data.dateTime)}{' '}
+                    {getWeekday(match.data.dateTime)}
                   </S.Body>
                   <S.Spacer size="xxs" />
                   <S.Svg src="calender" width="20px" color="g400" />
                   <S.Spacer size="xxs" />
-                  <S.Body>{getDate(match.dateTime)}</S.Body>
+                  <S.Body>{getDate(match.data.dateTime)}</S.Body>
                 </S.Row>
 
                 <S.Spacer size="xs" />
@@ -69,7 +69,7 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
                 <S.Row align="center">
                   <S.Svg src="star" width="18px" color="g400" />
                   <S.Spacer size="xxs" />
-                  <S.Body>{getSkill(match.users)}</S.Body>
+                  <S.Body>{getSkill(match.data.users)}</S.Body>
                 </S.Row>
 
                 <S.Spacer size="xs" />
@@ -77,7 +77,7 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
                 <S.Row align="end">
                   <S.Svg src="stopwatch" width="20px" color="g400" />
                   <S.Spacer size="xxs" />
-                  <S.Body>{match.duration} min</S.Body>
+                  <S.Body>{match.data.duration} min</S.Body>
                 </S.Row>
 
                 <S.Spacer size="xs" />
@@ -87,12 +87,12 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
 
               <S.Fill />
 
-              {match.isBooked && !isAdmin(match.users) && (
+              {match.data.isBooked && !isAdmin(match.data.users) && (
                 <S.Button
                   icon="currency"
                   label={`${t.pay}  ${
-                    Number(match.price) / (isSingle(match) ? 2 : 4)
-                  }/${match.currency}`}
+                    Number(match.data.price) / (isSingle(match.data) ? 2 : 4)
+                  }/${match.data.currency}`}
                 />
               )}
 
@@ -102,7 +102,9 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
                 <S.ModalOpenButton>
                   <S.OutlineButton
                     color="g400"
-                    label={isAdmin(match.users) ? t.abort_match : t.leave_match}
+                    label={
+                      isAdmin(match.data.users) ? t.abort_match : t.leave_match
+                    }
                   />
                 </S.ModalOpenButton>
 
@@ -123,20 +125,15 @@ const Match: React.FC<Props> = ({ navigation, route }) => {
         <S.Padding size="xs">
           <S.Align type="center">
             <S.Absolute left="0">
-              <S.Clickable
-                onPress={() => {
-                  unloadMatch();
-                  navigation.navigate('Discover');
-                }}
-              >
+              <S.Clickable onPress={() => navigation.navigate('Discover')}>
                 <S.Svg src="leftArrow" width="20px" color="g1000" />
               </S.Clickable>
             </S.Absolute>
 
-            <S.H5>{match.center?.name}</S.H5>
+            <S.H5>{match.data.center?.name}</S.H5>
             <S.Detail color="g500">
-              {match.users?.length}{' '}
-              {match.users?.length === 1 ? t.member : t.members}
+              {match.data.users?.length}{' '}
+              {match.data.users?.length === 1 ? t.member : t.members}
             </S.Detail>
           </S.Align>
         </S.Padding>

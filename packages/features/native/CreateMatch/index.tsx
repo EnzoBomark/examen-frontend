@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
-import validate, { v } from '@racket-traits/validation';
+import criteria, { v } from '@racket-traits/validation';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
 import { useProfile } from '@racket-traits/api/profile';
@@ -14,11 +14,6 @@ const CreateMatch: React.FC<Props> = ({ navigation }) => {
   const match = useMatch();
   const createMatch = useCreateMatch();
 
-  React.useEffect(() => {
-    if (!match.isLoading && match.hasLoaded)
-      navigation.navigate('Match', match.data);
-  }, [match]);
-
   const [type, setType] = React.useState(false);
   const [isBooked, setIsBooked] = React.useState(false);
   const [isPublic, setIsPublic] = React.useState(false);
@@ -30,15 +25,21 @@ const CreateMatch: React.FC<Props> = ({ navigation }) => {
   const [currency, setCurrency] = React.useState('SEK');
   const [phone, setPhone] = React.useState(profile.data.phone || '');
 
-  const criteria = new Map([
-    [{ phone }, [v.isPhone]],
-    [{ center }, []],
-    [{ dateTime }, []],
-    [{ court }, [v.max(20)]],
-    [{ price }, [v.numeric, v.max(10)]],
-    [{ duration }, []],
-    [{ currency }, []],
-  ]);
+  const validate = criteria(
+    new Map([
+      [{ phone }, [v.isPhone]],
+      [{ center }, []],
+      [{ dateTime }, []],
+      [{ court }, [v.max(20)]],
+      [{ price }, [v.numeric, v.max(10)]],
+      [{ duration }, []],
+      [{ currency }, []],
+    ])
+  );
+
+  React.useEffect(() => {
+    if (!match.isLoading && match.hasLoaded) navigation.navigate('Match');
+  }, [match]);
 
   return (
     <S.AvoidKeyboard>
@@ -51,7 +52,7 @@ const CreateMatch: React.FC<Props> = ({ navigation }) => {
               </S.Clickable>
             </S.Absolute>
 
-            <S.H5 bold={true}>Create match</S.H5>
+            <S.H5 bold>Create match</S.H5>
           </S.Row>
 
           <S.Spacer size="l" />
@@ -84,21 +85,21 @@ const CreateMatch: React.FC<Props> = ({ navigation }) => {
                       placeholder="0"
                       value={court}
                       onTextChange={setCourt}
-                      error={validate(criteria, { court })}
+                      error={validate({ court })}
                     />,
                     <S.ListInput
                       label="Phone number"
                       placeholder="0"
                       value={phone}
                       onTextChange={setPhone}
-                      error={validate(criteria, { phone })}
+                      error={validate({ phone })}
                     />,
                     <S.ListInput
                       label="Price"
                       placeholder="0"
                       value={price}
                       onTextChange={setPrice}
-                      error={validate(criteria, { price })}
+                      error={validate({ price })}
                     />,
                     <C.CurrencyModal
                       setCurrency={setCurrency}
@@ -138,7 +139,7 @@ const CreateMatch: React.FC<Props> = ({ navigation }) => {
             }
             label="Create match"
             disabled={
-              !!validate(criteria, {
+              !!validate({
                 center,
                 duration,
                 dateTime,

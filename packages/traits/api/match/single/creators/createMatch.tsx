@@ -1,5 +1,5 @@
 import { Alert } from 'react-native';
-import api, { AxiosError } from '../../../index';
+import api, { AxiosError } from '../../../axios';
 import store from '../store';
 import { fail, pending, success } from '../actions';
 

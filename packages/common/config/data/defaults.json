@@ -1,4 +1,5 @@
 {
+  "APP_STORE_ID": "",
   "WEB_BASE_URL": "http://localhost:9000/api",
   "IOS_BASE_URL": "http://localhost:9000/api",
   "ANDROID_BASE_URL": "http://enzos-mbp.lan:9000/api",

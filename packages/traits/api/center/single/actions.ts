@@ -17,3 +17,8 @@ export const fail = (error: ResponseError<Center>): Action => ({
   type: Types.FAIL,
   payload: error,
 });
+
+export const setCenter = (center: Center): Action => ({
+  type: Types.SET_CENTER,
+  payload: center,
+});

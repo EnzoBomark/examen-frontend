@@ -23,22 +23,24 @@ export const Drawer: React.FC<Props> = (props) => {
         }}
       >
         <S.ImageBackground source={Images.drawer}>
-          <S.Padding size="xs">
-            <S.Image src="TEST" width="80px" border="xxl" />
+          <S.Padding size="xxs">
+            <S.ProfilePicture user={profile.data} width="80px" border="s" />
 
-            <S.Spacer size="xxs" />
+            <S.Spacer size="xs" />
 
-            <S.H3 color="g0">{profile.data.name}</S.H3>
-
-            <S.Spacer size="xxs" />
-
-            <S.Row>
-              <S.Svg src="star" width="14px" />
+            <S.Padding size="xxxs" vertical={false}>
+              <S.H3 color="g0">{profile.data.name}</S.H3>
 
               <S.Spacer size="xxs" />
 
-              <S.Body color="g0">420 Matches</S.Body>
-            </S.Row>
+              <S.Row>
+                <S.Svg src="star" width="14px" />
+
+                <S.Spacer size="xxxs" />
+
+                <S.Body color="g0">420 Matches</S.Body>
+              </S.Row>
+            </S.Padding>
           </S.Padding>
         </S.ImageBackground>
 

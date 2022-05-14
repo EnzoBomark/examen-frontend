@@ -8,7 +8,6 @@ import {
   useFetchMessages,
   useMarkAsRead,
   useResignChat,
-  useUnloadChat,
 } from '@racket-traits/api/chat';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
@@ -17,18 +16,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 type Props = StackScreenProps<ChatParamList, 'Chat'>;
 
 const Chat: React.FC<Props> = ({ navigation }) => {
+  const { getLabel, getMemberCount, formatMessages } = useChatFunctions();
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const insets = useSafeAreaInsets();
   const chat = useChat();
-  const unloadChat = useUnloadChat();
   const markAsRead = useMarkAsRead();
   const resignChat = useResignChat();
   const fetchMessages = useFetchMessages();
-  const { getLabel, getMemberCount, formatMessages } = useChatFunctions();
-
-  React.useEffect(() => {
-    if (!chat.hasLoaded) navigation.navigate('Chats');
-  }, [chat]);
 
   React.useEffect(() => {
     if (chat.data.messages.length) fetchMessages(chat.data);
@@ -65,7 +59,7 @@ const Chat: React.FC<Props> = ({ navigation }) => {
         <S.Padding size="xs">
           <S.Align type="center">
             <S.Absolute left="0">
-              <S.Clickable onPress={unloadChat}>
+              <S.Clickable onPress={() => navigation.navigate('Chats')}>
                 <S.Svg src="leftArrow" width="20px" color="g1000" />
               </S.Clickable>
             </S.Absolute>

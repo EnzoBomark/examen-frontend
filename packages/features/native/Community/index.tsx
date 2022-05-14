@@ -12,10 +12,10 @@ import { CommunityParamList } from '@racket-native/router/stacks/CommunityStack'
 type Props = DrawerScreenProps<CommunityParamList, 'Community'>;
 
 const Community: React.FC<Props> = ({ navigation }) => {
+  const [headerHeight, setHeaderHeight] = React.useState(0);
   const users = useUsers();
   const fetchUsers = useFetchUsers();
   const refreshUsers = useRefreshUsers();
-  const [headerHeight, setHeaderHeight] = React.useState(0);
   const [query, setQuery] = React.useState('');
 
   React.useEffect(() => {

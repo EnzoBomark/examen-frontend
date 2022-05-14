@@ -33,6 +33,7 @@ export * from './icon/Spinner';
 // image
 export * from './image/Image';
 export * from './image/ImageBackground';
+export * from './image/ProfilePicture';
 
 // gradient
 export * from './gradient/Gradient';
@@ -40,10 +41,13 @@ export * from './gradient/Gradient';
 // list
 export * from './list/StaticList';
 export * from './list/StaticSubList';
+export * from './list/HorizontalList';
 export * from './list/List';
 
 // layout
+export * from './layout/Center';
 export * from './layout/Background';
+export * from './layout/Wrap';
 export * from './layout/Screen';
 export * from './layout/Scroll';
 export * from './layout/Spacer';

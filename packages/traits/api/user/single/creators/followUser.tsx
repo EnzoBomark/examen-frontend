@@ -1,4 +1,4 @@
-import api, { AxiosError } from '../../../index';
+import api, { AxiosError } from '../../../axios';
 import { useSetFollow } from '../../multiple';
 import { fail, pending, success } from '../actions';
 import store from '../store';
@@ -6,6 +6,7 @@ import store from '../store';
 export const useFollowUser = () => {
   const dispatch = store.useDispatch();
   const setFollow = useSetFollow();
+
   const followUser = (user: User) => {
     dispatch(pending());
 

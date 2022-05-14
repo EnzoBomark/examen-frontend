@@ -1,5 +1,5 @@
 import { createStore } from '@racket-common/store';
-import { unique } from '@racket-traits/utils';
+import { alter, resign, unique } from '@racket-traits/utils';
 import { Action, State, Types } from './types';
 
 const initialState: State = {
@@ -47,6 +47,14 @@ const store = createStore<State, Action>({
           ...state,
           isLoading: false,
           hasError: action.payload,
+        };
+
+      case Types.RESIGN_BOOKMARK:
+        return {
+          ...state,
+          data: alter(state.data, action.payload.center, 'id', (center) => ({
+            users: resign(center.users, action.payload.profile, 'id'),
+          })),
         };
 
       default:

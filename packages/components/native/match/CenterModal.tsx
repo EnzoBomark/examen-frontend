@@ -11,10 +11,11 @@ export const CenterModal: React.FC<Props> = (props) => {
   const [label, setLabel] = React.useState('Choose center');
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const centers = useCenters();
-  const getCenters = useFetchCenters();
+  const fetchCenters = useFetchCenters();
+  const [query, setQuery] = React.useState('');
 
   React.useEffect(() => {
-    if (!centers.hasLoaded) getCenters(centers.page);
+    if (!centers.hasLoaded) fetchCenters(query, centers.page);
   }, []);
 
   return (

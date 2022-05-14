@@ -26,7 +26,7 @@ export const UserCard: React.FC<User> = (user) => {
 
   return (
     <Card style={{ ...theme.shadow }}>
-      <S.Image src={user.picture || ''} width="36px" />
+      <S.ProfilePicture user={user} width="36px" border="xxs" />
 
       <S.Spacer size="xs" />
 

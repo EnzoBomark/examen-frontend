@@ -56,6 +56,13 @@ const match = (match: string) => ({
   message: "Conformation dosen't match",
 });
 
+const birthDate = {
+  validate: (str: string) =>
+    new Date(str) >
+    new Date(new Date().setFullYear(new Date().getFullYear() - 13)),
+  message: 'Must be older then 13',
+};
+
 export const v = {
   notEmpty,
   isEmail,
@@ -68,4 +75,5 @@ export const v = {
   min,
   max,
   match,
+  birthDate,
 };

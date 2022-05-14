@@ -14,6 +14,7 @@ export enum Types {
   SUCCESS = 'SUCCESS',
   REFRESH = 'REFRESH',
   FAIL = 'FAIL',
+  RESIGN_BOOKMARK = 'RESIGN_BOOKMARK',
 }
 
 export type Payload = {
@@ -22,6 +23,7 @@ export type Payload = {
   [Types.SUCCESS]: Center[];
   [Types.REFRESH]: Center[];
   [Types.FAIL]: ResponseError;
+  [Types.RESIGN_BOOKMARK]: { center: Center; profile: User };
 };
 
 export type Action = ActionMap<Payload>[keyof ActionMap<Payload>];
