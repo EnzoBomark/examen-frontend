@@ -3,7 +3,7 @@ import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
 import styled from 'styled-components/native';
 import theme from '@racket-styles/core/theme';
-import validate, { v } from '@racket-traits/validation';
+import criteria, { v } from '@racket-traits/validation';
 import { useSendMessage } from '@racket-traits/api/chat';
 import { useTranslation } from '@racket-traits/lang';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -34,7 +34,7 @@ export const Input: React.FC = () => {
   const sendMessage = useSendMessage();
   const [message, setMessage] = React.useState('');
 
-  const criteria = new Map([[{ message }, [v.max(600)]]]);
+  const validate = criteria(new Map([[{ message }, [v.max(600)]]]), true);
 
   return (
     <Container insets={insets.bottom}>
@@ -46,21 +46,21 @@ export const Input: React.FC = () => {
         placeholder={t.send_message}
         value={message}
         onTextChange={setMessage}
-        error={validate(criteria, { message }, true)}
+        error={validate({ message })}
       />
       <S.Spacer size="xs" />
       <S.Clickable
-        disabled={!!validate(criteria, { message })}
+        disabled={!!validate({ message })}
         onPress={() => {
           sendMessage(message);
           setMessage('');
         }}
       >
-        <Send isValid={!validate(criteria, { message })}>
+        <Send isValid={!validate({ message })}>
           <S.Svg
             src="upArrow"
             width="15px"
-            color={!validate(criteria, { message }) ? 'g0' : 'g500'}
+            color={!validate({ message }) ? 'g0' : 'g500'}
           />
         </Send>
       </S.Clickable>

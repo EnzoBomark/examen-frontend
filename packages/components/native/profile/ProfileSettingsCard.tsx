@@ -23,7 +23,7 @@ export const ProfileSettingsCard: React.FC = () => {
     <Card style={{ ...theme.shadow }}>
       <S.Button
         arrow
-        label={'Match history'}
+        label={'My matches'}
         background="g100"
         color="g500"
         onPress={() => navigation.navigate('MatchHistory')}
