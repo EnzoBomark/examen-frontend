@@ -12,6 +12,7 @@ type Match = {
   isPlayed?: boolean;
   isBooked?: boolean;
   centerId?: string;
+  description?: string;
   center?: Center;
   users?: User[];
 };

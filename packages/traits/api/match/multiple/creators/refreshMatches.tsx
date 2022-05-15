@@ -10,7 +10,9 @@ export const useRefreshMatches = () => {
 
     api
       .get<Match[]>(`matches`, { params: { page: 0 } })
-      .then((res) => dispatch(refresh(res.data)))
+      .then((res) => {
+        dispatch(refresh(res.data));
+      })
       .catch((err: AxiosError<ResponseError>) => {
         if (!err.response) throw err;
         dispatch(fail(err.response.data));

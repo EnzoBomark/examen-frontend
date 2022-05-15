@@ -8,6 +8,7 @@ import ChatStack from './stacks/ChatStack';
 import { useProfile, useFetchProfile } from '@racket-traits/api/profile';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useUnloadAppState } from '@racket-traits/api/core';
+import { useChats, useFetchChats } from '@racket-traits/api/chat';
 
 export type RootParamList = {
   DrawerStack: undefined;
@@ -24,6 +25,8 @@ const options = { headerShown: false };
 const RootStack: React.FC = () => {
   const unloadAppState = useUnloadAppState();
   const fetchProfile = useFetchProfile();
+  const fetchChats = useFetchChats();
+  const chats = useChats();
   const profile = useProfile();
 
   React.useEffect(() => {
@@ -31,6 +34,10 @@ const RootStack: React.FC = () => {
       user ? fetchProfile() : unloadAppState();
     });
   }, []);
+
+  React.useEffect(() => {
+    if (profile.hasLoaded && !chats.hasLoaded) fetchChats(chats.page);
+  }, [profile]);
 
   return (
     <Stack.Navigator screenOptions={options}>

@@ -6,17 +6,18 @@ type Validator = {
   message: string;
 };
 
-export const validator = (
-  allowEmpty: boolean | undefined,
-  str: string,
-  ...criteria: Validator[]
-) =>
-  // Test string against array of criteria
-  (allowEmpty ? criteria : [v.notEmpty, ...criteria]).reduceRight(
+export const validator = (str: string, ...criteria: Validator[]) => {
+  const arr = criteria.some((v) => v.message === 'nullable')
+    ? criteria
+    : [v.notEmpty, ...criteria];
+
+  return arr.reduceRight(
     (messages: string | undefined, criterion) =>
       criterion.validate(str) ? criterion.message : messages,
     undefined
   );
+};
+// Test string against array of criteria
 
 type KeyOfMap<M extends Map<unknown, unknown>> = M extends Map<infer K, unknown>
   ? K
@@ -27,8 +28,7 @@ export const criteria =
     T extends Map<{ [key: string]: string | undefined }, Validator[]>,
     K extends KeyOfMap<T>
   >(
-    map: T,
-    allowEmpty?: boolean
+    map: T
   ) =>
   (obj: { [Key in keyof K]: string | undefined }) => {
     const keys = Array.from(map.keys());
@@ -58,11 +58,7 @@ export const criteria =
 
       // Return first invalid result
       return criteria
-        ? validator(
-            allowEmpty,
-            Object.values(value || {})[0] || '',
-            ...criteria[1]
-          )
+        ? validator(Object.values(value || {})[0] || '', ...criteria[1])
         : undefined;
     });
 

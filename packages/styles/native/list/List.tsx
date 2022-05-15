@@ -5,18 +5,19 @@ import styled from 'styled-components/native';
 import { Spacer } from '../layout/Spacer';
 import { UnderLine } from '../layout/UnderLine';
 
-type List = {
+type List<T> = {
   inverted?: boolean | null | undefined;
-  data: ReadonlyArray<unknown>;
-  renderItem: Native.ListRenderItem<any>;
+  data: ReadonlyArray<T>;
+  renderItem: Native.ListRenderItem<T>;
   refreshing?: boolean;
   onRefresh?: () => void;
-  onEndReached?: (info: { distanceFromEnd: number }) => void;
   padding?: number;
   headerHeight?: number;
   fullScreen?: boolean;
   underline?: boolean;
   spacer?: keyof theme['space'];
+  keyExtractor?: (item: T, index: number) => string;
+  onEndReached?: (info: { distanceFromEnd: number }) => void;
 };
 
 const Separator = styled(UnderLine)`
@@ -25,7 +26,7 @@ const Separator = styled(UnderLine)`
 
 const EnableScroll = styled.TouchableOpacity``;
 
-export const List: React.FC<List> = (props) => {
+export const List = <T,>(props: List<T>) => {
   const separator = () => (
     <EnableScroll activeOpacity={1}>
       {props.underline ? <Separator /> : <Spacer size={props.spacer || 'xs'} />}
@@ -41,12 +42,14 @@ export const List: React.FC<List> = (props) => {
   return (
     <Native.FlatList
       {...props}
-      refreshing={props.refreshing || false}
+      removeClippedSubviews
       nestedScrollEnabled
-      onEndReachedThreshold={0.2}
+      initialNumToRender={25}
+      maxToRenderPerBatch={25}
+      onEndReachedThreshold={0.1}
+      refreshing={props.refreshing || false}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
-      keyExtractor={(_, index) => `${new Date()}${index}`}
       ListHeaderComponent={wrapper}
       ListFooterComponent={wrapper}
       ItemSeparatorComponent={separator}

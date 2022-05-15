@@ -45,6 +45,7 @@ import stopwatch from './stopwatch.svg';
 import menu from './menu.svg';
 import bookmark from './bookmark.svg';
 import bookmarkFill from './bookmark-fill.svg';
+import chatActive from './chat-active.svg';
 
 const Icons = {
   forward,
@@ -94,6 +95,7 @@ const Icons = {
   menu,
   bookmark,
   bookmarkFill,
+  chatActive,
 };
 
 export default Icons;

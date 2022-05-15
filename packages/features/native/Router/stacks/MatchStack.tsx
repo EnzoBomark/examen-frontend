@@ -3,11 +3,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import messaging from '@react-native-firebase/messaging';
 import Discover from '@racket-native/discover';
 import CreateMatch from '@racket-native/create-match';
+import UpdateMatch from '@racket-native/update-match';
 import Match from '@racket-native/match';
 
 export type MatchParamList = {
   Discover: undefined;
   CreateMatch: undefined;
+  UpdateMatch: undefined;
   Match: undefined;
 };
 
@@ -45,6 +47,7 @@ const MatchStack = () => {
     >
       <Stack.Screen name="Discover" component={Discover} />
       <Stack.Screen name="CreateMatch" component={CreateMatch} />
+      <Stack.Screen name="UpdateMatch" component={UpdateMatch} />
       <Stack.Screen name="Match" component={Match} />
     </Stack.Navigator>
   );

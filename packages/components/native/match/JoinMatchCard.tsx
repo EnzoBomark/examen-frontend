@@ -2,10 +2,8 @@ import * as React from 'react';
 import * as S from '@racket-styles/native';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { useNavigation } from '@react-navigation/native';
-import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
-import { useProfile, useSetProfile } from '@racket-traits/api/profile';
+import { useProfile } from '@racket-traits/api/profile';
+import { useMatchFunctions, useResignMatch } from '@racket-traits/api/match';
 
 const Card = styled.View`
   position: relative;
@@ -54,27 +52,17 @@ const NameTag = styled(S.Detail)`
   color: ${theme.colors.g500};
 `;
 
-type Navigation = StackNavigationProp<MatchParamList, 'Discover'>;
-
 export const JoinMatchCard: React.FC<Match> = (match) => {
-  const navigation = useNavigation<Navigation>();
-  const profile = useProfile();
-  const users = match.users;
-  const center = match.center?.name;
-  const time = match.dateTime;
-  const admin = users?.find((user) => user.usersMatches?.isAdmin);
-  const userOne = users?.find((user) => user.usersMatches?.position === '0');
-  const userTwo = users?.find((user) => user.usersMatches?.position === '1');
-  const userThree = users?.find((user) => user.usersMatches?.position === '2');
-  const userFour = users?.find((user) => user.usersMatches?.position === '3');
-  const rank = users?.map((user) => Number(user.skill)) || [];
+  const { isAdmin, isPlayer, isSingle, isMe, getUser } = useMatchFunctions();
+  const resignMatch = useResignMatch();
+  const userOne = getUser(match.users, '0');
+  const userTwo = getUser(match.users, '1');
+  const userThree = getUser(match.users, '2');
+  const userFour = getUser(match.users, '3');
 
-  const isMe = (user?: User) => user?.id === profile.data.id;
-  const isPlayer = users?.some((user) => user.id === profile.data.id);
-  const isAdmin = admin?.id === profile.data.id;
-  const isSingle = match.type === 'single';
-
-  const Player: React.FC<Align & { user?: User }> = ({ user, type }) => (
+  const Player: React.FC<
+    Align & { user?: User; position: '0' | '1' | '2' | '3' }
+  > = ({ user, type, position }) => (
     <PlayerCard type={type}>
       {user && <NameTag numberOfLines={1}>{user.name}</NameTag>}
       <S.Spacer size="xxs" />
@@ -82,17 +70,17 @@ export const JoinMatchCard: React.FC<Match> = (match) => {
         <S.ProfilePicture user={user} width="54px" />
       ) : (
         <S.IconButton
-          disabled={isPlayer}
+          disabled={isPlayer(match.users)}
           icon={match.isPublic ? 'add' : 'lock'}
+          onPress={() => match.isPublic && resignMatch(match, position)}
         />
       )}
       <S.Spacer size="xxs" />
-      {isAdmin ||
-        (isMe(user) && (
-          <S.Clickable>
-            <S.Svg src="exit" width="20px" color="g300" />
-          </S.Clickable>
-        ))}
+      {!isMe(user) && isAdmin(match.users) && user && (
+        <S.Clickable>
+          <S.Svg src="exit" width="20px" color="g300" />
+        </S.Clickable>
+      )}
     </PlayerCard>
   );
 
@@ -100,23 +88,23 @@ export const JoinMatchCard: React.FC<Match> = (match) => {
     <Card style={theme.shadow}>
       <Inner>
         <CourtSide>
-          {isSingle ? (
-            <Player type="center" user={userOne} />
+          {isSingle(match) ? (
+            <Player type="center" user={userOne} position="0" />
           ) : (
             <React.Fragment>
-              <Player type="start" user={userOne} />
-              <Player type="end" user={userTwo} />
+              <Player type="start" user={userOne} position="0" />
+              <Player type="end" user={userTwo} position="1" />
             </React.Fragment>
           )}
         </CourtSide>
         <Divider />
         <CourtSide>
-          {isSingle ? (
-            <Player type="center" user={userTwo} />
+          {isSingle(match) ? (
+            <Player type="center" user={userTwo} position="1" />
           ) : (
             <React.Fragment>
-              <Player type="end" user={userThree} />
-              <Player type="start" user={userFour} />
+              <Player type="end" user={userThree} position="2" />
+              <Player type="start" user={userFour} position="3" />
             </React.Fragment>
           )}
         </CourtSide>

@@ -35,6 +35,7 @@ const Centers: React.FC<Props> = ({ navigation }) => {
         headerHeight={headerHeight}
         onEndReached={() => fetchCenters(query, centers.page)}
         onRefresh={() => refreshCenters(query)}
+        keyExtractor={(item) => item.id}
         data={centers.data}
         renderItem={({ item }) => (
           <S.ArrowButton

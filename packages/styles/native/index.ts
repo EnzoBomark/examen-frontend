@@ -29,6 +29,7 @@ export * from './text/Tiny';
 // icon
 export * from './icon/Svg';
 export * from './icon/Spinner';
+export * from './icon/LoadingBar';
 
 // image
 export * from './image/Image';
@@ -45,6 +46,7 @@ export * from './list/HorizontalList';
 export * from './list/List';
 
 // layout
+export * from './layout/Container';
 export * from './layout/Center';
 export * from './layout/Background';
 export * from './layout/Wrap';

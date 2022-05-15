@@ -70,8 +70,8 @@ const ModalDismissButton: React.FC<{ onPress?: () => void }> = ({
 
   return React.cloneElement(children, {
     onPress: () => {
-      if (onPress) onPress();
       setIsOpen(false);
+      if (onPress) onPress();
     },
   });
 };
@@ -87,8 +87,8 @@ const ModalOpenButton: React.FC<{ onPress?: () => void }> = ({
 
   return React.cloneElement(children, {
     onPress: () => {
-      if (onPress) onPress();
       setIsOpen(true);
+      if (onPress) onPress();
     },
   });
 };

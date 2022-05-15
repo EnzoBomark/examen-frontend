@@ -28,6 +28,11 @@ export const pushMessages = (messages: Message[], chat: Chat): Action => ({
   payload: { messages, chat },
 });
 
+export const createChat = (chat: Chat): Action => ({
+  type: Types.CREATE_CHAT,
+  payload: chat,
+});
+
 export const setChat = (chat: Chat): Action => ({
   type: Types.SET_CHAT,
   payload: chat,

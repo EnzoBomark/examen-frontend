@@ -20,10 +20,6 @@ const Chats: React.FC<Props> = ({ navigation }) => {
   const { sortChats } = useChatFunctions();
   const [query, setQuery] = React.useState('');
 
-  React.useEffect(() => {
-    if (!chats.hasLoaded) fetchChats(chats.page);
-  }, []);
-
   return (
     <React.Fragment>
       <S.List
@@ -31,6 +27,7 @@ const Chats: React.FC<Props> = ({ navigation }) => {
         onEndReached={() => fetchChats(chats.page)}
         onRefresh={() => refreshChats()}
         data={sortChats(chats.data, query)}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => <C.ChatCard {...item} />}
         fullScreen={true}
         spacer="xxs"

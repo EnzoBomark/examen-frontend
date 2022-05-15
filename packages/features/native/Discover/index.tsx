@@ -10,6 +10,7 @@ import {
   useRefreshMatches,
   useUnloadMatch,
 } from '@racket-traits/api/match';
+import { useFocusEffect } from '@react-navigation/native';
 
 type Props = DrawerScreenProps<MatchParamList, 'Discover'>;
 
@@ -29,19 +30,22 @@ const Discover: React.FC<Props> = ({ navigation }) => {
   const [accordion, setAccordion] = React.useState(false);
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
 
-  React.useEffect(() => {
-    if (!matches.hasLoaded) fetchMatches(matches.page);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      refreshMatches();
+    }, [])
+  );
 
   return (
     <React.Fragment>
       <S.List
-        headerHeight={headerHeight}
-        onEndReached={() => fetchMatches(matches.page)}
-        onRefresh={refreshMatches}
+        fullScreen
         data={matches.data}
+        onRefresh={refreshMatches}
+        headerHeight={headerHeight}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => <C.MatchCard {...item} />}
-        fullScreen={true}
+        onEndReached={() => matches.hasMore && fetchMatches(matches.page)}
       />
 
       <S.Header setHeaderHeight={setHeaderHeight}>
@@ -103,7 +107,6 @@ const Discover: React.FC<Props> = ({ navigation }) => {
             <S.Spacer size="xs" />
           </S.Row>
         </S.Padding>
-
         {accordion ? (
           <S.HorizontalList
             data={dummy}
@@ -112,6 +115,8 @@ const Discover: React.FC<Props> = ({ navigation }) => {
         ) : (
           <S.Spacer size="xs" />
         )}
+
+        {matches.isLoading && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );

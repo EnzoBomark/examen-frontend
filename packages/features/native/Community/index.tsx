@@ -30,13 +30,14 @@ const Community: React.FC<Props> = ({ navigation }) => {
     <React.Fragment>
       {!users.hasError ? (
         <S.List
+          fullScreen
+          spacer="xxs"
+          data={users.data}
           headerHeight={headerHeight}
           onEndReached={() => fetchUsers(query, users.page)}
           onRefresh={() => refreshUsers(query)}
-          data={users.data}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => <C.UserCard {...item} />}
-          fullScreen={true}
-          spacer="xxs"
         />
       ) : (
         <S.Body color="error" style={{ paddingTop: headerHeight }}>

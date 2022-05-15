@@ -36,6 +36,7 @@ const CreateChat: React.FC<Props> = ({ navigation }) => {
         headerHeight={headerHeight}
         onEndReached={() => fetchUsers(query, users.page)}
         onRefresh={() => refreshUsers(query)}
+        keyExtractor={(item) => item.id}
         data={users.data}
         renderItem={({ item }) => (
           <C.ChatUserCard

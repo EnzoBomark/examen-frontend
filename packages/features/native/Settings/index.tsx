@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
-import * as C from '@racket-components/native';
 import * as Hooks from '@racket-traits/hooks';
 import criteria, { v } from '@racket-traits/validation';
 import DatePicker from 'react-native-date-picker';
@@ -32,9 +31,8 @@ const Settings: React.FC<Props> = ({ navigation }) => {
       [{ name }, [v.min(3), v.max(20), v.notEmpty]],
       [{ phone }, [v.isPhone, v.notEmpty]],
       [{ birthDate }, [v.birthDate]],
-      [{ description }, [v.max(300)]],
-    ]),
-    true
+      [{ description }, [v.allowEmpty, v.max(300)]],
+    ])
   );
 
   Hooks.useUpdate(() => {

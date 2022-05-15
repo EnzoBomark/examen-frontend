@@ -3,6 +3,7 @@ import { ActionMap } from '@racket-common/store';
 export type State = {
   isLoading: boolean;
   hasLoaded: boolean;
+  hasMore: boolean;
   hasError?: ResponseError;
   page: number;
   data: Chat[];
@@ -14,6 +15,7 @@ export enum Types {
   SUCCESS = 'SUCCESS',
   REFRESH = 'REFRESH',
   FAIL = 'FAIL',
+  CREATE_CHAT = 'CREATE_CHAT',
   SET_CHAT = 'SET_CHAT',
   PUSH_MESSAGES = 'PUSH_MESSAGES',
   UPDATE_READ_STATUS = 'PUSH_READ_STATUS',
@@ -25,6 +27,7 @@ export type Payload = {
   [Types.SUCCESS]: Chat[];
   [Types.REFRESH]: Chat[];
   [Types.FAIL]: ResponseError;
+  [Types.CREATE_CHAT]: Chat;
   [Types.SET_CHAT]: Chat;
   [Types.UPDATE_READ_STATUS]: {
     readStatus: ReadStatus[];

@@ -1,5 +1,5 @@
 import api, { AxiosError } from '../../../axios';
-import { useSetChat } from '../../multiple/handlers/setChat';
+import { useCreateChat as useSetChat } from '../../multiple/handlers/createChat';
 import { fail, pending, success } from '../actions';
 import store from '../store';
 

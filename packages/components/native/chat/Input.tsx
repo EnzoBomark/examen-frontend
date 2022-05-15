@@ -8,8 +8,6 @@ import { useSendMessage } from '@racket-traits/api/chat';
 import { useTranslation } from '@racket-traits/lang';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const screen = Native.Dimensions.get('screen');
-
 const Container = styled.View<{ insets: number }>`
   padding: 8px 16px;
   padding-bottom: ${({ insets }) => 8 + insets}px;
@@ -34,7 +32,9 @@ export const Input: React.FC = () => {
   const sendMessage = useSendMessage();
   const [message, setMessage] = React.useState('');
 
-  const validate = criteria(new Map([[{ message }, [v.max(600)]]]), true);
+  const validate = criteria(
+    new Map([[{ message }, [v.allowEmpty, v.max(600)]]])
+  );
 
   return (
     <Container insets={insets.bottom}>

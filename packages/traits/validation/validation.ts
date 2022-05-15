@@ -6,6 +6,11 @@ const notEmpty = {
   message: 'Please enter a value',
 };
 
+const allowEmpty = {
+  validate: (str: string) => str.length < 0,
+  message: 'nullable',
+};
+
 const isEmail = {
   validate: (str: string) => str.search(EMAIL_REGEX) < 0,
   message: `Please enter a valid email`,
@@ -65,6 +70,7 @@ const birthDate = {
 
 export const v = {
   notEmpty,
+  allowEmpty,
   isEmail,
   isPhone,
   upper,

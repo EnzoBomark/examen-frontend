@@ -6,12 +6,12 @@ import theme from '@racket-styles/core/theme';
 
 type Image = ImageCore & ImageType & ImageSizing;
 
-export const Container = styled.View<Partial<Image>>`
+const Container = styled.View<Partial<Image>>`
   height: ${({ height }) => height || '100%'};
   width: ${({ width }) => width || '100%'};
 `;
 
-export const Inner = styled(FastImage)<Partial<Image>>`
+const Inner = styled(FastImage)<Partial<Image>>`
   border-radius: ${({ border }) =>
     border ? theme.radius[border] : theme.radius.xs};
   height: 100%;

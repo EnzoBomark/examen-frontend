@@ -32,6 +32,10 @@ const Chat: React.FC<Props> = ({ navigation }) => {
     markAsRead();
   }, [chat.data.messages.length]);
 
+  React.useEffect(() => {
+    if (!chat.hasLoaded) navigation.navigate('Chats');
+  }, [chat.hasLoaded]);
+
   return (
     <React.Fragment>
       <S.Background color="g0">
@@ -43,6 +47,7 @@ const Chat: React.FC<Props> = ({ navigation }) => {
           data={formatMessages(chat.data)}
           onEndReached={() => fetchMessages(chat.data)}
           renderItem={({ item }) => <C.ChatBubble {...item} />}
+          keyExtractor={(item) => item.message + item.time + item.isMe}
         />
       </S.Background>
 

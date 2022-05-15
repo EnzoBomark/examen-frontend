@@ -2,6 +2,7 @@ import { ActionMap } from '@racket-common/store';
 
 export type State = {
   isLoading: boolean;
+  hasMore: boolean;
   hasLoaded: boolean;
   hasError?: ResponseError;
   page: number;

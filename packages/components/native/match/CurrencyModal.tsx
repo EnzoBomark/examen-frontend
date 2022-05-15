@@ -19,10 +19,11 @@ export const CurrencyModal: React.FC<Props> = (props) => {
 
       <S.ModalContents height="92%">
         <S.List
-          underline={true}
-          fullScreen={true}
+          underline
+          fullScreen
           data={currency}
           headerHeight={headerHeight}
+          keyExtractor={(item) => item}
           renderItem={({ item }) => (
             <S.ModalDismissButton
               onPress={() => {

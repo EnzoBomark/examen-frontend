@@ -3,17 +3,30 @@ import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
-import { useMatch, useMatchFunctions } from '@racket-traits/api/match';
+import {
+  useDeleteMatch,
+  useMatch,
+  useMatchFunctions,
+  useResignMatch,
+} from '@racket-traits/api/match';
 import { getTime, getDate, getWeekday } from '@racket-traits/utils';
 import { useTranslation } from '@racket-traits/lang';
+import { useChats } from '@racket-traits/api/chat';
 
 type Props = StackScreenProps<MatchParamList, 'Match'>;
 
 const Match: React.FC<Props> = ({ navigation }) => {
-  const { getSkill, isAdmin, isSingle } = useMatchFunctions();
+  const { getSkill, isAdmin, isPlayer, isSingle } = useMatchFunctions();
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const { match: t } = useTranslation();
   const match = useMatch();
+  const chats = useChats();
+  const deleteMatch = useDeleteMatch();
+  const resignMatch = useResignMatch();
+
+  React.useEffect(() => {
+    if (!match.hasLoaded) navigation.navigate('Discover');
+  }, [match]);
 
   return (
     <React.Fragment>
@@ -28,20 +41,26 @@ const Match: React.FC<Props> = ({ navigation }) => {
               <S.Spacer size="s" />
 
               <S.Padding size="xxs" vertical={false}>
-                <S.Row justify="center">
-                  <S.SmallButton icon="chat" label={t.chat} />
-                  <S.Spacer size="xs" />
-                  <S.SmallButton icon="community" label={t.invite} />
-                  <S.Spacer size="xs" />
-                  <S.SmallButton
-                    color="g600"
-                    background="g100"
-                    icon="share"
-                    label={t.share}
-                  />
-                </S.Row>
+                {isPlayer(match.data.users) && (
+                  <S.Container size="xs">
+                    <S.Row justify="center">
+                      <S.SmallButton icon="chat" label={t.chat} />
 
-                <S.Spacer size="xs" />
+                      <S.Spacer size="xs" />
+
+                      <S.SmallButton icon="community" label={t.invite} />
+
+                      <S.Spacer size="xs" />
+
+                      <S.SmallButton
+                        color="g600"
+                        background="g100"
+                        icon="share"
+                        label={t.share}
+                      />
+                    </S.Row>
+                  </S.Container>
+                )}
 
                 <S.Row align="center">
                   <S.Svg src="infoDrop" width="20px" color="g400" />
@@ -87,35 +106,52 @@ const Match: React.FC<Props> = ({ navigation }) => {
 
               <S.Fill />
 
-              {match.data.isBooked && !isAdmin(match.data.users) && (
-                <S.Button
-                  icon="currency"
-                  label={`${t.pay}  ${
-                    Number(match.data.price) / (isSingle(match.data) ? 2 : 4)
-                  }/${match.data.currency}`}
-                />
+              {isPlayer(match.data.users) && (
+                <React.Fragment>
+                  {match.data.isBooked && !isAdmin(match.data.users) && (
+                    <S.Button
+                      icon="currency"
+                      label={`${t.pay}  ${
+                        Number(match.data.price) /
+                        (isSingle(match.data) ? 2 : 4)
+                      }/${match.data.currency}`}
+                    />
+                  )}
+
+                  <S.Spacer size="xs" />
+
+                  <S.Modal>
+                    <S.ModalOpenButton>
+                      <S.OutlineButton
+                        color="g400"
+                        label={
+                          isAdmin(match.data.users)
+                            ? t.abort_match
+                            : t.leave_match
+                        }
+                      />
+                    </S.ModalOpenButton>
+
+                    <S.ModalContents>
+                      <S.Padding size="xs">
+                        <S.ModalDismissButton
+                          onPress={() =>
+                            isAdmin(match.data.users)
+                              ? deleteMatch(match.data)
+                              : resignMatch(match.data)
+                          }
+                        >
+                          <S.Button background="error" label={t.are_you_sure} />
+                        </S.ModalDismissButton>
+                      </S.Padding>
+                    </S.ModalContents>
+                  </S.Modal>
+                </React.Fragment>
               )}
 
-              <S.Spacer size="xs" />
-
-              <S.Modal>
-                <S.ModalOpenButton>
-                  <S.OutlineButton
-                    color="g400"
-                    label={
-                      isAdmin(match.data.users) ? t.abort_match : t.leave_match
-                    }
-                  />
-                </S.ModalOpenButton>
-
-                <S.ModalContents>
-                  <S.Padding size="xs">
-                    <S.ModalDismissButton>
-                      <S.Button background="error" label={t.are_you_sure} />
-                    </S.ModalDismissButton>
-                  </S.Padding>
-                </S.ModalContents>
-              </S.Modal>
+              {!match.data.isPublic && !isPlayer(match.data.users) && (
+                <S.Button icon="lockOpen" label={'Ask to join'} />
+              )}
             </S.Padding>
           </S.Screen>
         </S.AvoidKeyboard>
@@ -135,6 +171,14 @@ const Match: React.FC<Props> = ({ navigation }) => {
               {match.data.users?.length}{' '}
               {match.data.users?.length === 1 ? t.member : t.members}
             </S.Detail>
+
+            {isAdmin(match.data.users) && (
+              <S.Absolute right="0">
+                <S.Clickable onPress={() => navigation.navigate('UpdateMatch')}>
+                  <S.Svg src="settings" width="20px" color="g1000" />
+                </S.Clickable>
+              </S.Absolute>
+            )}
           </S.Align>
         </S.Padding>
       </S.Header>

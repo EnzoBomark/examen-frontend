@@ -5,17 +5,17 @@ import { useCenters, useFetchCenters } from '@racket-traits/api/center';
 type Props = {
   setCenter: (center: string) => void;
   center: string;
+  label?: string;
 };
 
 export const CenterModal: React.FC<Props> = (props) => {
-  const [label, setLabel] = React.useState('Choose center');
+  const [label, setLabel] = React.useState(props.label || 'Choose center');
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const centers = useCenters();
   const fetchCenters = useFetchCenters();
-  const [query, setQuery] = React.useState('');
 
   React.useEffect(() => {
-    if (!centers.hasLoaded) fetchCenters(query, centers.page);
+    if (!centers.hasLoaded) fetchCenters('', centers.page);
   }, []);
 
   return (
@@ -26,10 +26,11 @@ export const CenterModal: React.FC<Props> = (props) => {
 
       <S.ModalContents height="92%">
         <S.List
-          underline={true}
-          fullScreen={true}
+          underline
+          fullScreen
           data={centers.data}
           headerHeight={headerHeight}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <S.ModalDismissButton
               onPress={() => {

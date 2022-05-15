@@ -77,7 +77,7 @@ export const MatchCard: React.FC<Match> = (match) => {
               />
               <CardSpacer />
               <S.ProfilePicture
-                user={getUser(match.users, '1')}
+                user={getUser(match.users, '3')}
                 width="45px"
                 icon={match.isPublic ? 'add' : 'lock'}
               />
@@ -85,13 +85,13 @@ export const MatchCard: React.FC<Match> = (match) => {
             <CardSpacer />
             <S.Row>
               <S.ProfilePicture
-                user={getUser(match.users, '2')}
+                user={getUser(match.users, '1')}
                 width="45px"
                 icon={match.isPublic ? 'add' : 'lock'}
               />
               <CardSpacer />
               <S.ProfilePicture
-                user={getUser(match.users, '3')}
+                user={getUser(match.users, '2')}
                 width="45px"
                 icon={match.isPublic ? 'add' : 'lock'}
               />

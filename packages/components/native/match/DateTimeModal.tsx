@@ -5,10 +5,11 @@ import DatePicker from 'react-native-date-picker';
 type Props = {
   setDateTime: (dateTime: string) => void;
   dateTime: string;
+  label?: string;
 };
 
 export const DateTimeModal: React.FC<Props> = (props) => {
-  const [label, setLabel] = React.useState('Choose date & time');
+  const [label, setLabel] = React.useState(props.label || 'Choose date & time');
 
   const onDateChange = (date: Date) => {
     setLabel(
