@@ -6,6 +6,7 @@ import CreateMatch from '@racket-native/create-match';
 import UpdateMatch from '@racket-native/update-match';
 import Match from '@racket-native/match';
 import Chat from '@racket-native/chat';
+import Invite from '@racket-native/invite';
 
 export type MatchParamList = {
   Discover: undefined;
@@ -13,6 +14,7 @@ export type MatchParamList = {
   UpdateMatch: undefined;
   Match: undefined;
   Chat: undefined;
+  Invite: undefined;
 };
 
 const Stack = createStackNavigator<MatchParamList>();
@@ -52,6 +54,7 @@ const MatchStack = () => {
       <Stack.Screen name="UpdateMatch" component={UpdateMatch} />
       <Stack.Screen name="Match" component={Match} />
       <Stack.Screen name="Chat" component={Chat} />
+      <Stack.Screen name="Invite" component={Invite} />
     </Stack.Navigator>
   );
 };

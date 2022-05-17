@@ -1,30 +1,34 @@
 import * as React from 'react';
+import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
+import * as Hooks from '@racket-traits/hooks';
+import { useTranslation } from '@racket-traits/lang';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
+import { getTime, getDate, getWeekday } from '@racket-traits/utils';
+import { matchShare } from '@racket-traits/misc';
+import { useChats, useSetChat } from '@racket-traits/api/chat';
 import {
   useDeleteMatch,
   useMatch,
   useMatchFunctions,
   useResignMatch,
 } from '@racket-traits/api/match';
-import { getTime, getDate, getWeekday } from '@racket-traits/utils';
-import { useTranslation } from '@racket-traits/lang';
-import { useChats, useSetChat } from '@racket-traits/api/chat';
 
 type Props = StackScreenProps<MatchParamList, 'Match'>;
 
 const Match: React.FC<Props> = ({ navigation }) => {
-  const { getSkill, isAdmin, isPlayer, isSingle } = useMatchFunctions();
+  const { getSkill, isAdmin, isPlayer, isSingle, isFull } = useMatchFunctions();
   const [headerHeight, setHeaderHeight] = React.useState(0);
-  const [matchChat, setMatchChat] = React.useState<Chat>();
   const { match: t } = useTranslation();
   const match = useMatch();
   const chats = useChats();
   const setChat = useSetChat();
   const deleteMatch = useDeleteMatch();
   const resignMatch = useResignMatch();
+  const [share, onShare] = Hooks.useShare(matchShare(match.data, 'tennis'));
+  const [matchChat, setMatchChat] = React.useState<Chat>();
 
   React.useEffect(() => {
     if (!match.hasLoaded) navigation.navigate('Discover');
@@ -32,7 +36,15 @@ const Match: React.FC<Props> = ({ navigation }) => {
 
   React.useEffect(() => {
     setMatchChat(chats.data.find((chat) => chat.id === match.data.chat?.id));
-  }, [match.data]);
+  }, [match.data, chats.data.length]);
+
+  React.useEffect(() => {
+    if (share.hasError)
+      Native.Alert.alert('Something went wrong 😔', '', [
+        { text: 'Cancel' },
+        { text: 'Try again', onPress: () => onShare() },
+      ]);
+  }, [share.hasError]);
 
   return (
     <React.Fragment>
@@ -62,7 +74,12 @@ const Match: React.FC<Props> = ({ navigation }) => {
 
                       <S.Spacer size="xs" />
 
-                      <S.SmallButton icon="community" label={t.invite} />
+                      <S.SmallButton
+                        icon="community"
+                        label={t.invite}
+                        disabled={isFull(match.data)}
+                        onPress={() => navigation.navigate('Invite')}
+                      />
 
                       <S.Spacer size="xs" />
 
@@ -71,6 +88,8 @@ const Match: React.FC<Props> = ({ navigation }) => {
                         background="g100"
                         icon="share"
                         label={t.share}
+                        disabled={isFull(match.data)}
+                        onPress={onShare}
                       />
                     </S.Row>
                   </S.Container>
@@ -131,37 +150,39 @@ const Match: React.FC<Props> = ({ navigation }) => {
                       }/${match.data.currency}`}
                     />
                   )}
-
-                  <S.Spacer size="xs" />
-
-                  <S.Modal>
-                    <S.ModalOpenButton>
-                      <S.OutlineButton
-                        color="g400"
-                        label={
-                          isAdmin(match.data.users)
-                            ? t.abort_match
-                            : t.leave_match
-                        }
-                      />
-                    </S.ModalOpenButton>
-
-                    <S.ModalContents>
-                      <S.Padding size="xs">
-                        <S.ModalDismissButton
-                          onPress={() =>
-                            isAdmin(match.data.users)
-                              ? deleteMatch(match.data)
-                              : resignMatch(match.data)
-                          }
-                        >
-                          <S.Button background="error" label={t.are_you_sure} />
-                        </S.ModalDismissButton>
-                      </S.Padding>
-                    </S.ModalContents>
-                  </S.Modal>
                 </React.Fragment>
               )}
+
+              <S.Spacer size="xs" />
+
+              <S.Modal>
+                {isPlayer(match.data.users) && (
+                  <S.ModalOpenButton>
+                    <S.OutlineButton
+                      color="g400"
+                      label={
+                        isAdmin(match.data.users)
+                          ? t.abort_match
+                          : t.leave_match
+                      }
+                    />
+                  </S.ModalOpenButton>
+                )}
+
+                <S.ModalContents>
+                  <S.Padding size="xs">
+                    <S.ModalDismissButton
+                      onPress={() =>
+                        isAdmin(match.data.users)
+                          ? deleteMatch(match.data)
+                          : resignMatch(match.data)
+                      }
+                    >
+                      <S.Button background="error" label={t.are_you_sure} />
+                    </S.ModalDismissButton>
+                  </S.Padding>
+                </S.ModalContents>
+              </S.Modal>
 
               {!match.data.isPublic && !isPlayer(match.data.users) && (
                 <S.Button icon="lockOpen" label={'Ask to join'} />

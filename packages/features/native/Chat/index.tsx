@@ -26,7 +26,7 @@ const Chat: React.FC<Props> = ({ navigation }) => {
 
   React.useEffect(() => {
     if (chat.data.messages.length) fetchMessages(chat.data);
-  }, [chat.data]);
+  }, []);
 
   React.useEffect(() => {
     markAsRead();
@@ -47,7 +47,6 @@ const Chat: React.FC<Props> = ({ navigation }) => {
           data={formatMessages(chat.data)}
           onEndReached={() => fetchMessages(chat.data)}
           renderItem={({ item }) => <C.ChatBubble {...item} />}
-          keyExtractor={(item) => item.message + item.time + item.isMe}
         />
       </S.Background>
 
@@ -72,15 +71,17 @@ const Chat: React.FC<Props> = ({ navigation }) => {
             <S.H5>{getLabel(chat.data)}</S.H5>
             <S.Detail color="g500">{getMemberCount(chat.data)}</S.Detail>
 
-            <S.Absolute right="0">
-              <S.Clickable
-                onPress={() => {
-                  resignChat(chat.data);
-                }}
-              >
-                <S.Svg src="info" width="20px" color="g1000" />
-              </S.Clickable>
-            </S.Absolute>
+            {chat.data.type !== 'match' && (
+              <S.Absolute right="0">
+                <S.Clickable
+                  onPress={() => {
+                    resignChat(chat.data);
+                  }}
+                >
+                  <S.Svg src="info" width="20px" color="g1000" />
+                </S.Clickable>
+              </S.Absolute>
+            )}
           </S.Align>
         </S.Padding>
       </S.Header>

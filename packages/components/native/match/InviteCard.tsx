@@ -20,7 +20,7 @@ const Skill = styled(S.Detail)`
   max-width: 70%;
 `;
 
-export const UserCard: React.FC<User> = (user) => {
+export const InviteCard: React.FC<User> = (user) => {
   const followUser = useFollowUser();
   const { isFriends } = useUserFunctions();
 
@@ -41,7 +41,7 @@ export const UserCard: React.FC<User> = (user) => {
       <S.SmallButton
         onPress={() => followUser(user)}
         height="30px"
-        label={isFriends(user) ? 'Following' : 'Follow'}
+        label={isFriends(user) ? 'Invited' : 'Invite'}
         background="g100"
         color="g400"
         icon={isFriends(user) ? 'circleCheck' : 'circleAdd'}

@@ -43,49 +43,37 @@ const NoImage = styled.View<Partial<Image>>`
 `;
 
 const Prefix = styled(H1)<{ width: number }>`
-  font-size: ${({ width }) => width / 2}px;
+  font-size: ${({ width }) => width / 2.5}px;
 `;
 
 export const ProfilePicture: React.FC<Image> = (props) => {
-  const [width, setWidth] = React.useState(0);
+  const width = Number(props.width.replace(/[^0-9]/g, ''));
 
-  if (!props.user)
-    return (
-      <Container
-        height={props.height || props.width}
-        width={props.width}
-        onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
-      >
+  return (
+    <Container height={props.height || props.width} width={props.width}>
+      {!props.user && (
         <NoUser border={props.border}>
           {props.icon && (
             <Svg src={props.icon} width={`${width / 3}px`} color="g200" />
           )}
         </NoUser>
-      </Container>
-    );
+      )}
 
-  if (!props.user.picture)
-    return (
-      <Container
-        height={props.height || props.width}
-        width={props.width}
-        onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
-      >
+      {!!props.user && !props.user.picture && (
         <NoImage border={props.border}>
           <Prefix width={width} color="p500">
             {props.user.name[0]}
           </Prefix>
         </NoImage>
-      </Container>
-    );
+      )}
 
-  return (
-    <Container height={props.height || props.width} width={props.width}>
-      <Inner
-        source={{ uri: props.user.picture }}
-        resizeMode={props.resize}
-        border={props.border}
-      />
+      {!!props.user && props.user.picture && (
+        <Inner
+          source={{ uri: props.user.picture }}
+          resizeMode={props.resize}
+          border={props.border}
+        />
+      )}
     </Container>
   );
 };

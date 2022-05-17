@@ -7,6 +7,7 @@ import { useProfile } from '@racket-traits/api/profile';
 import {
   useFetchMatches,
   useMatches,
+  useMatchFunctions,
   useRefreshMatches,
   useUnloadMatch,
 } from '@racket-traits/api/match';
@@ -22,6 +23,7 @@ const dummy = [
 ];
 
 const Discover: React.FC<Props> = ({ navigation }) => {
+  const { sortMatches } = useMatchFunctions();
   const profile = useProfile();
   const matches = useMatches();
   const unloadMatch = useUnloadMatch();
@@ -40,7 +42,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
     <React.Fragment>
       <S.List
         fullScreen
-        data={matches.data}
+        data={sortMatches(matches.data)}
         onRefresh={refreshMatches}
         headerHeight={headerHeight}
         keyExtractor={(item) => item.id}

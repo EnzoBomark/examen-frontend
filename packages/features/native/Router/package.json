@@ -33,6 +33,7 @@
     "@racket-native/chat": "0.0.1",
     "@racket-native/match": "0.0.1",
     "@racket-native/matches": "0.0.1",
+    "@racket-native/invite": "0.0.1",
     "@racket-native/profile": "0.0.1",
     "@racket-native/settings": "0.0.1",
     "@racket-native/match-history": "0.0.1",
