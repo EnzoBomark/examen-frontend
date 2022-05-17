@@ -46,6 +46,7 @@ export const useChatFunctions = () => {
           : false;
 
         const formattedMessage: FormattedMessage = {
+          key: message.key,
           isPrevSameId,
           message: message.message,
           time: message.time,

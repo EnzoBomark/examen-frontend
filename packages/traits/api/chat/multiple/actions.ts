@@ -33,8 +33,8 @@ export const createChat = (chat: Chat): Action => ({
   payload: chat,
 });
 
-export const setChat = (chat: Chat): Action => ({
-  type: Types.SET_CHAT,
+export const setChats = (chat: Chat): Action => ({
+  type: Types.SET_CHATS,
   payload: chat,
 });
 

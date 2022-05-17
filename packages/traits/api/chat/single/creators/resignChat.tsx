@@ -1,11 +1,11 @@
 import api, { AxiosError } from '../../../axios';
-import { useSetChat } from '../../multiple/handlers/setChat';
+import { useSetChats } from '../../multiple/handlers/setChat';
 import { fail, pending, unload } from '../actions';
 import store from '../store';
 
 export const useResignChat = () => {
   const dispatch = store.useDispatch();
-  const setChat = useSetChat();
+  const setChats = useSetChats();
 
   const resignChat = (chat: Chat) => {
     dispatch(pending());
@@ -13,7 +13,7 @@ export const useResignChat = () => {
     api
       .put<Chat>(`profile/chat/${chat.id}`)
       .then(() => {
-        setChat(chat);
+        setChats(chat);
         dispatch(unload());
       })
       .catch((err: AxiosError<ResponseError<Chat>>) => {

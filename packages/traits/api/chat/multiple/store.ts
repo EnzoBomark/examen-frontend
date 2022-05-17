@@ -58,7 +58,7 @@ const store = createStore<State, Action>({
           data: unique(state.data, action.payload, 'id'),
         };
 
-      case Types.SET_CHAT:
+      case Types.SET_CHATS:
         return {
           ...state,
           data: resign(state.data, action.payload, 'id'),

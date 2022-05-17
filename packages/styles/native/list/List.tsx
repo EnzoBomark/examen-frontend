@@ -8,6 +8,7 @@ import { UnderLine } from '../layout/UnderLine';
 type List<T> = {
   inverted?: boolean | null | undefined;
   data: ReadonlyArray<T>;
+  extraData?: ReadonlyArray<T>;
   renderItem: Native.ListRenderItem<T>;
   refreshing?: boolean;
   onRefresh?: () => void;
@@ -42,10 +43,7 @@ export const List = <T,>(props: List<T>) => {
   return (
     <Native.FlatList
       {...props}
-      removeClippedSubviews
       nestedScrollEnabled
-      initialNumToRender={25}
-      maxToRenderPerBatch={25}
       onEndReachedThreshold={0.1}
       refreshing={props.refreshing || false}
       showsVerticalScrollIndicator={false}

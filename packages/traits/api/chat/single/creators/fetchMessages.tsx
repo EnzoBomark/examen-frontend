@@ -23,7 +23,7 @@ export const useFetchMessages = () => {
 
       const messages: Message[] = [];
 
-      messagesSnapShot.forEach((message) => {
+      await messagesSnapShot.forEach((message) => {
         messages.push({
           key: message.key,
           uid: message.val().uid,

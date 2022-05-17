@@ -34,6 +34,17 @@ export const useMatchFunctions = () => {
 
   const isSingle = (match?: Match) => match?.type === 'single';
 
+  const isFull = (match?: Match) =>
+    isSingle(match) ? match?.users?.length === 2 : match?.users?.length === 4;
+
+  const sortMatches = (matches: Match[]) =>
+    matches
+      .filter((match) => new Date(match.dateTime) > new Date())
+      .sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      );
+
   return {
     getUser,
     getAdmin,
@@ -42,5 +53,7 @@ export const useMatchFunctions = () => {
     isPlayer,
     isAdmin,
     isSingle,
+    isFull,
+    sortMatches,
   };
 };

@@ -19,6 +19,7 @@ type Chat = {
 };
 
 type FormattedMessage = {
+  key: string | null;
   isPrevSameId: boolean;
   isMe: boolean;
   message: string;

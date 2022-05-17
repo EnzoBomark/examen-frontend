@@ -16,4 +16,6 @@ type Match = {
   center?: Center;
   users?: User[];
   chat?: Chat;
+  createdAt: string;
+  updatedAt: string;
 };
