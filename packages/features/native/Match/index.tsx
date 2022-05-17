@@ -11,22 +11,28 @@ import {
 } from '@racket-traits/api/match';
 import { getTime, getDate, getWeekday } from '@racket-traits/utils';
 import { useTranslation } from '@racket-traits/lang';
-import { useChats } from '@racket-traits/api/chat';
+import { useChats, useSetChat } from '@racket-traits/api/chat';
 
 type Props = StackScreenProps<MatchParamList, 'Match'>;
 
 const Match: React.FC<Props> = ({ navigation }) => {
   const { getSkill, isAdmin, isPlayer, isSingle } = useMatchFunctions();
   const [headerHeight, setHeaderHeight] = React.useState(0);
+  const [matchChat, setMatchChat] = React.useState<Chat>();
   const { match: t } = useTranslation();
   const match = useMatch();
   const chats = useChats();
+  const setChat = useSetChat();
   const deleteMatch = useDeleteMatch();
   const resignMatch = useResignMatch();
 
   React.useEffect(() => {
     if (!match.hasLoaded) navigation.navigate('Discover');
   }, [match]);
+
+  React.useEffect(() => {
+    setMatchChat(chats.data.find((chat) => chat.id === match.data.chat?.id));
+  }, [match.data]);
 
   return (
     <React.Fragment>
@@ -44,7 +50,15 @@ const Match: React.FC<Props> = ({ navigation }) => {
                 {isPlayer(match.data.users) && (
                   <S.Container size="xs">
                     <S.Row justify="center">
-                      <S.SmallButton icon="chat" label={t.chat} />
+                      <S.SmallButton
+                        icon="chat"
+                        label={t.chat}
+                        disabled={!matchChat}
+                        onPress={() => {
+                          matchChat && setChat(matchChat);
+                          navigation.navigate('Chat');
+                        }}
+                      />
 
                       <S.Spacer size="xs" />
 

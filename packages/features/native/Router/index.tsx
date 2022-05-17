@@ -1,4 +1,5 @@
 import * as React from 'react';
+import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import DrawerStack from './stacks/DrawerStack';
 import MatchStack from './stacks/MatchStack';
@@ -8,7 +9,12 @@ import ChatStack from './stacks/ChatStack';
 import { useProfile, useFetchProfile } from '@racket-traits/api/profile';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useUnloadAppState } from '@racket-traits/api/core';
-import { useChats, useFetchChats } from '@racket-traits/api/chat';
+import {
+  useChats,
+  useFetchChats,
+  useFetchLastMessages,
+  useFetchReadStatus,
+} from '@racket-traits/api/chat';
 
 export type RootParamList = {
   DrawerStack: undefined;
@@ -29,6 +35,9 @@ const RootStack: React.FC = () => {
   const chats = useChats();
   const profile = useProfile();
 
+  const fetchLastMessages = useFetchLastMessages();
+  const fetchReadStatus = useFetchReadStatus();
+
   React.useEffect(() => {
     auth().onAuthStateChanged((user) => {
       user ? fetchProfile() : unloadAppState();
@@ -36,8 +45,33 @@ const RootStack: React.FC = () => {
   }, []);
 
   React.useEffect(() => {
+    if (profile.hasLoaded) {
+      chats.data.forEach((chat) => {
+        database()
+          .ref(`/chat_rooms/${chat.id}`)
+          .on('value', () => {
+            fetchLastMessages(chat);
+          });
+
+        database()
+          .ref(`/chat_rooms_status/${chat.id}`)
+          .on('value', () => {
+            fetchReadStatus(chat);
+          });
+      });
+
+      return () => {
+        chats.data.forEach((chat) => {
+          database().ref(`/chat_rooms/${chat.id}`).off();
+          database().ref(`/chat_rooms_status/${chat.id}`).off();
+        });
+      };
+    }
+  }, [profile.hasLoaded, chats.data.length]);
+
+  React.useEffect(() => {
     if (profile.hasLoaded && !chats.hasLoaded) fetchChats(chats.page);
-  }, [profile]);
+  }, [profile.hasLoaded]);
 
   return (
     <Stack.Navigator screenOptions={options}>

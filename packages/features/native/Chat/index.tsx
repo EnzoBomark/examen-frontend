@@ -64,7 +64,7 @@ const Chat: React.FC<Props> = ({ navigation }) => {
         <S.Padding size="xs">
           <S.Align type="center">
             <S.Absolute left="0">
-              <S.Clickable onPress={() => navigation.navigate('Chats')}>
+              <S.Clickable onPress={() => navigation.goBack()}>
                 <S.Svg src="leftArrow" width="20px" color="g1000" />
               </S.Clickable>
             </S.Absolute>

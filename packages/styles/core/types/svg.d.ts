@@ -1,16 +1,10 @@
 import Icons from '@racket-styles/assets/icons';
 
 declare global {
-  type SvgCore = {
+  type Svg = {
     src: keyof typeof Icons;
-  };
-
-  type SvgType = {
-    color?: keyof theme['colors'];
-  };
-
-  type SvgSizing = {
-    height?: string;
     width: string;
+    color?: keyof theme['colors'];
+    height?: string;
   };
 }

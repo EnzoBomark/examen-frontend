@@ -1,7 +1,7 @@
 import { Alert } from 'react-native';
 import { fail, pending, success } from '../actions';
 import auth from '@react-native-firebase/auth';
-import api, { AxiosError } from '../../index';
+import api, { AxiosError } from '../../axios';
 import store from '../store';
 
 export const useCreateProfile = () => {

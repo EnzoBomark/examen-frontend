@@ -17,12 +17,12 @@ export const validator = (str: string, ...criteria: Validator[]) => {
     undefined
   );
 };
-// Test string against array of criteria
 
 type KeyOfMap<M extends Map<unknown, unknown>> = M extends Map<infer K, unknown>
   ? K
   : never;
 
+// Test string against array of criteria
 export const criteria =
   <
     T extends Map<{ [key: string]: string | undefined }, Validator[]>,

@@ -13,7 +13,7 @@ export const useChatFunctions = () => {
     chat.users
       .filter((u) => u.id !== profile.data.id)
       .map((u) => u.name)
-      .join(', ');
+      .join(', ') || '-';
 
   const getPrefix = (message: Message, users: User[]) => {
     return `${

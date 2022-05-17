@@ -10,7 +10,8 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@types/react-modal": "^3.13.1",
+    "@racket-styles/assets": "0.0.1",
+    "@racket-styles/core": "0.0.1",
     "@types/styled-components": "^5.1.21"
   }
 }

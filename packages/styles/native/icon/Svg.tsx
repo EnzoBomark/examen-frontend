@@ -1,12 +1,10 @@
 import * as React from 'react';
 import { SvgXml } from 'react-native-svg';
-import Icons from '@racket-styles/assets/icons';
+import { NativeIcons } from '@racket-styles/assets/icons';
 import theme from '@racket-styles/core/theme';
 
-type Svg = SvgCore & SvgType & SvgSizing;
-
 export const Svg: React.FC<Svg> = (props) => {
-  const icon = Icons[props.src];
+  const icon = NativeIcons[props.src];
 
   const isColor = (color?: string): color is keyof typeof theme.colors =>
     Object.keys(theme.colors).indexOf(color || '') !== -1;

@@ -14,7 +14,7 @@ const CommunityStack = () => {
   const fetchUsers = useFetchUsers();
 
   React.useEffect(() => {
-    if (!users.hasLoaded) fetchUsers(users.page);
+    if (!users.hasLoaded) fetchUsers('', users.page);
   }, []);
 
   return (

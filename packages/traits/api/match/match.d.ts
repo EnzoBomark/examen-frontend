@@ -15,4 +15,5 @@ type Match = {
   description?: string;
   center?: Center;
   users?: User[];
+  chat?: Chat;
 };

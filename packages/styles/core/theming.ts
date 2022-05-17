@@ -1,6 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
-import RobotoBold from './assets/fonts/Roboto-Bold.ttf';
-import RobotoRegular from './assets/fonts/Roboto-Regular.ttf';
+import RobotoBold from '@racket-styles/assets/fonts/Roboto-Bold.ttf';
+import RobotoRegular from '@racket-styles/assets/fonts/Roboto-Regular.ttf';
 
 const theming = createGlobalStyle`
   @font-face {
@@ -16,8 +16,6 @@ const theming = createGlobalStyle`
     src: url(${RobotoRegular}) format('truetype');
     font-weight: 300;
   }
-
- 
 
   * {
     box-sizing: border-box;
