@@ -13,7 +13,7 @@ const Card = styled.TouchableOpacity`
 `;
 
 const Header = styled(S.H1)`
-  font-size: 58px;
+  font-size: 48px;
 `;
 
 const Detail = styled(S.H4)`

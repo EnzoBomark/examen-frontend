@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as S from '@racket-styles/native';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
-import { useMatchFunctions } from '@racket-traits/api/match';
+import { useMatchFunctions, useScoreMatch } from '@racket-traits/api/match';
 
 const ScoreButton = styled.View`
   width: 100%;
@@ -30,6 +30,8 @@ const ScoreContainer = styled.View`
 `;
 
 export const ScoreMatchModal: React.FC<Match> = (match) => {
+  const scoreMatch = useScoreMatch();
+
   const [teamOneScore, setTeamOneScore] = React.useState(0);
   const [teamTwoScore, setTeamTwoScore] = React.useState(0);
 
@@ -106,7 +108,10 @@ export const ScoreMatchModal: React.FC<Match> = (match) => {
 
           <S.Spacer size="xxl" />
 
-          <S.Button label="Post score" />
+          <S.Button
+            label="Post score"
+            onPress={() => scoreMatch(match, teamOneScore, teamTwoScore)}
+          />
         </S.Padding>
       </S.ModalContents>
     </S.Modal>

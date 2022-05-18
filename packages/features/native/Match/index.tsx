@@ -117,42 +117,48 @@ const Match: React.FC<Props> = ({ navigation }) => {
                   </S.Container>
                 )}
 
-                <S.Row align="center">
-                  <S.Svg src="infoDrop" width="20px" color="g400" />
-                  <S.Spacer size="xxs" />
-                  <S.Body>{match.data.center?.address}</S.Body>
-                </S.Row>
+                {!match.data.isPlayed && (
+                  <React.Fragment>
+                    <S.Row align="center">
+                      <S.Svg src="infoDrop" width="20px" color="g400" />
+                      <S.Spacer size="xxs" />
+                      <S.Body>{match.data.center?.address}</S.Body>
+                    </S.Row>
 
-                <S.Spacer size="xs" />
+                    <S.Spacer size="xs" />
 
-                <S.Row align="center">
-                  <S.Svg src="clock" width="20px" color="g400" />
-                  <S.Spacer size="xxs" />
-                  <S.Body>
-                    {getTime(match.data.dateTime)}{' '}
-                    {getWeekday(match.data.dateTime)}
-                  </S.Body>
-                  <S.Spacer size="xxs" />
-                  <S.Svg src="calender" width="20px" color="g400" />
-                  <S.Spacer size="xxs" />
-                  <S.Body>{getDate(match.data.dateTime)}</S.Body>
-                </S.Row>
+                    <S.Row align="center">
+                      <S.Svg src="clock" width="20px" color="g400" />
+                      <S.Spacer size="xxs" />
+                      <S.Body>
+                        {getTime(match.data.dateTime)}{' '}
+                        {getWeekday(match.data.dateTime)}
+                      </S.Body>
+                      <S.Spacer size="xxs" />
+                      <S.Svg src="calender" width="20px" color="g400" />
+                      <S.Spacer size="xxs" />
+                      <S.Body>{getDate(match.data.dateTime)}</S.Body>
+                    </S.Row>
 
-                <S.Spacer size="xs" />
+                    <S.Spacer size="xs" />
 
-                <S.Row align="center">
-                  <S.Svg src="star" width="18px" color="g400" />
-                  <S.Spacer size="xxs" />
-                  <S.Body>{getSkill(match.data.users)}</S.Body>
-                </S.Row>
+                    <S.Row align="center">
+                      <S.Svg src="star" width="18px" color="g400" />
+                      <S.Spacer size="xxs" />
+                      <S.Body>{getSkill(match.data.users)}</S.Body>
+                    </S.Row>
 
-                <S.Spacer size="xs" />
+                    <S.Spacer size="xs" />
 
-                <S.Row align="end">
-                  <S.Svg src="stopwatch" width="20px" color="g400" />
-                  <S.Spacer size="xxs" />
-                  <S.Body>{match.data.duration} min</S.Body>
-                </S.Row>
+                    <S.Row align="end">
+                      <S.Svg src="stopwatch" width="20px" color="g400" />
+                      <S.Spacer size="xxs" />
+                      <S.Body>{match.data.duration} min</S.Body>
+                    </S.Row>
+                  </React.Fragment>
+                )}
+
+                {match.data.isPlayed && <C.ScoreCard {...match.data} />}
               </S.Padding>
 
               <S.Spacer size="xs" />
@@ -225,15 +231,17 @@ const Match: React.FC<Props> = ({ navigation }) => {
                 </React.Fragment>
               )}
 
-              {isPastDate(match.data) && isAdmin(match.data.users) && (
-                <React.Fragment>
-                  <C.ScoreMatchModal {...match.data} />
-                  <S.Spacer size="xs" />
-                </React.Fragment>
-              )}
+              {!match.data.isPlayed &&
+                isPastDate(match.data) &&
+                isAdmin(match.data.users) && (
+                  <React.Fragment>
+                    <C.ScoreMatchModal {...match.data} />
+                    <S.Spacer size="xs" />
+                  </React.Fragment>
+                )}
 
               <S.Modal>
-                {isPlayer(match.data.users) && (
+                {!match.data.isPlayed && isPlayer(match.data.users) && (
                   <S.ModalOpenButton>
                     <S.OutlineButton
                       color="g400"

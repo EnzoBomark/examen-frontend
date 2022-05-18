@@ -1,3 +1,4 @@
+export * from './creators/scoreMatch';
 export * from './creators/kickPlayer';
 export * from './creators/fetchMatch';
 export * from './creators/createMatch';

@@ -13,6 +13,8 @@ type Match = {
   isBooked?: boolean;
   centerId?: string;
   description?: string;
+  teamOneScore?: number;
+  teamTwoScore?: number;
   center?: Center;
   users?: User[];
   chat?: Chat;
