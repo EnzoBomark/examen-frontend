@@ -13,8 +13,8 @@ export const useResignMatch = () => {
     api
       .put<Match>(`profile/match/${match.id}`, { position })
       .then((res) => {
-        dispatch(success(res.data));
         setChats(res.data.chat as Chat);
+        dispatch(success(res.data));
       })
       .catch((err: AxiosError<ResponseError<Match>>) => {
         if (!err.response) throw err;

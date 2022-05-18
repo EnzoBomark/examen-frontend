@@ -25,6 +25,6 @@ type FormattedMessage = {
   message: string;
   time: string;
   name?: string;
-  picture?: string;
   date?: string;
+  user?: User;
 };

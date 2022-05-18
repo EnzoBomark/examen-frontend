@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { ChatParamList } from '@racket-native/router/stacks/ChatStack';
 import { useChatFunctions, useSetChat } from '@racket-traits/api/chat';
 import { getTime, getDate } from '@racket-traits/utils';
+import { profileSelector } from '@racket-traits/api/profile/selectors';
+import { useProfile } from '@racket-traits/api/profile';
 
 const Card = styled.View`
   height: 56px;
@@ -23,9 +25,32 @@ const Message = styled(S.Detail)`
   max-width: 70%;
 `;
 
+const TitleWrapper = styled.View`
+  overflow: hidden;
+  width: 95%;
+`;
+
 const Date = styled(S.Detail)`
   margin-left: auto;
   margin-top: 2px;
+`;
+
+const Images = styled.View<{ number: number }>`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  justify-content: center;
+  left: ${({ number }) => 6 * number + 10}px;
+`;
+
+const ImageSpacer = styled.View<{ number: number }>`
+  width: ${({ number }) => 6 * number + 12}px;
+`;
+
+const ImageBorder = styled.View`
+  padding: 1px;
+  background-color: ${theme.colors.p100};
+  border-radius: ${theme.radius.xxl};
 `;
 
 const Dot = styled.View`
@@ -38,9 +63,14 @@ const Dot = styled.View`
 type Navigation = StackNavigationProp<ChatParamList, 'Chats'>;
 
 export const ChatCard: React.FC<Chat> = (chat) => {
+  const profile = useProfile();
   const setChat = useSetChat();
   const navigation = useNavigation<Navigation>();
   const { getLabel, getPrefix, getReadStatus } = useChatFunctions();
+
+  const userImages = chat.users
+    .filter((user) => user.id !== profile.data.id)
+    .slice(0, 3);
 
   return (
     <S.Clickable
@@ -50,20 +80,33 @@ export const ChatCard: React.FC<Chat> = (chat) => {
       }}
     >
       <Card style={{ ...theme.shadow }}>
-        <S.Image
-          border="xxl"
-          src="https://d2ihp3fq52ho68.cloudfront.net/YTo2OntzOjI6ImlkIjtpOjEzNDM5NzE7czoxOiJ3IjtpOjQ4MDtzOjE6ImgiO2k6MzIwMDtzOjE6ImMiO2k6MDtzOjE6InMiO2k6MDtzOjE6ImsiO3M6NDA6IjUyZTRiMDg0MWRhOTAxODJlNzIyZjRmNjAxYTU1OWI2ODAwZWZlOGQiO30="
-          width="34px"
-        />
+        {userImages.map((user, index) => (
+          <Images number={index}>
+            <ImageBorder>
+              <S.ProfilePicture
+                key={user.id}
+                border="xxl"
+                user={user}
+                width="34px"
+              />
+            </ImageBorder>
+          </Images>
+        ))}
+
+        <ImageSpacer number={userImages.length} />
 
         <S.Absolute top="8px" left="8px">
           {!getReadStatus(chat) && <Dot />}
         </S.Absolute>
 
-        <S.Spacer size="xs" />
+        <S.Spacer size="s" />
 
         <S.Col>
-          <S.Label color="g1000">{getLabel(chat)}</S.Label>
+          <TitleWrapper>
+            <S.Label color="g1000" numberOfLines={1}>
+              {getLabel(chat)}
+            </S.Label>
+          </TitleWrapper>
 
           {!!chat.messages.length ? (
             <S.Row style={{ width: '100%' }}>

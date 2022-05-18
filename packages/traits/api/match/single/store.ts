@@ -19,6 +19,8 @@ const initialState: State = {
     isPlayed: undefined,
     isBooked: undefined,
     centerId: undefined,
+    createdAt: '',
+    updatedAt: '',
   },
 };
 

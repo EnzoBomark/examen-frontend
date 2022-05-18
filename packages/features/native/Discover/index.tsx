@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
+import * as Hooks from '@racket-traits/hooks';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
 import { useProfile } from '@racket-traits/api/profile';
@@ -31,6 +32,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
   const refreshMatches = useRefreshMatches();
   const [accordion, setAccordion] = React.useState(false);
   const [headerHeight, setHeaderHeight] = React.useState<number>(0);
+  const showLoadingBar = Hooks.useDelay(matches.isLoading, 2100);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -40,15 +42,24 @@ const Discover: React.FC<Props> = ({ navigation }) => {
 
   return (
     <React.Fragment>
-      <S.List
-        fullScreen
-        data={sortMatches(matches.data)}
-        onRefresh={refreshMatches}
-        headerHeight={headerHeight}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => <C.MatchCard {...item} />}
-        onEndReached={() => matches.hasMore && fetchMatches(matches.page)}
-      />
+      {!!sortMatches(matches.data).length ? (
+        <S.List
+          fullScreen
+          data={sortMatches(matches.data)}
+          onRefresh={refreshMatches}
+          headerHeight={headerHeight}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <C.MatchCard {...item} />}
+          onEndReached={() => matches.hasMore && fetchMatches(matches.page)}
+        />
+      ) : (
+        <C.EmptyListReload
+          title="Oh no!"
+          message="No matches found"
+          onPress={refreshMatches}
+          headerHeight={headerHeight}
+        />
+      )}
 
       <S.Header setHeaderHeight={setHeaderHeight}>
         <S.Padding size="xs" vertical={false}>
@@ -118,7 +129,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
           <S.Spacer size="xs" />
         )}
 
-        {matches.isLoading && <S.LoadingBar />}
+        {showLoadingBar && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );

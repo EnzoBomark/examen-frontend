@@ -62,9 +62,7 @@ export const useChatFunctions = () => {
             chat.users.find((u) => u.id === message.uid)?.name || t.user_left;
 
         if (!isNextSameId || !isNextSameSpan)
-          formattedMessage.picture =
-            chat.users.find((u) => u.id === message.uid)?.picture ||
-            'https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png';
+          formattedMessage.user = chat.users.find((u) => u.id === message.uid);
 
         return [...acc, formattedMessage];
       }, [] as Array<FormattedMessage>)

@@ -16,8 +16,7 @@ const Container = styled.View<Partial<FormattedMessage>>`
   border-bottom-right-radius: ${({ isMe }) => (isMe ? '3px' : theme.radius.xs)};
   background-color: ${({ isMe }) =>
     isMe ? theme.colors.p200 : theme.colors.p600};
-  margin-left: ${({ isMe, picture }) =>
-    !isMe ? (picture ? '8px' : '32px') : 0};
+  margin-left: ${({ isMe, user }) => (!isMe ? (user ? '8px' : '32px') : 0)};
 `;
 
 const Date = styled(S.Detail)`
@@ -55,8 +54,8 @@ export const ChatBubble: React.FC<Props> = (props) => {
   return (
     <>
       <Wrapper {...props} align="end">
-        {!props.isMe && props.picture && (
-          <S.Image src={props.picture} width="25px" />
+        {!props.isMe && props.user && (
+          <S.ProfilePicture user={props.user} width="25px" />
         )}
 
         <Container {...props}>

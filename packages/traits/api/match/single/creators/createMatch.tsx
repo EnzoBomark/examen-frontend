@@ -1,10 +1,12 @@
 import { Alert } from 'react-native';
 import api, { AxiosError } from '../../../axios';
-import store from '../store';
+import { useSetChats } from '../../../chat';
 import { fail, pending, success } from '../actions';
+import store from '../store';
 
 export const useCreateMatch = () => {
   const dispatch = store.useDispatch();
+  const setChats = useSetChats();
 
   const createMatch = async (
     type: boolean,
@@ -33,7 +35,10 @@ export const useCreateMatch = () => {
         price: price.length ? price : undefined,
         phone: phone.length ? phone : undefined,
       })
-      .then((res) => dispatch(success(res.data)))
+      .then((res) => {
+        setChats(res.data.chat as Chat);
+        dispatch(success(res.data));
+      })
       .catch((err: AxiosError<ResponseError<Match>>) => {
         if (!err.response) throw err;
 
