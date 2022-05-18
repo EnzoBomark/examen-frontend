@@ -38,7 +38,9 @@ const CreateMatch: React.FC<Props> = ({ navigation }) => {
   );
 
   React.useEffect(() => {
-    if (!match.isLoading && match.hasLoaded) navigation.navigate('Match');
+    if (!match.isLoading && match.hasLoaded) {
+      navigation.replace('Match');
+    }
   }, [match]);
 
   return (

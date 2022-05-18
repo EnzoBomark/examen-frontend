@@ -19,7 +19,8 @@ import {
 type Props = StackScreenProps<MatchParamList, 'Match'>;
 
 const Match: React.FC<Props> = ({ navigation }) => {
-  const { getSkill, isAdmin, isPlayer, isSingle, isFull } = useMatchFunctions();
+  const { getSkill, isAdmin, isPlayer, isSingle, isFull, isPastDate } =
+    useMatchFunctions();
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const { match: t } = useTranslation();
   const match = useMatch();
@@ -31,7 +32,7 @@ const Match: React.FC<Props> = ({ navigation }) => {
   const [matchChat, setMatchChat] = React.useState<Chat>();
 
   React.useEffect(() => {
-    if (!match.hasLoaded) navigation.navigate('Discover');
+    if (!match.hasLoaded) navigation.goBack();
   }, [match]);
 
   React.useEffect(() => {
@@ -59,7 +60,7 @@ const Match: React.FC<Props> = ({ navigation }) => {
               <S.Spacer size="s" />
 
               <S.Padding size="xxs" vertical={false}>
-                {isPlayer(match.data.users) && (
+                {!match.data.isPlayed && isPlayer(match.data.users) && (
                   <S.Container size="xs">
                     <S.Row justify="center">
                       <S.SmallButton
@@ -156,6 +157,20 @@ const Match: React.FC<Props> = ({ navigation }) => {
               <S.Spacer size="xs" />
 
               <S.Modal>
+                {isPastDate(match.data) && isAdmin(match.data.users) && (
+                  <S.ModalOpenButton>
+                    <S.Button label={'Mark as played'} icon="cup" />
+                  </S.ModalOpenButton>
+                )}
+
+                <S.ModalContents height="85%">
+                  <S.Padding size="xs"></S.Padding>
+                </S.ModalContents>
+              </S.Modal>
+
+              <S.Spacer size="xs" />
+
+              <S.Modal>
                 {isPlayer(match.data.users) && (
                   <S.ModalOpenButton>
                     <S.OutlineButton
@@ -196,7 +211,7 @@ const Match: React.FC<Props> = ({ navigation }) => {
         <S.Padding size="xs">
           <S.Align type="center">
             <S.Absolute left="0">
-              <S.Clickable onPress={() => navigation.navigate('Discover')}>
+              <S.Clickable onPress={() => navigation.goBack()}>
                 <S.Svg src="leftArrow" width="20px" color="g1000" />
               </S.Clickable>
             </S.Absolute>

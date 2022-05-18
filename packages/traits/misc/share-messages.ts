@@ -9,3 +9,7 @@ export const matchShare = (match: Match, type: 'tennis' | 'paddel') => {
   Time: ${getDate(match.dateTime)} at ${getTime(match.dateTime)}
   Place: ${match.center?.name}`;
 };
+
+export const appShare = () => {
+  return `Hi! I’m looking for a teammate, download Racket at {{ Insert app_store_id }}`;
+};

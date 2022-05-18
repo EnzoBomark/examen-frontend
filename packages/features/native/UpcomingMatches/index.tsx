@@ -4,47 +4,41 @@ import * as C from '@racket-components/native';
 import * as Hooks from '@racket-traits/hooks';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
-import { useMatchFunctions } from '@racket-traits/api/match';
 import {
-  useFetchHistory,
-  useHistory,
-  useRefreshHistory,
-} from '@racket-traits/api/user/misc/history';
+  useFetchUpcoming,
+  useRefreshUpcoming,
+  useUpcoming,
+} from '@racket-traits/api/user/misc/upcoming';
 import { useProfile } from '@racket-traits/api/profile';
 
-type Props = DrawerScreenProps<MatchParamList, 'MatchHistory'>;
+type Props = DrawerScreenProps<MatchParamList, 'UpcomingMatches'>;
 
-const MatchHistory: React.FC<Props> = ({ navigation }) => {
+const UpcomingMatches: React.FC<Props> = ({ navigation }) => {
   const profile = useProfile();
-  const history = useHistory();
-  const fetchHistory = useFetchHistory();
-  const refreshHistory = useRefreshHistory();
+  const upcoming = useUpcoming();
+  const fetchUpcoming = useFetchUpcoming();
+  const refreshUpcoming = useRefreshUpcoming();
   const [headerHeight, setHeaderHeight] = React.useState(0);
-  const showLoadingBar = Hooks.useDelay(history.isLoading, 2100);
-
-  React.useEffect(() => {
-    if (!history.hasLoaded) fetchHistory(profile.data, history.page);
-  }, []);
 
   return (
     <React.Fragment>
-      {!!history.data.length ? (
+      {!!upcoming.data.length ? (
         <S.List
           fullScreen
-          data={history.data}
-          onRefresh={() => refreshHistory(profile.data)}
+          data={upcoming.data}
+          onRefresh={() => refreshUpcoming(profile.data)}
           headerHeight={headerHeight}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => <C.MatchCard {...item} />}
           onEndReached={() =>
-            history.hasMore && fetchHistory(profile.data, history.page)
+            upcoming.hasMore && fetchUpcoming(profile.data, upcoming.page)
           }
         />
       ) : (
         <C.EmptyListReload
           title="Oh no!"
-          message="Looks like you don't have any played matches"
-          onPress={() => refreshHistory(profile.data)}
+          message="Looks like you don't have any upcoming matches"
+          onPress={() => refreshUpcoming(profile.data)}
           headerHeight={headerHeight}
         />
       )}
@@ -60,7 +54,7 @@ const MatchHistory: React.FC<Props> = ({ navigation }) => {
               </S.Clickable>
             </S.Absolute>
 
-            <S.H5 bold>Match history</S.H5>
+            <S.H5 bold>Upcoming matches</S.H5>
           </S.Row>
 
           <S.Spacer size="xs" />
@@ -70,10 +64,10 @@ const MatchHistory: React.FC<Props> = ({ navigation }) => {
           <S.Spacer size="xs" />
         </S.Padding>
 
-        {showLoadingBar && <S.LoadingBar />}
+        {upcoming.isLoading && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );
 };
 
-export default MatchHistory;
+export default UpcomingMatches;

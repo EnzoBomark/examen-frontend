@@ -49,6 +49,7 @@ import * as bookmark from './bookmark.svg';
 import * as bookmarkFill from './bookmark-fill.svg';
 import * as chatActive from './chat-active.svg';
 import * as deal from './deal.svg';
+import * as cup from './cup.svg';
 
 const Icons = {
   forward,
@@ -101,6 +102,7 @@ const Icons = {
   bookmarkFill,
   chatActive,
   deal,
+  cup,
 };
 
 enum Platform {

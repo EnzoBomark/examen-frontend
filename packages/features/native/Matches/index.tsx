@@ -1,73 +1,72 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
+import * as C from '@racket-components/native';
+import * as Hooks from '@racket-traits/hooks';
+import { DrawerScreenProps } from '@react-navigation/drawer';
+import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
+import {
+  useFetchMatches,
+  useMatches,
+  useMatchFunctions,
+  useRefreshMatches,
+} from '@racket-traits/api/match';
 
-const MatchHistory: React.FC = () => {
-  const [bool, setBool] = React.useState<boolean>(false);
+type Props = DrawerScreenProps<MatchParamList, 'MatchHistory'>;
+
+const Matches: React.FC<Props> = ({ navigation }) => {
+  const { sortMatches } = useMatchFunctions();
+  const matches = useMatches();
+  const fetchMatches = useFetchMatches();
+  const refreshMatches = useRefreshMatches();
+  const [headerHeight, setHeaderHeight] = React.useState(0);
+  const showLoadingBar = Hooks.useDelay(matches.isLoading, 2100);
 
   return (
-    <S.Screen>
-      <S.Padding size="xs">
-        <S.Align type="start">
-          <S.TextInput placeholder="Placeholder" />
+    <React.Fragment>
+      {!!sortMatches(matches.data).length ? (
+        <S.List
+          fullScreen
+          data={sortMatches(matches.data)}
+          onRefresh={refreshMatches}
+          headerHeight={headerHeight}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => <C.MatchCard {...item} />}
+          onEndReached={() => matches.hasMore && fetchMatches(matches.page)}
+        />
+      ) : (
+        <C.EmptyListReload
+          title="Oh no!"
+          message="Looks like you don't have any played matches"
+          onPress={refreshMatches}
+          headerHeight={headerHeight}
+        />
+      )}
 
-          <S.Spacer size="s" />
+      <S.Header setHeaderHeight={setHeaderHeight}>
+        <S.Padding size="xs" vertical={false}>
+          <S.Spacer size="xs" />
 
-          <S.TextInput placeholder="Placeholder" />
+          <S.Row justify="center">
+            <S.Absolute left="0" bottom="0">
+              <S.Clickable onPress={() => navigation.goBack()}>
+                <S.Svg src="leftArrow" color="g1000" width="20px" />
+              </S.Clickable>
+            </S.Absolute>
 
-          <S.Spacer size="s" />
+            <S.H5 bold>Your matches</S.H5>
+          </S.Row>
 
-          <S.TextInput placeholder="Placeholder" icon="search" />
+          <S.Spacer size="xs" />
 
-          <S.Spacer size="s" />
+          <S.TextInput placeholder="Search" height="38px" icon="search" />
 
-          <S.TextInput placeholder="Placeholder" />
+          <S.Spacer size="xs" />
+        </S.Padding>
 
-          <S.Spacer size="s" />
-
-          <S.TextInput placeholder="Placeholder" />
-
-          <S.Spacer size="s" />
-
-          <S.TextInput placeholder="Placeholder" icon="search" />
-
-          <S.Spacer size="s" />
-
-          <S.Modal>
-            <S.ModalOpenButton>
-              <S.Button label="Modal button" icon="infoDrop" />
-            </S.ModalOpenButton>
-            <S.ModalContents>
-              <S.ModalDismissButton>
-                <S.Clickable>
-                  <S.Padding size="xxs">
-                    <S.Svg src="leftArrow" width="23px" color="g1000" />
-                  </S.Padding>
-                </S.Clickable>
-              </S.ModalDismissButton>
-
-              <S.Spacer size="xs" />
-
-              <S.TextInput placeholder="Placeholder" />
-
-              <S.Spacer size="s" />
-
-              <S.TextInput placeholder="Placeholder" />
-
-              <S.Spacer size="s" />
-
-              <S.TextInput placeholder="Placeholder" />
-
-              <S.Spacer size="s" />
-
-              <S.ModalDismissButton>
-                <S.Button label="Close" icon="exit" background="g1000" />
-              </S.ModalDismissButton>
-            </S.ModalContents>
-          </S.Modal>
-        </S.Align>
-      </S.Padding>
-    </S.Screen>
+        {showLoadingBar && <S.LoadingBar />}
+      </S.Header>
+    </React.Fragment>
   );
 };
 
-export default MatchHistory;
+export default Matches;

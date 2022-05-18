@@ -1,10 +1,12 @@
 import * as React from 'react';
 import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
+import * as Hooks from '@racket-traits/hooks';
 import * as Navigation from '@react-navigation/drawer';
 import auth from '@react-native-firebase/auth';
 import theme from '@racket-styles/core/theme';
 import Images from '@racket-styles/assets/images';
+import { appShare } from '@racket-traits/misc';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useProfile } from '@racket-traits/api/profile';
 import {
@@ -19,10 +21,19 @@ export const Drawer: React.FC<Props> = (props) => {
   const profile = useProfile();
   const history = useHistory();
   const insets = useSafeAreaInsets();
+  const [share, onShare] = Hooks.useShare(appShare());
 
   React.useEffect(() => {
     countHistory(profile.data);
   }, []);
+
+  React.useEffect(() => {
+    if (share.hasError)
+      Native.Alert.alert('Something went wrong 😔', '', [
+        { text: 'Cancel' },
+        { text: 'Try again', onPress: () => onShare() },
+      ]);
+  }, [share.hasError]);
 
   return (
     <Native.View style={{ flex: 1 }}>
@@ -73,7 +84,7 @@ export const Drawer: React.FC<Props> = (props) => {
         <S.UnderLine />
 
         <S.Padding size="s">
-          <S.Clickable>
+          <S.Clickable onPress={onShare}>
             <S.Row>
               <S.Svg src="share" width="18px" color="g1000" />
 

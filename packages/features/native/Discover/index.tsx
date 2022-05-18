@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
 import * as Hooks from '@racket-traits/hooks';
+import { useFocusEffect } from '@react-navigation/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
 import { useProfile } from '@racket-traits/api/profile';
@@ -12,24 +13,22 @@ import {
   useRefreshMatches,
   useUnloadMatch,
 } from '@racket-traits/api/match';
-import { useFocusEffect } from '@react-navigation/native';
+import {
+  useRefreshUpcoming,
+  useUpcoming,
+} from '@racket-traits/api/user/misc/upcoming';
 
 type Props = DrawerScreenProps<MatchParamList, 'Discover'>;
-
-const dummy = [
-  { center: 'Lund Padelcenter', dateTime: '2022-04-05' },
-  { center: 'Tyresö Padelcenter', dateTime: '2022-04-06' },
-  { center: 'Stockholm Tennis', dateTime: '2022-04-07' },
-  { center: 'Stockholm Tennis', dateTime: '2022-04-07' },
-];
 
 const Discover: React.FC<Props> = ({ navigation }) => {
   const { sortMatches } = useMatchFunctions();
   const profile = useProfile();
   const matches = useMatches();
+  const upcoming = useUpcoming();
   const unloadMatch = useUnloadMatch();
   const fetchMatches = useFetchMatches();
   const refreshMatches = useRefreshMatches();
+  const refreshUpcoming = useRefreshUpcoming();
   const [accordion, setAccordion] = React.useState(false);
   const [headerHeight, setHeaderHeight] = React.useState(0);
   const showLoadingBar = Hooks.useDelay(matches.isLoading, 2100);
@@ -37,6 +36,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       refreshMatches();
+      refreshUpcoming(profile.data);
     }, [])
   );
 
@@ -113,7 +113,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
 
             <S.Fill />
 
-            <S.Clickable>
+            <S.Clickable onPress={() => navigation.navigate('UpcomingMatches')}>
               <S.Body color="p600">See All</S.Body>
             </S.Clickable>
 
@@ -122,7 +122,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
         </S.Padding>
         {accordion ? (
           <S.HorizontalList
-            data={dummy}
+            data={upcoming.data}
             renderItem={({ item }) => <C.UpcomingMatchCard {...item} />}
           />
         ) : (

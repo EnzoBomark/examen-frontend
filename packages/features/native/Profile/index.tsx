@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
+import { useFocusEffect } from '@react-navigation/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { ProfileParamList } from '@racket-native/router/stacks/ProfileStack';
 import { useProfile } from '@racket-traits/api/profile';
@@ -48,14 +49,16 @@ const Profile: React.FC<Props> = ({ navigation }) => {
   const followers = useFollowers();
   const followings = useFollowings();
 
-  React.useEffect(() => {
-    fetchWinRate(profile.data);
-    countCenters(profile.data);
-    countHistory(profile.data);
-    countUpcoming(profile.data);
-    countFollowers(profile.data);
-    countFollowings(profile.data);
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchWinRate(profile.data);
+      countCenters(profile.data);
+      countHistory(profile.data);
+      countUpcoming(profile.data);
+      countFollowers(profile.data);
+      countFollowings(profile.data);
+    }, [])
+  );
 
   return (
     <React.Fragment>
@@ -93,16 +96,19 @@ const Profile: React.FC<Props> = ({ navigation }) => {
                     <C.ProfileStatsCard
                       header={upcoming.count.toString()}
                       detail={'Upcoming matches'}
+                      onPress={() => navigation.navigate('UpcomingMatches')}
                     />
 
                     <C.ProfileStatsCard
                       header={history.count.toString()}
                       detail={'Matches played'}
+                      onPress={() => navigation.navigate('MatchHistory')}
                     />
 
                     <C.ProfileStatsCard
                       header={centers.count.toString()}
                       detail={'Bookmarked centers'}
+                      onPress={() => navigation.navigate('Centers')}
                     />
 
                     <C.ProfileStatsCard
