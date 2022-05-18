@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as S from '@racket-styles/native';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
-import { useUserFunctions, useFollowUser } from '@racket-traits/api/user';
+import { useMatch, useMatchFunctions } from '@racket-traits/api/match';
+import { useSendInviteNotification } from '@racket-traits/api/notifications/creators/sendInviteNotification';
 
 const Card = styled.View`
   height: 56px;
@@ -21,8 +22,9 @@ const Skill = styled(S.Detail)`
 `;
 
 export const InviteCard: React.FC<User> = (user) => {
-  const followUser = useFollowUser();
-  const { isFriends } = useUserFunctions();
+  const sendInvitation = useSendInviteNotification();
+  const match = useMatch();
+  const { isInvited } = useMatchFunctions();
 
   return (
     <Card style={{ ...theme.shadow }}>
@@ -39,12 +41,12 @@ export const InviteCard: React.FC<User> = (user) => {
       </S.Col>
 
       <S.SmallButton
-        onPress={() => followUser(user)}
+        onPress={() => sendInvitation(user, match.data)}
         height="30px"
-        label={isFriends(user) ? 'Invited' : 'Invite'}
+        label={isInvited(match.data, user) ? 'Invited' : 'Invite'}
         background="g100"
         color="g400"
-        icon={isFriends(user) ? 'circleCheck' : 'circleAdd'}
+        icon={isInvited(match.data, user) ? 'circleCheck' : 'circleAdd'}
       />
     </Card>
   );

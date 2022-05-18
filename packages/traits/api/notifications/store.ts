@@ -1,32 +1,18 @@
 import { createStore } from '@racket-common/store';
-import { unique } from '@racket-traits/utils';
+import { hasMore, unique } from '@racket-traits/utils';
 import { Action, State, Types } from './types';
 
 const initialState: State = {
   isLoading: false,
   hasLoaded: false,
+  hasMore: false,
   hasError: undefined,
-  data: {
-    id: '',
-    dateTime: '',
-    type: 'double',
-    duration: '90',
-    currency: 'SEK',
-    court: undefined,
-    price: undefined,
-    phone: undefined,
-    result: undefined,
-    isPublic: undefined,
-    isPlayed: undefined,
-    isBooked: undefined,
-    centerId: undefined,
-    createdAt: '',
-    updatedAt: '',
-  },
+  page: 0,
+  data: [],
 };
 
 const store = createStore<State, Action>({
-  name: 'match',
+  name: 'notifications',
   reducer: (state = initialState, action) => {
     switch (action.type) {
       case Types.UNLOAD:
@@ -44,6 +30,18 @@ const store = createStore<State, Action>({
           ...state,
           hasLoaded: true,
           isLoading: false,
+          hasMore: hasMore(action.payload),
+          page: action.payload.length ? state.page + 1 : state.page,
+          data: unique(state.data, action.payload, 'id'),
+        };
+
+      case Types.REFRESH:
+        return {
+          ...state,
+          hasLoaded: true,
+          isLoading: false,
+          hasMore: hasMore(action.payload),
+          page: 0,
           data: action.payload,
         };
 
@@ -52,29 +50,6 @@ const store = createStore<State, Action>({
           ...state,
           isLoading: false,
           hasError: action.payload,
-        };
-
-      case Types.SET_MATCH:
-        return {
-          ...state,
-          hasLoaded: true,
-          isLoading: false,
-          data: action.payload,
-        };
-
-      case Types.SET_NOTIFICATION:
-        return {
-          ...state,
-          hasLoaded: true,
-          isLoading: false,
-          data: {
-            ...state.data,
-            notifications: unique(
-              state.data.notifications,
-              action.payload,
-              'id'
-            ),
-          },
         };
 
       default:

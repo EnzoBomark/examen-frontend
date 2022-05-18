@@ -8,6 +8,7 @@ import MatchStack from './MatchStack';
 import ProfileStack from './ProfileStack';
 import ChatStack from './ChatStack';
 import CommunityStack from './CommunityStack';
+import NotificationStack from './NotificationStack';
 import { useChatFunctions, useChats } from '@racket-traits/api/chat';
 
 export type DrawerParamList = {
@@ -15,6 +16,7 @@ export type DrawerParamList = {
   ProfileStack: undefined;
   ChatStack: undefined;
   CommunityStack: undefined;
+  NotificationStack: undefined;
 };
 
 const Drawer = createDrawerNavigator();
@@ -29,7 +31,9 @@ const BottomTabs = () => {
 
   const icons = (color: keyof theme['colors']) => ({
     MatchStack: <S.Svg src="house" width="24px" color={color} />,
+
     ProfileStack: <S.Svg src="profile" width="24px" color={color} />,
+
     ChatStack: (
       <S.Svg
         src={isChatActive ? 'chatActive' : 'chat'}
@@ -37,7 +41,10 @@ const BottomTabs = () => {
         color={color}
       />
     ),
+
     CommunityStack: <S.Svg src="community" width="24px" color={color} />,
+
+    NotificationStack: <S.Svg src="notification" width="24px" color={color} />,
   });
 
   return (
@@ -76,6 +83,12 @@ const BottomTabs = () => {
         name="CommunityStack"
         component={CommunityStack}
         options={{ title: 'Community' }}
+      />
+
+      <Drawer.Screen
+        name="NotificationStack"
+        component={NotificationStack}
+        options={{ title: 'Notifications' }}
       />
     </Drawer.Navigator>
   );

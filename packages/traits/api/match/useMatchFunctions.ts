@@ -37,6 +37,11 @@ export const useMatchFunctions = () => {
   const isFull = (match?: Match) =>
     isSingle(match) ? match?.users?.length === 2 : match?.users?.length === 4;
 
+  const isInvited = (match?: Match, user?: User) =>
+    match?.notifications?.some(
+      (notification) => notification.receiverId === user?.id
+    );
+
   const sortMatches = (matches: Match[]) =>
     matches
       .filter((match) => new Date(match.dateTime) > new Date())
@@ -54,6 +59,7 @@ export const useMatchFunctions = () => {
     isAdmin,
     isSingle,
     isFull,
+    isInvited,
     sortMatches,
   };
 };

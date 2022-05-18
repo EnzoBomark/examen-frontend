@@ -7,3 +7,4 @@ export * from './creators/resignMatch';
 export * from './handlers/useMatch';
 export * from './handlers/unloadMatch';
 export * from './handlers/setMatch';
+export * from './handlers/setNotification';

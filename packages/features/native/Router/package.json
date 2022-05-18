@@ -23,6 +23,7 @@
     "@racket-styles/assets": "0.0.1",
     "@racket-styles/native": "0.0.1",
     "@racket-common/config": "0.0.1",
+    "@racket-native/notifications": "0.0.1",
     "@racket-native/register": "0.0.1",
     "@racket-native/login": "0.0.1",
     "@racket-native/discover": "0.0.1",

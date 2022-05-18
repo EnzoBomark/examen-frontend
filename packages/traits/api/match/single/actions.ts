@@ -22,3 +22,8 @@ export const setMatch = (match: Match): Action => ({
   type: Types.SET_MATCH,
   payload: match,
 });
+
+export const setNotification = (notification: InviteNotification): Action => ({
+  type: Types.SET_NOTIFICATION,
+  payload: notification,
+});

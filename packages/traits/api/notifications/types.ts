@@ -3,26 +3,26 @@ import { ActionMap } from '@racket-common/store';
 export type State = {
   isLoading: boolean;
   hasLoaded: boolean;
-  hasError?: ResponseError<Match>;
-  data: Match;
+  hasMore: boolean;
+  page: number;
+  hasError?: ResponseError<User>;
+  data: CombinedNotification[];
 };
 
 export enum Types {
   UNLOAD = 'UNLOAD',
   PENDING = 'PENDING',
   SUCCESS = 'SUCCESS',
+  REFRESH = 'REFRESH',
   FAIL = 'FAIL',
-  SET_MATCH = 'SET_MATCH',
-  SET_NOTIFICATION = 'SET_NOTIFICATION',
 }
 
 export type Payload = {
   [Types.UNLOAD]: undefined;
   [Types.PENDING]: undefined;
-  [Types.SUCCESS]: Match;
-  [Types.FAIL]: ResponseError<Match>;
-  [Types.SET_MATCH]: Match;
-  [Types.SET_NOTIFICATION]: InviteNotification;
+  [Types.SUCCESS]: CombinedNotification[];
+  [Types.REFRESH]: CombinedNotification[];
+  [Types.FAIL]: ResponseError;
 };
 
 export type Action = ActionMap<Payload>[keyof ActionMap<Payload>];

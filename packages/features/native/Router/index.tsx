@@ -6,6 +6,7 @@ import MatchStack from './stacks/MatchStack';
 import AuthStack from './stacks/AuthStack';
 import ProfileStack from './stacks/ProfileStack';
 import ChatStack from './stacks/ChatStack';
+import NotificationStack from './stacks/NotificationStack';
 import { useProfile, useFetchProfile } from '@racket-traits/api/profile';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useUnloadAppState } from '@racket-traits/api/core';
@@ -22,6 +23,7 @@ export type RootParamList = {
   AuthStack: undefined;
   ProfileStack: undefined;
   ChatStack: undefined;
+  NotificationStack: undefined;
 };
 
 const Stack = createStackNavigator<RootParamList>();
@@ -78,9 +80,17 @@ const RootStack: React.FC = () => {
       {profile.hasLoaded && (
         <Stack.Group>
           <Stack.Screen name="DrawerStack" component={DrawerStack} />
+
           <Stack.Screen name="MatchStack" component={MatchStack} />
+
           <Stack.Screen name="ProfileStack" component={ProfileStack} />
+
           <Stack.Screen name="ChatStack" component={ChatStack} />
+
+          <Stack.Screen
+            name="NotificationStack"
+            component={NotificationStack}
+          />
         </Stack.Group>
       )}
 
