@@ -2,25 +2,25 @@ type FollowNotification = {
   type: 'follow';
   id: string;
   isRead: boolean;
-  senderId?: string;
-  receiverId?: string;
+  sender?: User;
+  receiver?: User;
 };
 
 type InviteNotification = {
   type: 'invite';
   id: string;
   isRead: boolean;
-  senderId?: string;
-  matchId?: string;
-  receiverId?: string;
+  match?: Match;
+  sender?: User;
+  receiver?: User;
 };
 
 type ResultNotification = {
   type: 'result';
   id: string;
   isRead: boolean;
-  matchId?: string;
-  receiverId?: string;
+  match?: Match;
+  receiver?: User;
 };
 
 type CombinedNotification =

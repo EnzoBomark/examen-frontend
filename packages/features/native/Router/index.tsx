@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as Hooks from '@racket-traits/hooks';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 import DrawerStack from './stacks/DrawerStack';
@@ -16,6 +17,11 @@ import {
   useFetchLastMessages,
   useFetchReadStatus,
 } from '@racket-traits/api/chat';
+import {
+  useFetchNotifications,
+  useNotifications,
+  useRefreshNotifications,
+} from '@racket-traits/api/notifications';
 
 export type RootParamList = {
   DrawerStack: undefined;
@@ -34,11 +40,17 @@ const RootStack: React.FC = () => {
   const unloadAppState = useUnloadAppState();
   const fetchProfile = useFetchProfile();
   const fetchChats = useFetchChats();
+  const fetchNotifications = useFetchNotifications();
+  const refreshNotifications = useRefreshNotifications();
   const chats = useChats();
   const profile = useProfile();
-
+  const notifications = useNotifications();
   const fetchLastMessages = useFetchLastMessages();
   const fetchReadStatus = useFetchReadStatus();
+
+  Hooks.useInterval(() => {
+    refreshNotifications();
+  }, 300000);
 
   React.useEffect(() => {
     auth().onAuthStateChanged((user) => {
@@ -70,6 +82,11 @@ const RootStack: React.FC = () => {
       };
     }
   }, [profile.hasLoaded, chats.data.length]);
+
+  React.useEffect(() => {
+    if (profile.hasLoaded && !notifications.hasLoaded)
+      fetchNotifications(notifications.page);
+  }, [profile.hasLoaded]);
 
   React.useEffect(() => {
     if (profile.hasLoaded && !chats.hasLoaded) fetchChats(chats.page);

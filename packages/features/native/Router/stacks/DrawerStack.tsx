@@ -10,6 +10,7 @@ import ChatStack from './ChatStack';
 import CommunityStack from './CommunityStack';
 import NotificationStack from './NotificationStack';
 import { useChatFunctions, useChats } from '@racket-traits/api/chat';
+import { useNotifications } from '@racket-traits/api/notifications';
 
 export type DrawerParamList = {
   MatchStack: undefined;
@@ -26,8 +27,10 @@ type ScreenOptions = { route: RouteProp<ParamListBase, string> };
 const BottomTabs = () => {
   const { getReadStatus } = useChatFunctions();
   const chats = useChats();
+  const notifications = useNotifications();
 
-  const isChatActive = chats.data.some((chat) => !getReadStatus(chat));
+  const isChatActive = chats.data.some((c) => !getReadStatus(c));
+  const isNotificationsActive = notifications.data.some((n) => !n.isRead);
 
   const icons = (color: keyof theme['colors']) => ({
     MatchStack: <S.Svg src="house" width="24px" color={color} />,
@@ -44,7 +47,13 @@ const BottomTabs = () => {
 
     CommunityStack: <S.Svg src="community" width="24px" color={color} />,
 
-    NotificationStack: <S.Svg src="notification" width="24px" color={color} />,
+    NotificationStack: (
+      <S.Svg
+        src={isNotificationsActive ? 'notificationActive' : 'notification'}
+        width="24px"
+        color={color}
+      />
+    ),
   });
 
   return (

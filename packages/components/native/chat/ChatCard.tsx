@@ -81,14 +81,9 @@ export const ChatCard: React.FC<Chat> = (chat) => {
     >
       <Card style={{ ...theme.shadow }}>
         {userImages.map((user, index) => (
-          <Images number={index}>
+          <Images number={index} key={user.id}>
             <ImageBorder>
-              <S.ProfilePicture
-                key={user.id}
-                border="xxl"
-                user={user}
-                width="34px"
-              />
+              <S.ProfilePicture border="xxl" user={user} width="34px" />
             </ImageBorder>
           </Images>
         ))}

@@ -40,6 +40,7 @@ import * as refresh from './refresh.svg';
 import * as calender from './calender.svg';
 import * as clock from './clock.svg';
 import * as notification from './notification.svg';
+import * as notificationActive from './notification-active.svg';
 import * as ball from './ball.svg';
 import * as slider from './slider.svg';
 import * as stopwatch from './stopwatch.svg';
@@ -91,6 +92,7 @@ const Icons = {
   calender,
   clock,
   notification,
+  notificationActive,
   ball,
   slider,
   stopwatch,

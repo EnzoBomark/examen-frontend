@@ -13,6 +13,9 @@ export * from './community/UserCard';
 // drawer
 export * from './drawer/Drawer';
 
+// notifications
+export * from './notifications/NotificationCard';
+
 // profile
 export * from './profile/ProfileCard';
 export * from './profile/ProfileBioCard';

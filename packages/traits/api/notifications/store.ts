@@ -52,6 +52,12 @@ const store = createStore<State, Action>({
           hasError: action.payload,
         };
 
+      case Types.UPDATE_STATUS:
+        return {
+          ...state,
+          data: state.data.map((n) => ({ ...n, isRead: true })),
+        };
+
       default:
         return state;
     }

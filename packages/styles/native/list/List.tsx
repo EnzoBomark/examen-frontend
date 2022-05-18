@@ -43,6 +43,13 @@ export const List = <T,>(props: List<T>) => {
   return (
     <Native.FlatList
       {...props}
+      refreshControl={
+        <Native.RefreshControl
+          refreshing={false}
+          enabled={false}
+          tintColor={'transparent'}
+        />
+      }
       nestedScrollEnabled
       onEndReachedThreshold={0.1}
       refreshing={props.refreshing || false}

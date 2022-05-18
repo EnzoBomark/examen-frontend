@@ -22,3 +22,7 @@ export const fail = (error: ResponseError): Action => ({
   type: Types.FAIL,
   payload: error,
 });
+
+export const updateReadStatus = (): Action => ({
+  type: Types.UPDATE_STATUS,
+});

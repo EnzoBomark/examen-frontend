@@ -15,6 +15,7 @@ export enum Types {
   SUCCESS = 'SUCCESS',
   REFRESH = 'REFRESH',
   FAIL = 'FAIL',
+  UPDATE_STATUS = 'UPDATE_STATUS',
 }
 
 export type Payload = {
@@ -23,6 +24,7 @@ export type Payload = {
   [Types.SUCCESS]: CombinedNotification[];
   [Types.REFRESH]: CombinedNotification[];
   [Types.FAIL]: ResponseError;
+  [Types.UPDATE_STATUS]: undefined;
 };
 
 export type Action = ActionMap<Payload>[keyof ActionMap<Payload>];
