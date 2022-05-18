@@ -1,3 +1,4 @@
+export * from './handlers/updateUsers';
 export * from './handlers/unloadChats';
 export * from './handlers/useChats';
 export * from './handlers/setChat';

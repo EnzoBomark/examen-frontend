@@ -45,3 +45,8 @@ export const updateReadStatus = (
   type: Types.UPDATE_READ_STATUS,
   payload: { readStatus, chat },
 });
+
+export const updateUsers = (users: User[], chat: Chat): Action => ({
+  type: Types.UPDATE_USERS,
+  payload: { users, chat },
+});

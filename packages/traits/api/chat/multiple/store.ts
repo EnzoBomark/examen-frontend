@@ -72,6 +72,14 @@ const store = createStore<State, Action>({
           })),
         };
 
+      case Types.UPDATE_USERS:
+        return {
+          ...state,
+          data: alter(state.data, action.payload.chat, 'id', (chat) => ({
+            users: action.payload.users,
+          })),
+        };
+
       case Types.UPDATE_READ_STATUS:
         return {
           ...state,

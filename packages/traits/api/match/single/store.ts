@@ -1,5 +1,5 @@
 import { createStore } from '@racket-common/store';
-import { unique } from '@racket-traits/utils';
+import { resign, unique } from '@racket-traits/utils';
 import { Action, State, Types } from './types';
 
 const initialState: State = {
@@ -74,6 +74,17 @@ const store = createStore<State, Action>({
               action.payload,
               'id'
             ),
+          },
+        };
+
+      case Types.KICK_PLAYER:
+        return {
+          ...state,
+          hasLoaded: true,
+          isLoading: false,
+          data: {
+            ...state.data,
+            users: resign(state.data.users || [], action.payload, 'id'),
           },
         };
 

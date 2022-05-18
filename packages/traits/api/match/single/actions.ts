@@ -27,3 +27,8 @@ export const setNotification = (notification: InviteNotification): Action => ({
   type: Types.SET_NOTIFICATION,
   payload: notification,
 });
+
+export const kickPlayer = (user: User): Action => ({
+  type: Types.KICK_PLAYER,
+  payload: user,
+});

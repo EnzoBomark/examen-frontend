@@ -19,6 +19,7 @@ export enum Types {
   SET_CHATS = 'SET_CHATS',
   PUSH_MESSAGES = 'PUSH_MESSAGES',
   UPDATE_READ_STATUS = 'PUSH_READ_STATUS',
+  UPDATE_USERS = 'UPDATE_USERS',
 }
 
 export type Payload = {
@@ -35,6 +36,10 @@ export type Payload = {
   };
   [Types.PUSH_MESSAGES]: {
     messages: Message[];
+    chat: Chat;
+  };
+  [Types.UPDATE_USERS]: {
+    users: User[];
     chat: Chat;
   };
 };

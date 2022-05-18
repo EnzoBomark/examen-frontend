@@ -14,6 +14,7 @@ export enum Types {
   FAIL = 'FAIL',
   SET_MATCH = 'SET_MATCH',
   SET_NOTIFICATION = 'SET_NOTIFICATION',
+  KICK_PLAYER = 'KICK_PLAYER',
 }
 
 export type Payload = {
@@ -23,6 +24,7 @@ export type Payload = {
   [Types.FAIL]: ResponseError<Match>;
   [Types.SET_MATCH]: Match;
   [Types.SET_NOTIFICATION]: InviteNotification;
+  [Types.KICK_PLAYER]: User;
 };
 
 export type Action = ActionMap<Payload>[keyof ActionMap<Payload>];
