@@ -5,7 +5,11 @@ import styled from 'styled-components/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
-import { useMatchFunctions, useSetMatch } from '@racket-traits/api/match';
+import {
+  useMatchFunctions,
+  useSetMatch,
+  useUnloadMatch,
+} from '@racket-traits/api/match';
 import { getTime, getWeekday } from '@racket-traits/utils';
 
 const Card = styled.View`
@@ -31,11 +35,13 @@ type Navigation = StackNavigationProp<MatchParamList, 'Discover'>;
 export const MatchCard: React.FC<Match> = (match) => {
   const navigation = useNavigation<Navigation>();
   const setMatch = useSetMatch();
+  const unloadMatch = useUnloadMatch();
   const { getSkill, isSingle, getAdmin, getUser } = useMatchFunctions();
 
   return (
     <S.Clickable
       onPress={() => {
+        unloadMatch();
         setMatch(match);
         navigation.navigate('Match');
       }}
@@ -69,33 +75,53 @@ export const MatchCard: React.FC<Match> = (match) => {
           </S.Padding>
 
           <S.Padding size="xs">
-            <S.Row>
-              <S.ProfilePicture
-                user={getUser(match.users, '0')}
-                width="45px"
-                icon={match.isPublic ? 'add' : 'lock'}
-              />
-              <CardSpacer />
-              <S.ProfilePicture
-                user={getUser(match.users, '3')}
-                width="45px"
-                icon={match.isPublic ? 'add' : 'lock'}
-              />
-            </S.Row>
-            <CardSpacer />
-            <S.Row>
-              <S.ProfilePicture
-                user={getUser(match.users, '1')}
-                width="45px"
-                icon={match.isPublic ? 'add' : 'lock'}
-              />
-              <CardSpacer />
-              <S.ProfilePicture
-                user={getUser(match.users, '2')}
-                width="45px"
-                icon={match.isPublic ? 'add' : 'lock'}
-              />
-            </S.Row>
+            {isSingle(match) ? (
+              <React.Fragment>
+                <S.Row>
+                  <S.ProfilePicture
+                    user={getUser(match.users, '0')}
+                    width="45px"
+                    icon={match.isPublic ? 'add' : 'lock'}
+                  />
+                  <CardSpacer />
+                  <S.ProfilePicture
+                    user={getUser(match.users, '1')}
+                    width="45px"
+                    icon={match.isPublic ? 'add' : 'lock'}
+                  />
+                </S.Row>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <S.Row>
+                  <S.ProfilePicture
+                    user={getUser(match.users, '0')}
+                    width="45px"
+                    icon={match.isPublic ? 'add' : 'lock'}
+                  />
+                  <CardSpacer />
+                  <S.ProfilePicture
+                    user={getUser(match.users, '3')}
+                    width="45px"
+                    icon={match.isPublic ? 'add' : 'lock'}
+                  />
+                </S.Row>
+                <CardSpacer />
+                <S.Row>
+                  <S.ProfilePicture
+                    user={getUser(match.users, '1')}
+                    width="45px"
+                    icon={match.isPublic ? 'add' : 'lock'}
+                  />
+                  <CardSpacer />
+                  <S.ProfilePicture
+                    user={getUser(match.users, '2')}
+                    width="45px"
+                    icon={match.isPublic ? 'add' : 'lock'}
+                  />
+                </S.Row>
+              </React.Fragment>
+            )}
           </S.Padding>
         </S.Row>
 
