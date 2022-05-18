@@ -42,12 +42,17 @@ export const List = <T,>(props: List<T>) => {
 
   return (
     <Native.FlatList
-      {...props}
+      data={props.data}
+      extraData={props.extraData}
+      renderItem={props.renderItem}
+      inverted={props.inverted}
+      keyExtractor={props.keyExtractor}
+      onEndReached={props.onEndReached}
       refreshControl={
         <Native.RefreshControl
           refreshing={false}
-          enabled={false}
           tintColor={'transparent'}
+          onRefresh={props.onRefresh}
         />
       }
       nestedScrollEnabled
