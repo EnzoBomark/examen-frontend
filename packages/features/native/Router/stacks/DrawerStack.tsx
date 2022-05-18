@@ -29,14 +29,16 @@ const BottomTabs = () => {
   const chats = useChats();
   const notifications = useNotifications();
 
-  const isChatActive = chats.data.some((c) => !getReadStatus(c));
+  const isChatActive = chats.data
+    .filter((chat) => chat.users.length > 1)
+    .some((c) => !getReadStatus(c));
+
   const isNotificationsActive = notifications.data.some((n) => !n.isRead);
 
   const icons = (color: keyof theme['colors']) => ({
     MatchStack: <S.Svg src="house" width="24px" color={color} />,
-
     ProfileStack: <S.Svg src="profile" width="24px" color={color} />,
-
+    CommunityStack: <S.Svg src="community" width="24px" color={color} />,
     ChatStack: (
       <S.Svg
         src={isChatActive ? 'chatActive' : 'chat'}
@@ -44,9 +46,6 @@ const BottomTabs = () => {
         color={color}
       />
     ),
-
-    CommunityStack: <S.Svg src="community" width="24px" color={color} />,
-
     NotificationStack: (
       <S.Svg
         src={isNotificationsActive ? 'notificationActive' : 'notification'}

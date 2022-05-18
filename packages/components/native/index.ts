@@ -23,6 +23,7 @@ export * from './profile/ProfileStatsCard';
 export * from './profile/ProfileSettingsCard';
 
 // match
+export * from './match/ScoreMatchModal';
 export * from './match/InviteCard';
 export * from './match/UpcomingMatchCard';
 export * from './match/MatchCard';

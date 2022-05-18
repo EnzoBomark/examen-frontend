@@ -153,12 +153,9 @@ const Match: React.FC<Props> = ({ navigation }) => {
                   <S.Spacer size="xxs" />
                   <S.Body>{match.data.duration} min</S.Body>
                 </S.Row>
-
-                <S.Spacer size="xs" />
               </S.Padding>
 
-              <S.Spacer size="s" />
-
+              <S.Spacer size="xs" />
               <S.Fill />
 
               {isPlayer(match.data.users) && (
@@ -230,16 +227,7 @@ const Match: React.FC<Props> = ({ navigation }) => {
 
               {isPastDate(match.data) && isAdmin(match.data.users) && (
                 <React.Fragment>
-                  <S.Modal>
-                    <S.ModalOpenButton>
-                      <S.Button label={'Mark as played'} icon="cup" />
-                    </S.ModalOpenButton>
-
-                    <S.ModalContents height="85%">
-                      <S.Padding size="xs"></S.Padding>
-                    </S.ModalContents>
-                  </S.Modal>
-
+                  <C.ScoreMatchModal {...match.data} />
                   <S.Spacer size="xs" />
                 </React.Fragment>
               )}

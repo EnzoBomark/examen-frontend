@@ -10,7 +10,7 @@ import {
   useSetMatch,
   useUnloadMatch,
 } from '@racket-traits/api/match';
-import { getTime, getWeekday } from '@racket-traits/utils';
+import { getTime, getDate } from '@racket-traits/utils';
 
 const Card = styled.View`
   width: 100%;
@@ -56,7 +56,7 @@ export const MatchCard: React.FC<Match> = (match) => {
             <S.Spacer size="xxs" />
 
             <S.Body>
-              {getTime(match.dateTime)} {getWeekday(match.dateTime)}
+              {getTime(match.dateTime)} {getDate(match.dateTime)}
             </S.Body>
 
             <S.Spacer size="xxs" />
