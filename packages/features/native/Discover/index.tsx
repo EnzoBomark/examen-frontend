@@ -31,7 +31,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
   const refreshUpcoming = useRefreshUpcoming();
   const [accordion, setAccordion] = React.useState(false);
   const [headerHeight, setHeaderHeight] = React.useState(0);
-  const showLoadingBar = Hooks.useDelay(matches.isLoading, 2100);
+  const showLoadingBar = Hooks.useDelay(matches.isLoading, 1000);
 
   useFocusEffect(
     React.useCallback(() => {

@@ -14,11 +14,12 @@ import { useProfile } from '@racket-traits/api/profile';
 type Props = DrawerScreenProps<MatchParamList, 'UpcomingMatches'>;
 
 const UpcomingMatches: React.FC<Props> = ({ navigation }) => {
+  const [headerHeight, setHeaderHeight] = React.useState(0);
   const profile = useProfile();
   const upcoming = useUpcoming();
   const fetchUpcoming = useFetchUpcoming();
   const refreshUpcoming = useRefreshUpcoming();
-  const [headerHeight, setHeaderHeight] = React.useState(0);
+  const showLoadingBar = Hooks.useDelay(upcoming.isLoading, 1000);
 
   return (
     <React.Fragment>
@@ -64,7 +65,7 @@ const UpcomingMatches: React.FC<Props> = ({ navigation }) => {
           <S.Spacer size="xs" />
         </S.Padding>
 
-        {upcoming.isLoading && <S.LoadingBar />}
+        {showLoadingBar && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );

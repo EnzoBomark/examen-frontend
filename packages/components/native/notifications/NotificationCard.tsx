@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as S from '@racket-styles/native';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
+import { useFetchMatch } from '@racket-traits/api/match';
 
 const Card = styled.View`
   height: 56px;
@@ -11,6 +12,10 @@ const Card = styled.View`
   padding: 10px 12px;
   flex-direction: row;
   align-items: center;
+`;
+
+const Title = styled(S.Label)`
+  width: 60%;
 `;
 
 const isFollowNotification = (
@@ -28,6 +33,8 @@ const isResultNotification = (
 export const NotificationCard: React.FC<CombinedNotification> = (
   notification
 ) => {
+  const fetchMatch = useFetchMatch();
+
   return (
     <Card style={{ ...theme.shadow }}>
       {(isFollowNotification(notification) ||
@@ -44,19 +51,39 @@ export const NotificationCard: React.FC<CombinedNotification> = (
       )}
 
       {isFollowNotification(notification) && (
-        <S.Label color="g1000">
+        <Title color="g1000" numberOfLines={1}>
           {notification.sender?.name} started following you
-        </S.Label>
+        </Title>
       )}
 
       {isInviteNotification(notification) && (
-        <S.Label color="g1000">
+        <Title color="g1000" numberOfLines={1}>
           {notification.sender?.name} invited you to a game
-        </S.Label>
+        </Title>
       )}
 
       {isResultNotification(notification) && (
-        <S.Label color="g1000">New match result!</S.Label>
+        <Title color="g1000" numberOfLines={1}>
+          New match result!
+        </Title>
+      )}
+
+      <S.Fill />
+
+      {isInviteNotification(notification) && (
+        <S.SmallButton
+          onPress={() => fetchMatch(notification.match as Match)}
+          height="30px"
+          label={'Join'}
+        />
+      )}
+
+      {isResultNotification(notification) && (
+        <S.SmallButton
+          onPress={() => fetchMatch(notification.match as Match)}
+          height="30px"
+          label={'Look'}
+        />
       )}
     </Card>
   );

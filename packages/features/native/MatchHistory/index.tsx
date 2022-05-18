@@ -20,7 +20,7 @@ const MatchHistory: React.FC<Props> = ({ navigation }) => {
   const fetchHistory = useFetchHistory();
   const refreshHistory = useRefreshHistory();
   const [headerHeight, setHeaderHeight] = React.useState(0);
-  const showLoadingBar = Hooks.useDelay(history.isLoading, 2100);
+  const showLoadingBar = Hooks.useDelay(history.isLoading, 1000);
 
   React.useEffect(() => {
     if (!history.hasLoaded) fetchHistory(profile.data, history.page);

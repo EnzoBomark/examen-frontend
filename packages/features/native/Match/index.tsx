@@ -8,9 +8,10 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
 import { getTime, getDate, getWeekday } from '@racket-traits/utils';
 import { matchShare } from '@racket-traits/misc';
-import { useChats, useSetChat } from '@racket-traits/api/chat';
+import { useUpdateUsers, useChats, useSetChat } from '@racket-traits/api/chat';
 import {
   useDeleteMatch,
+  useFetchMatch,
   useMatch,
   useMatchFunctions,
   useResignMatch,
@@ -19,25 +20,37 @@ import {
 type Props = StackScreenProps<MatchParamList, 'Match'>;
 
 const Match: React.FC<Props> = ({ navigation }) => {
+  const { match: t } = useTranslation();
+  const [headerHeight, setHeaderHeight] = React.useState(0);
   const { getSkill, isAdmin, isPlayer, isSingle, isFull, isPastDate } =
     useMatchFunctions();
-  const [headerHeight, setHeaderHeight] = React.useState(0);
-  const { match: t } = useTranslation();
+
   const match = useMatch();
   const chats = useChats();
   const setChat = useSetChat();
+  const fetchMatch = useFetchMatch();
   const deleteMatch = useDeleteMatch();
   const resignMatch = useResignMatch();
-  const [share, onShare] = Hooks.useShare(matchShare(match.data, 'tennis'));
+  const updateUser = useUpdateUsers();
   const [matchChat, setMatchChat] = React.useState<Chat>();
+  const [share, onShare] = Hooks.useShare(matchShare(match.data, 'tennis'));
+  const [swish, onPay] = Hooks.useSwish();
+  const showLoadingBar = Hooks.useDelay(match.isLoading, 1000);
 
   React.useEffect(() => {
     if (!match.hasLoaded) navigation.goBack();
   }, [match]);
 
   React.useEffect(() => {
-    setMatchChat(chats.data.find((chat) => chat.id === match.data.chat?.id));
-  }, [match.data, chats.data.length]);
+    updateUser(match.data.chat, match.data.users);
+  }, [match.data.users]);
+
+  React.useEffect(() => {
+    if (matchChat) {
+      setChat(matchChat);
+      navigation.navigate('Chat');
+    }
+  }, [matchChat]);
 
   React.useEffect(() => {
     if (share.hasError)
@@ -47,9 +60,20 @@ const Match: React.FC<Props> = ({ navigation }) => {
       ]);
   }, [share.hasError]);
 
+  React.useEffect(() => {
+    if (swish.hasError)
+      Native.Alert.alert('Something went wrong', 'Payment failed', [
+        { text: 'Cancel' },
+        { text: 'Try again', onPress: () => onShare() },
+      ]);
+  }, [swish.hasError]);
+
+  const openChat = () =>
+    setMatchChat(chats.data.find((chat) => chat.id === match.data.chat?.id));
+
   return (
     <React.Fragment>
-      <S.Scroll>
+      <S.Scroll onRefresh={() => fetchMatch(match.data)}>
         <S.AvoidKeyboard>
           <S.Screen headerHeight={headerHeight}>
             <S.Padding size="xs" vertical={false} flexBox={true}>
@@ -66,11 +90,8 @@ const Match: React.FC<Props> = ({ navigation }) => {
                       <S.SmallButton
                         icon="chat"
                         label={t.chat}
-                        disabled={!matchChat}
-                        onPress={() => {
-                          matchChat && setChat(matchChat);
-                          navigation.navigate('Chat');
-                        }}
+                        disabled={!match.data.chat}
+                        onPress={openChat}
                       />
 
                       <S.Spacer size="xs" />
@@ -143,32 +164,85 @@ const Match: React.FC<Props> = ({ navigation }) => {
               {isPlayer(match.data.users) && (
                 <React.Fragment>
                   {match.data.isBooked && !isAdmin(match.data.users) && (
-                    <S.Button
-                      icon="currency"
-                      label={`${t.pay}  ${
-                        Number(match.data.price) /
-                        (isSingle(match.data) ? 2 : 4)
-                      }/${match.data.currency}`}
-                    />
+                    <S.Modal>
+                      <S.ModalOpenButton>
+                        <S.Button
+                          icon="currency"
+                          label={`${t.pay}  ${
+                            Number(match.data.price) /
+                            (isSingle(match.data) ? 2 : 4)
+                          }/${match.data.currency}`}
+                        />
+                      </S.ModalOpenButton>
+
+                      <S.ModalContents>
+                        <S.Padding size="xs">
+                          <S.Spacer size="s" />
+
+                          <S.Row justify="center" align="center">
+                            <S.H3 bold>Payment made with swish</S.H3>
+                          </S.Row>
+
+                          <S.Spacer size="xs" />
+
+                          <S.Align type="center">
+                            <S.Label color="g600">
+                              Swish number: {match.data.phone}
+                            </S.Label>
+
+                            <S.Spacer size="m" />
+
+                            <S.Image src="swish" width="70px" />
+
+                            <S.Spacer size="xs" />
+
+                            <S.H3 color="g1000" bold>
+                              {`${t.pay}  ${
+                                Number(match.data.price) /
+                                (isSingle(match.data) ? 2 : 4)
+                              }/${match.data.currency}`}
+                            </S.H3>
+                          </S.Align>
+
+                          <S.Spacer size="xxl" />
+
+                          <S.Button
+                            disabled={!match.data.phone}
+                            onPress={() => {
+                              onPay(
+                                match.data.phone as string,
+                                Number(match.data.price) /
+                                  (isSingle(match.data) ? 2 : 4)
+                              );
+                            }}
+                            label={'Are you sure'}
+                            color="g600"
+                            background="g100"
+                          />
+                        </S.Padding>
+                      </S.ModalContents>
+                    </S.Modal>
                   )}
+
+                  <S.Spacer size="xs" />
                 </React.Fragment>
               )}
 
-              <S.Spacer size="xs" />
+              {isPastDate(match.data) && isAdmin(match.data.users) && (
+                <React.Fragment>
+                  <S.Modal>
+                    <S.ModalOpenButton>
+                      <S.Button label={'Mark as played'} icon="cup" />
+                    </S.ModalOpenButton>
 
-              <S.Modal>
-                {isPastDate(match.data) && isAdmin(match.data.users) && (
-                  <S.ModalOpenButton>
-                    <S.Button label={'Mark as played'} icon="cup" />
-                  </S.ModalOpenButton>
-                )}
+                    <S.ModalContents height="85%">
+                      <S.Padding size="xs"></S.Padding>
+                    </S.ModalContents>
+                  </S.Modal>
 
-                <S.ModalContents height="85%">
-                  <S.Padding size="xs"></S.Padding>
-                </S.ModalContents>
-              </S.Modal>
-
-              <S.Spacer size="xs" />
+                  <S.Spacer size="xs" />
+                </React.Fragment>
+              )}
 
               <S.Modal>
                 {isPlayer(match.data.users) && (
@@ -231,6 +305,8 @@ const Match: React.FC<Props> = ({ navigation }) => {
             )}
           </S.Align>
         </S.Padding>
+
+        {showLoadingBar && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );

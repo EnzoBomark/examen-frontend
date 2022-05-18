@@ -52,6 +52,8 @@
 		<string>fbauth</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+    <string>itms-apps</string>
+    <string>swish</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

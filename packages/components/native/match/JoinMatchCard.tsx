@@ -3,7 +3,11 @@ import * as S from '@racket-styles/native';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
 import { useProfile } from '@racket-traits/api/profile';
-import { useMatchFunctions, useResignMatch } from '@racket-traits/api/match';
+import {
+  useKickPlayer,
+  useMatchFunctions,
+  useResignMatch,
+} from '@racket-traits/api/match';
 
 const Card = styled.View`
   position: relative;
@@ -55,6 +59,7 @@ const NameTag = styled(S.Detail)`
 export const JoinMatchCard: React.FC<Match> = (match) => {
   const { isAdmin, isPlayer, isSingle, isMe, getUser } = useMatchFunctions();
   const resignMatch = useResignMatch();
+  const kickPlayer = useKickPlayer();
   const userOne = getUser(match.users, '0');
   const userTwo = getUser(match.users, '1');
   const userThree = getUser(match.users, '2');
@@ -77,7 +82,7 @@ export const JoinMatchCard: React.FC<Match> = (match) => {
       )}
       <S.Spacer size="xxs" />
       {!isMe(user) && isAdmin(match.users) && user && (
-        <S.Clickable>
+        <S.Clickable onPress={() => kickPlayer(match, user)}>
           <S.Svg src="exit" width="20px" color="g300" />
         </S.Clickable>
       )}
