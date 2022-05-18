@@ -7,18 +7,32 @@ import theme from '@racket-styles/core/theme';
 import Images from '@racket-styles/assets/images';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useProfile } from '@racket-traits/api/profile';
+import {
+  useCountHistory,
+  useHistory,
+} from '@racket-traits/api/user/misc/history';
 
 type Props = Navigation.DrawerContentComponentProps;
 
 export const Drawer: React.FC<Props> = (props) => {
+  const countHistory = useCountHistory();
   const profile = useProfile();
+  const history = useHistory();
   const insets = useSafeAreaInsets();
+
+  React.useEffect(() => {
+    countHistory(profile.data);
+  }, []);
 
   return (
     <Native.View style={{ flex: 1 }}>
       <Navigation.DrawerContentScrollView
         {...props}
+        bounces={false}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
+          height: '100%',
+
           backgroundColor: theme.colors.p800,
         }}
       >
@@ -38,19 +52,21 @@ export const Drawer: React.FC<Props> = (props) => {
 
                 <S.Spacer size="xxxs" />
 
-                <S.Body color="g0">420 Matches</S.Body>
+                <S.Body color="g0">{history.count} Played matches</S.Body>
               </S.Row>
             </S.Padding>
           </S.Padding>
         </S.ImageBackground>
 
-        <Native.View style={{ flex: 1, backgroundColor: theme.colors.g0 }}>
+        <Native.ScrollView
+          style={{ flex: 1, backgroundColor: theme.colors.g0 }}
+        >
           <S.Spacer size="xs" />
 
           <Navigation.DrawerItemList {...props} />
 
           <S.Spacer size="xs" />
-        </Native.View>
+        </Native.ScrollView>
       </Navigation.DrawerContentScrollView>
 
       <Native.View style={{ paddingBottom: insets.bottom }}>
