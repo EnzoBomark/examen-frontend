@@ -30,7 +30,7 @@ const Settings: React.FC<Props> = ({ navigation }) => {
     new Map([
       [{ name }, [v.min(3), v.max(20), v.notEmpty]],
       [{ phone }, [v.isPhone, v.notEmpty]],
-      [{ birthDate }, [v.birthDate]],
+      [{ birthDate }, [v.allowEmpty, v.birthDate]],
       [{ description }, [v.allowEmpty, v.max(300)]],
     ])
   );

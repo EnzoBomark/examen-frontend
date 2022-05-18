@@ -19,8 +19,8 @@ export const ProfileCard: React.FC<User> = (user) => {
     <Card style={{ ...theme.shadow }}>
       <S.ProfilePicture
         user={user}
-        width={`${screen.width * 0.38}px`}
-        height={`${screen.width * 0.55}px`}
+        width={`${Math.round(screen.width * 0.38)}px`}
+        height={`${Math.round(screen.width * 0.55)}px`}
         border="xxs"
       />
 

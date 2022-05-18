@@ -36,6 +36,13 @@ const Chat: React.FC<Props> = ({ navigation }) => {
     if (!chat.hasLoaded) navigation.navigate('Chats');
   }, [chat.hasLoaded]);
 
+  const leaveChat = () => {
+    Native.Alert.alert('Are you sure you want to leave!', '', [
+      { text: 'Cancel' },
+      { text: 'Yes im sure', onPress: () => resignChat(chat.data) },
+    ]);
+  };
+
   return (
     <React.Fragment>
       <S.Background color="g0">
@@ -73,11 +80,7 @@ const Chat: React.FC<Props> = ({ navigation }) => {
 
             {chat.data.type !== 'match' && (
               <S.Absolute right="0">
-                <S.Clickable
-                  onPress={() => {
-                    resignChat(chat.data);
-                  }}
-                >
+                <S.Clickable onPress={leaveChat}>
                   <S.Svg src="info" width="20px" color="g1000" />
                 </S.Clickable>
               </S.Absolute>
