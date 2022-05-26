@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
-import * as Hooks from '@racket-traits/hooks';
 import { useFocusEffect } from '@react-navigation/native';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
@@ -31,35 +30,39 @@ const Discover: React.FC<Props> = ({ navigation }) => {
   const refreshUpcoming = useRefreshUpcoming();
   const [accordion, setAccordion] = React.useState(false);
   const [headerHeight, setHeaderHeight] = React.useState(0);
-  const showLoadingBar = Hooks.useDelay(matches.isLoading, 1000);
+  const [query, setQuery] = React.useState('');
 
   useFocusEffect(
     React.useCallback(() => {
-      refreshMatches();
-      refreshUpcoming(profile.data);
+      refreshMatches(query);
+      refreshUpcoming(query, profile.data);
     }, [])
+  );
+
+  const emptyList = (
+    <C.EmptyListReload
+      title="Oh no!"
+      message={query.length ? 'No search result found' : 'No matches found'}
+      onPress={() => refreshMatches(query)}
+      headerHeight={headerHeight}
+      loading={matches.isLoading}
+    />
   );
 
   return (
     <React.Fragment>
-      {!!sortMatches(matches.data).length ? (
-        <S.List
-          fullScreen
-          data={sortMatches(matches.data)}
-          onRefresh={refreshMatches}
-          headerHeight={headerHeight}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <C.MatchCard {...item} />}
-          onEndReached={() => matches.hasMore && fetchMatches(matches.page)}
-        />
-      ) : (
-        <C.EmptyListReload
-          title="Oh no!"
-          message="No matches found"
-          onPress={refreshMatches}
-          headerHeight={headerHeight}
-        />
-      )}
+      <S.List
+        fullScreen
+        data={sortMatches(matches.data)}
+        ListEmptyComponent={emptyList}
+        onRefresh={() => refreshMatches(query)}
+        headerHeight={headerHeight}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <C.MatchCard {...item} />}
+        onEndReached={() =>
+          matches.hasMore && fetchMatches(query, matches.page)
+        }
+      />
 
       <S.Header setHeaderHeight={setHeaderHeight}>
         <S.Padding size="xs" vertical={false}>
@@ -90,7 +93,13 @@ const Discover: React.FC<Props> = ({ navigation }) => {
 
           <S.Spacer size="xs" />
 
-          <S.TextInput placeholder="Search" height="38px" icon="search" />
+          <S.TextInput
+            placeholder="Search"
+            height="38px"
+            icon="search"
+            value={query}
+            onTextChange={setQuery}
+          />
 
           <S.Spacer size="xs" />
 
@@ -129,7 +138,7 @@ const Discover: React.FC<Props> = ({ navigation }) => {
           <S.Spacer size="xs" />
         )}
 
-        {showLoadingBar && <S.LoadingBar />}
+        {matches.isLoading && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );

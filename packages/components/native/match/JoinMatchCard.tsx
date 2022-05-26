@@ -121,7 +121,7 @@ export const JoinMatchCard: React.FC<Match> = (match) => {
         <S.Padding size="xs">
           <S.H5 color="g600">Bio</S.H5>
           <S.Spacer size="xxs" />
-          <S.Body color="g500">Add bio</S.Body>
+          <S.Body color="g500">{match.description || 'Add bio'}</S.Body>
         </S.Padding>
       </Bottom>
     </Card>

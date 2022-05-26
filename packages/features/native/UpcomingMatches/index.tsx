@@ -1,15 +1,14 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
-import * as Hooks from '@racket-traits/hooks';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
+import { useProfile } from '@racket-traits/api/profile';
 import {
   useFetchUpcoming,
   useRefreshUpcoming,
   useUpcoming,
 } from '@racket-traits/api/user/misc/upcoming';
-import { useProfile } from '@racket-traits/api/profile';
 
 type Props = DrawerScreenProps<MatchParamList, 'UpcomingMatches'>;
 
@@ -19,30 +18,36 @@ const UpcomingMatches: React.FC<Props> = ({ navigation }) => {
   const upcoming = useUpcoming();
   const fetchUpcoming = useFetchUpcoming();
   const refreshUpcoming = useRefreshUpcoming();
-  const showLoadingBar = Hooks.useDelay(upcoming.isLoading, 1000);
+  const [query, setQuery] = React.useState('');
+
+  const emptyList = (
+    <C.EmptyListReload
+      title="Oh no!"
+      message={
+        query.length
+          ? 'No search result found'
+          : "Looks like you don't have any upcoming matches"
+      }
+      onPress={() => refreshUpcoming(query, profile.data)}
+      headerHeight={headerHeight}
+      loading={upcoming.isLoading}
+    />
+  );
 
   return (
     <React.Fragment>
-      {!!upcoming.data.length ? (
-        <S.List
-          fullScreen
-          data={upcoming.data}
-          onRefresh={() => refreshUpcoming(profile.data)}
-          headerHeight={headerHeight}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <C.MatchCard {...item} />}
-          onEndReached={() =>
-            upcoming.hasMore && fetchUpcoming(profile.data, upcoming.page)
-          }
-        />
-      ) : (
-        <C.EmptyListReload
-          title="Oh no!"
-          message="Looks like you don't have any upcoming matches"
-          onPress={() => refreshUpcoming(profile.data)}
-          headerHeight={headerHeight}
-        />
-      )}
+      <S.List
+        fullScreen
+        data={upcoming.data}
+        ListEmptyComponent={emptyList}
+        onRefresh={() => refreshUpcoming(query, profile.data)}
+        headerHeight={headerHeight}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <C.MatchCard {...item} />}
+        onEndReached={() =>
+          upcoming.hasMore && fetchUpcoming(query, profile.data, upcoming.page)
+        }
+      />
 
       <S.Header setHeaderHeight={setHeaderHeight}>
         <S.Padding size="xs" vertical={false}>
@@ -60,12 +65,18 @@ const UpcomingMatches: React.FC<Props> = ({ navigation }) => {
 
           <S.Spacer size="xs" />
 
-          <S.TextInput placeholder="Search" height="38px" icon="search" />
+          <S.TextInput
+            placeholder="Search"
+            height="38px"
+            icon="search"
+            value={query}
+            onTextChange={setQuery}
+          />
 
           <S.Spacer size="xs" />
         </S.Padding>
 
-        {showLoadingBar && <S.LoadingBar />}
+        {upcoming.isLoading && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );

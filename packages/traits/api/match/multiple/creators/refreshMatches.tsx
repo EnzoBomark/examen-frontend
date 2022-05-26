@@ -5,11 +5,11 @@ import store from '../store';
 export const useRefreshMatches = () => {
   const dispatch = store.useDispatch();
 
-  const refreshMatches = () => {
+  const refreshMatches = (name: string) => {
     dispatch(pending());
 
     api
-      .get<Match[]>(`matches`, { params: { page: 0 } })
+      .get<Match[]>(`matches`, { params: { name, page: 0 } })
       .then((res) => dispatch(refresh(res.data)))
       .catch((err: AxiosError<ResponseError>) => {
         if (!err.response) throw err;

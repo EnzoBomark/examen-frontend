@@ -20,11 +20,26 @@ const Chats: React.FC<Props> = ({ navigation }) => {
   const { sortChats } = useChatFunctions();
   const [query, setQuery] = React.useState('');
 
+  const emptyList = (
+    <C.EmptyListReload
+      title="Oh no!"
+      message={
+        query.length
+          ? 'No search result found'
+          : "Looks like you don't have any chats"
+      }
+      onPress={() => refreshChats()}
+      headerHeight={headerHeight}
+      loading={chats.isLoading}
+    />
+  );
+
   return (
     <React.Fragment>
       <S.List
         headerHeight={headerHeight}
         onEndReached={() => fetchChats(chats.page)}
+        ListEmptyComponent={emptyList}
         onRefresh={() => refreshChats()}
         data={sortChats(chats.data, query)}
         keyExtractor={(item) => item.id}
@@ -55,6 +70,8 @@ const Chats: React.FC<Props> = ({ navigation }) => {
             onTextChange={setQuery}
           />
         </S.Padding>
+
+        {chats.isLoading && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );

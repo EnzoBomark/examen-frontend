@@ -26,24 +26,32 @@ const Community: React.FC<Props> = ({ navigation }) => {
     if (users.hasLoaded) refreshUsers(query);
   }, [query]);
 
+  const emptyList = (
+    <C.EmptyListReload
+      title="Oh no!"
+      message={
+        query.length
+          ? 'No search result found'
+          : 'Looks like no users where found'
+      }
+      onPress={() => refreshUsers(query)}
+      headerHeight={headerHeight}
+    />
+  );
+
   return (
     <React.Fragment>
-      {!users.hasError ? (
-        <S.List
-          fullScreen
-          spacer="xxs"
-          data={users.data}
-          headerHeight={headerHeight}
-          onEndReached={() => fetchUsers(query, users.page)}
-          onRefresh={() => refreshUsers(query)}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <C.UserCard {...item} />}
-        />
-      ) : (
-        <S.Body color="error" style={{ paddingTop: headerHeight }}>
-          {users.hasError.message}
-        </S.Body>
-      )}
+      <S.List
+        fullScreen
+        spacer="xxs"
+        data={users.data}
+        ListEmptyComponent={emptyList}
+        headerHeight={headerHeight}
+        onRefresh={() => refreshUsers(query)}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <C.UserCard {...item} />}
+        onEndReached={() => users.hasMore && fetchUsers(query, users.page)}
+      />
 
       <S.Header setHeaderHeight={setHeaderHeight}>
         <S.Padding size="xs">

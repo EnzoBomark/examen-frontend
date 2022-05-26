@@ -1,10 +1,8 @@
 import * as React from 'react';
 import * as S from '@racket-styles/native';
 import * as C from '@racket-components/native';
-import * as Hooks from '@racket-traits/hooks';
 import { DrawerScreenProps } from '@react-navigation/drawer';
 import { MatchParamList } from '@racket-native/router/stacks/MatchStack';
-import { useMatchFunctions } from '@racket-traits/api/match';
 import {
   useFetchHistory,
   useHistory,
@@ -20,34 +18,40 @@ const MatchHistory: React.FC<Props> = ({ navigation }) => {
   const fetchHistory = useFetchHistory();
   const refreshHistory = useRefreshHistory();
   const [headerHeight, setHeaderHeight] = React.useState(0);
-  const showLoadingBar = Hooks.useDelay(history.isLoading, 1000);
+  const [query, setQuery] = React.useState('');
 
   React.useEffect(() => {
-    if (!history.hasLoaded) fetchHistory(profile.data, history.page);
+    if (!history.hasLoaded) fetchHistory(query, profile.data, history.page);
   }, []);
+
+  const emptyList = (
+    <C.EmptyListReload
+      title="Oh no!"
+      message={
+        query.length
+          ? 'No search result found'
+          : "Looks like you don't have any played matches"
+      }
+      onPress={() => refreshHistory(query, profile.data)}
+      headerHeight={headerHeight}
+      loading={history.isLoading}
+    />
+  );
 
   return (
     <React.Fragment>
-      {!!history.data.length ? (
-        <S.List
-          fullScreen
-          data={history.data}
-          onRefresh={() => refreshHistory(profile.data)}
-          headerHeight={headerHeight}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => <C.MatchCard {...item} />}
-          onEndReached={() =>
-            history.hasMore && fetchHistory(profile.data, history.page)
-          }
-        />
-      ) : (
-        <C.EmptyListReload
-          title="Oh no!"
-          message="Looks like you don't have any played matches"
-          onPress={() => refreshHistory(profile.data)}
-          headerHeight={headerHeight}
-        />
-      )}
+      <S.List
+        fullScreen
+        data={history.data}
+        ListEmptyComponent={emptyList}
+        onRefresh={() => refreshHistory(query, profile.data)}
+        headerHeight={headerHeight}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => <C.MatchCard {...item} />}
+        onEndReached={() =>
+          history.hasMore && fetchHistory(query, profile.data, history.page)
+        }
+      />
 
       <S.Header setHeaderHeight={setHeaderHeight}>
         <S.Padding size="xs" vertical={false}>
@@ -65,12 +69,18 @@ const MatchHistory: React.FC<Props> = ({ navigation }) => {
 
           <S.Spacer size="xs" />
 
-          <S.TextInput placeholder="Search" height="38px" icon="search" />
+          <S.TextInput
+            placeholder="Search"
+            height="38px"
+            icon="search"
+            value={query}
+            onTextChange={setQuery}
+          />
 
           <S.Spacer size="xs" />
         </S.Padding>
 
-        {showLoadingBar && <S.LoadingBar />}
+        {history.isLoading && <S.LoadingBar />}
       </S.Header>
     </React.Fragment>
   );

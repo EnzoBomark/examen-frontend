@@ -19,6 +19,7 @@ type List<T> = {
   spacer?: keyof theme['space'];
   keyExtractor?: (item: T, index: number) => string;
   onEndReached?: (info: { distanceFromEnd: number }) => void;
+  ListEmptyComponent?: JSX.Element;
 };
 
 const Separator = styled(UnderLine)`
@@ -55,6 +56,7 @@ export const List = <T,>(props: List<T>) => {
           onRefresh={props.onRefresh}
         />
       }
+      ListEmptyComponent={props.ListEmptyComponent || null}
       nestedScrollEnabled
       onEndReachedThreshold={0.1}
       refreshing={props.refreshing || false}

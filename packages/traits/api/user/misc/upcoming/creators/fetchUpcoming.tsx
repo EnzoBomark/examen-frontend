@@ -7,11 +7,11 @@ export const useFetchUpcoming = () => {
   const dispatch = store.useDispatch();
   const countUpcoming = useCountUpcoming();
 
-  const fetchUpcoming = (user: User, page: number) => {
+  const fetchUpcoming = (name: string, user: User, page: number) => {
     dispatch(pending());
 
     api
-      .get<Match[]>(`user/${user.id}/upcoming`, { params: { page } })
+      .get<Match[]>(`user/${user.id}/upcoming`, { params: { name, page } })
       .then((res) => dispatch(success(res.data)))
       .catch((err: AxiosError<ResponseError>) => {
         if (!err.response) throw err;

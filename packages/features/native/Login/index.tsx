@@ -103,6 +103,7 @@ const Login: React.FC<Props> = ({ navigation }) => {
             label="Continue with Facebook"
             icon="facebook"
             height="46px"
+            disabled={true}
           />
 
           <S.Spacer size="xs" />
