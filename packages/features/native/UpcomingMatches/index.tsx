@@ -20,6 +20,10 @@ const UpcomingMatches: React.FC<Props> = ({ navigation }) => {
   const refreshUpcoming = useRefreshUpcoming();
   const [query, setQuery] = React.useState('');
 
+  React.useEffect(() => {
+    if (upcoming.hasLoaded) refreshUpcoming(query, profile.data);
+  }, [query]);
+
   const emptyList = (
     <C.EmptyListReload
       title="Oh no!"

@@ -24,6 +24,10 @@ const MatchHistory: React.FC<Props> = ({ navigation }) => {
     if (!history.hasLoaded) fetchHistory(query, profile.data, history.page);
   }, []);
 
+  React.useEffect(() => {
+    if (history.hasLoaded) refreshHistory(query, profile.data);
+  }, [query]);
+
   const emptyList = (
     <C.EmptyListReload
       title="Oh no!"

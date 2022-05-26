@@ -39,6 +39,10 @@ const Discover: React.FC<Props> = ({ navigation }) => {
     }, [])
   );
 
+  React.useEffect(() => {
+    if (matches.hasLoaded) refreshMatches(query);
+  }, [query]);
+
   const emptyList = (
     <C.EmptyListReload
       title="Oh no!"
