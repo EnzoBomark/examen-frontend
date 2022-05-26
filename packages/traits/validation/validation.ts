@@ -42,7 +42,7 @@ const special = {
 };
 
 const numeric = {
-  validate: (str: string) => str.search(/^[0-9]*$/) < 0,
+  validate: (str: string) => `${str}`.search(/^[0-9]*$/) < 0,
   message: `Should only contain numbers`,
 };
 

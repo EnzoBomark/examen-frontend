@@ -6,7 +6,6 @@
     "react-router-dom": "6"
   },
   "devDependencies": {
-    "@racket-styles/web": "0.0.1",
     "@types/styled-components": "^5.1.21"
   }
 }

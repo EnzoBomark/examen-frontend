@@ -12,16 +12,18 @@ const UpdateMatch: React.FC<Props> = ({ navigation }) => {
   const match = useMatch();
   const updateMatch = useUpdateMatch();
 
-  const [isBooked, setIsBooked] = React.useState(match.data.isBooked);
-  const [isPublic, setIsPublic] = React.useState(match.data.isPublic);
-  const [dateTime, setDateTime] = React.useState(match.data.dateTime);
-  const [court, setCourt] = React.useState(match.data.court);
-  const [price, setPrice] = React.useState(match.data.price);
-  const [phone, setPhone] = React.useState(match.data.phone);
+  const [isBooked, setIsBooked] = React.useState(match.data.isBooked || false);
+  const [isPublic, setIsPublic] = React.useState(match.data.isPublic || false);
+  const [dateTime, setDateTime] = React.useState(match.data.dateTime || '');
+  const [court, setCourt] = React.useState(match.data.court || '');
+  const [price, setPrice] = React.useState(match.data.price || '');
+  const [phone, setPhone] = React.useState(match.data.phone || '');
   const [center, setCenter] = React.useState(match.data.center?.id || '');
-  const [description, setDescription] = React.useState(match.data.description);
-  const [duration, setDuration] = React.useState<string>(match.data.duration);
-  const [currency, setCurrency] = React.useState<string>(match.data.currency);
+  const [duration, setDuration] = React.useState(match.data.duration || '90');
+  const [currency, setCurrency] = React.useState(match.data.currency || 'SEK');
+  const [description, setDescription] = React.useState(
+    match.data.description || ''
+  );
 
   const validate = criteria(
     new Map([
