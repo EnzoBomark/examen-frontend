@@ -1,0 +1,19 @@
+{
+  "name": "@racket-native/match",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "@racket-traits/hooks": "0.0.1",
+    "@racket-traits/lang": "0.0.1",
+    "@racket-traits/misc": "0.0.1",
+    "@racket-traits/utils": "0.0.1",
+    "@racket-components/native": "0.0.1",
+    "@racket-styles/core": "0.0.1",
+    "@racket-traits/api": "0.0.1",
+    "@racket-native/router": "0.0.1",
+    "@racket-styles/native": "0.0.1",
+    "@racket-common/store": "0.0.1",
+    "@types/styled-components": "^5.1.21",
+    "@types/styled-components-react-native": "^5.1.3"
+  }
+}

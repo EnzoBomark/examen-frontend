@@ -5,10 +5,10 @@ export type UseDispatch<Action extends AnyAction> = () => (
   action: Action
 ) => void;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function createUseDispatch<Action extends AnyAction = AnyAction>({
   context,
 }: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   context: any;
 }): UseDispatch<Action> {
   return createDispatchHook(context) as UseDispatch<Action>;

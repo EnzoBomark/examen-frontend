@@ -2,7 +2,7 @@ const theme: theme = {
   colors: {
     p50: '#F4F6FC',
     p100: '#F4F6FC',
-    p200: '#E3F1FF',
+    p200: '#EEF3FB',
     p300: '#C3E1FF',
     p400: '#95CAFF',
     p500: '#60AFFF',
@@ -20,6 +20,7 @@ const theme: theme = {
     s800: '#FF7A00',
     g0: '#ffffff',
     g50: '#F2F2F7',
+    g75: '#EfEfF0',
     g100: '#E5E5EA',
     g200: '#D1D1D6',
     g300: '#C7C7CC',
@@ -63,7 +64,8 @@ const theme: theme = {
   },
 
   space: {
-    xxs: '8px',
+    xxxs: '8px',
+    xxs: '12px',
     xs: '16px',
     s: '24px',
     m: '32px',
@@ -74,7 +76,7 @@ const theme: theme = {
   },
 
   radius: {
-    xxs: '8px',
+    xxs: '10px',
     xs: '16px',
     s: '24px',
     m: '32px',
@@ -85,12 +87,12 @@ const theme: theme = {
   },
 
   shadow: {
-    shadowColor: '#C7C7CC',
+    shadowColor: '#B7B7BC',
     shadowOffset: {
       width: 0,
       height: 5,
     },
-    shadowOpacity: 0.36,
+    shadowOpacity: 0.16,
     shadowRadius: 6.68,
     elevation: 11,
   },

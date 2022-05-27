@@ -5,8 +5,6 @@ import { Dimensions } from 'react-native';
 import { Body } from '../text/Body';
 import { Svg } from '../icon/Svg';
 
-type TextInput = NativeInputFunctions & InputAddons & InputType & InputSizing;
-
 const screen = Dimensions.get('screen');
 
 const Container = styled.View<TextInput>`
@@ -17,17 +15,18 @@ const Container = styled.View<TextInput>`
   border-radius: ${theme.radius.xxs};
   flex-direction: row;
   align-items: center;
-  border-width: ${({ error }) => (error ? '1px' : 0)};
-  border-color: ${theme.colors.error};
+  border-width: ${({ error, active }) => (error || active ? '1px' : 0)};
+  border-color: ${({ active }) =>
+    active ? theme.colors.g200 : theme.colors.error};
   background-color: ${({ active }) =>
-    active ? theme.colors.p200 : theme.colors.g100};
+    active ? theme.colors.g100 : theme.colors.g100};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
 `;
 
 const Inner = styled.TextInput<TextInput>`
   padding-right: 16px;
   padding-left: ${({ icon }) => (icon ? '48px' : '16px')};
-  color: ${({ active }) => (active ? theme.colors.p600 : theme.colors.g600)};
+  color: ${({ active }) => (active ? theme.colors.g700 : theme.colors.g600)};
   width: 100%;
   height: 100%;
 `;
@@ -45,37 +44,78 @@ const Icon = styled.View`
   left: 16px;
 `;
 
-export const TextInput: React.FC<TextInput> = (props) => {
+export const TextInput: React.FC<TextInput & NativeTextInput> = (props) => {
   const [active, setActive] = React.useState(false);
-  const [error, setError] = React.useState(props.error);
+  const [showError, setShowError] = React.useState(false);
 
-  React.useEffect(() => {
-    if (active) setError('');
-  }, [active]);
+  const error = showError ? props.error : undefined;
+
+  if (props.static)
+    return (
+      <React.Fragment>
+        <Container {...props} error={props.error}>
+          {props.icon && (
+            <Icon>
+              <Svg
+                src={props.icon}
+                color={active ? 'g500' : 'g400'}
+                width="18px"
+              />
+            </Icon>
+          )}
+          <Inner
+            pointerEvents="none"
+            editable={false}
+            selectTextOnFocus={false}
+            selectionColor={theme.colors.g700}
+            icon={props.icon}
+            placeholder={active ? undefined : props.placeholder}
+            value={props.value}
+          />
+        </Container>
+        {!!props.error && (
+          <ErrorLabel color={active ? 'g400' : 'error'}>
+            {props.error}
+          </ErrorLabel>
+        )}
+      </React.Fragment>
+    );
 
   return (
     <React.Fragment>
-      {props.label && <InputLabel color="g400">{props.label}</InputLabel>}
+      {props.label && active && (
+        <InputLabel color="g600">{props.placeholder}</InputLabel>
+      )}
       <Container {...props} error={error} active={active}>
         {props.icon && (
           <Icon>
             <Svg
               src={props.icon}
-              color={active ? 'p600' : 'g400'}
+              color={active ? 'g500' : 'g400'}
               width="18px"
             />
           </Icon>
         )}
         <Inner
+          selectionColor={theme.colors.g700}
+          keyboardType={props.type || 'default'}
+          secureTextEntry={props.password}
           active={active}
-          onFocus={() => setActive(true)}
+          onFocus={() => {
+            setActive(true);
+            setShowError(true);
+          }}
           onBlur={() => setActive(false)}
           icon={props.icon}
-          placeholderTextColor={active ? theme.colors.p400 : theme.colors.g400}
-          placeholder={props.placeholder}
+          placeholder={active ? undefined : props.placeholder}
+          value={props.value}
+          onChangeText={props.onTextChange}
+          placeholderTextColor={theme.colors.g400}
         />
       </Container>
-      {!!error && <ErrorLabel color="error">{error}</ErrorLabel>}
+      {!!error && (
+        <ErrorLabel color={active ? 'g400' : 'error'}>{error}</ErrorLabel>
+      )}
     </React.Fragment>
   );
 };

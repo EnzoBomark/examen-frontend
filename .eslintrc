@@ -27,6 +27,7 @@
       }
     ],
     "global-require": 0,
+    "react/jsx-key": 0,
     "react/prop-types": 0,
     "import/extensions": 0,
     "import/no-dynamic-require": 0,
@@ -38,7 +39,8 @@
     "react/jsx-uses-vars": "error",
     "workspaces/no-relative-imports": "error",
     "workspaces/require-dependency": "error",
-    "workspaces/no-absolute-imports": "error"
+    "workspaces/no-absolute-imports": "error",
+    "no-console": "warn"
   },
 
   "settings": {

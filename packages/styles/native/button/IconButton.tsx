@@ -1,11 +1,8 @@
 import * as React from 'react';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
-import { Dimensions } from 'react-native';
 import { Spinner } from '../icon/Spinner';
 import { Svg } from '../icon/Svg';
-
-const screen = Dimensions.get('screen');
 
 const Container = styled.TouchableOpacity``;
 
@@ -36,7 +33,7 @@ export const IconButton: React.FC<IconButton & NativeButton> = (props) => {
           <Spinner color={props.color} />
         ) : (
           props.icon && (
-            <Svg src={props.icon} color={props.color} width="24px" />
+            <Svg src={props.icon} color={props.color} width="20px" />
           )
         )}
       </Inner>

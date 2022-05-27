@@ -1,0 +1,19 @@
+{
+  "name": "@racket-traits/api",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "private": true,
+  "peerDependencies": {
+    "react": "*"
+  },
+  "dependencies": {
+    "@react-native-firebase/auth": "^14.5.1",
+    "axios": "^0.26.1"
+  },
+  "devDependencies": {
+    "@racket-traits/utils": "0.0.1",
+    "@racket-traits/lang": "0.0.1",
+    "@racket-common/config": "0.0.1",
+    "@racket-common/store": "0.0.1"
+  }
+}

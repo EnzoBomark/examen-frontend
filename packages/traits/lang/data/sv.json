@@ -1,0 +1,38 @@
+{
+  "time": {
+    "yesterday": "Igår",
+    "today": "Idag",
+    "tomorrow": "Imorgon",
+    "sunday": "Söndag",
+    "monday": "Måndag",
+    "tuesday": "Tisdag",
+    "wednesday": "Onsdag",
+    "thursday": "Torsdag",
+    "friday": "Fredag",
+    "saturday": "Söndag"
+  },
+  "discover": {
+    "see_all": "Se alla",
+    "show_upcoming_matches": "Visa kommande matcher",
+    "upcoming_matches": "Kommande matcher"
+  },
+  "match": {
+    "member": "Spelare",
+    "members": "Spelare",
+    "abort_match": "Avsluta match",
+    "leave_match": "Lämna match",
+    "are_you_sure": "Är du säker?",
+    "invite": "Bjud in",
+    "pay": "Betala",
+    "chat": "Chatt",
+    "share": "Dela",
+    "rank": "Rank"
+  },
+  "chat": {
+    "member": "Spelare",
+    "members": "Spelare",
+    "send_message": "Skicka meddelande",
+    "user_left": "Användare lämnat",
+    "prefix": "Du: "
+  }
+}

@@ -3,7 +3,7 @@ import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 import { Svg } from '../icon/Svg';
-import { Label } from '../text/Label';
+import { Body } from '../text/Body';
 
 const screen = Dimensions.get('screen');
 
@@ -12,8 +12,8 @@ const Container = styled.TouchableOpacity``;
 const Inner = styled.View<Partial<Toggle>>`
   position: relative;
   height: ${({ height }) => height || 'auto'};
-  width: ${({ width, label }) =>
-    label ? `${screen.width - 32}px` : width || `auto`};
+  width: ${({ width, label }) => (label ? 'auto' : width || `auto`)};
+  max-width: ${`${screen.width - 32}px`};
   flex-direction: ${({ invert }) => (invert ? 'row-reverse' : 'row')};
   align-items: center;
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
@@ -33,17 +33,17 @@ export const Checkbox: React.FC<Toggle & NativeToggle> = (props) => {
   return (
     <Container {...props} onPress={toggle}>
       <Inner {...props}>
-        {props.icon && <Svg src={props.icon} width="20px" color="g400" />}
+        {props.icon && <Svg src={props.icon} width="18px" color="g400" />}
 
         {props.label && (
           <LabelWrapper {...props}>
-            <Label color="g600">{props.label}</Label>
+            <Body color="g500">{props.label}</Body>
           </LabelWrapper>
         )}
 
         <Svg
           src={props.active ? 'checkboxFill' : 'checkbox'}
-          width="20px"
+          width="18px"
           color={props.active ? 'p600' : 'g400'}
         />
       </Inner>

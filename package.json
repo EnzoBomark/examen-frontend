@@ -27,6 +27,7 @@
     "packages/features/**/*",
     "packages/styles/**/*",
     "packages/components/**/*",
+    "packages/traits/**/*",
     "packages/api/**/*",
     "packages/*"
   ],

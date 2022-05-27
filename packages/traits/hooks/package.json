@@ -1,0 +1,14 @@
+{
+  "name": "@racket-traits/hooks",
+  "version": "0.0.1",
+  "main": "index.ts",
+  "private": true,
+  "peerDependencies": {
+    "react": "*"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@racket-traits/async-storage": "0.0.1",
+    "@racket-common/config": "0.0.1"
+  }
+}

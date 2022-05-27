@@ -19,6 +19,7 @@ type theme = {
     s700: string;
     s800: string;
     g0: string;
+    g75: string;
     g50: string;
     g100: string;
     g200: string;
@@ -63,6 +64,7 @@ type theme = {
   };
 
   space: {
+    xxxs: string;
     xxs: string;
     xs: string;
     s: string;

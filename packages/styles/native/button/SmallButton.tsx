@@ -1,19 +1,15 @@
 import * as React from 'react';
 import theme from '@racket-styles/core/theme';
 import styled from 'styled-components/native';
-import { Dimensions } from 'react-native';
 import { Svg } from '../icon/Svg';
 import { Label } from '../text/Label';
-import { Fill } from '../layout/Fill';
-
-const screen = Dimensions.get('screen');
 
 const Container = styled.TouchableOpacity``;
 
 const Inner = styled.View<SmallButton>`
   position: relative;
   height: ${({ height }) => height || '36px'};
-  width: ${({ width }) => width || `${screen.width / 3.5}px`};
+  width: ${({ width }) => width || 'auto'};
   border-radius: ${theme.radius.xxs};
   flex-direction: row;
   align-items: center;
@@ -22,6 +18,11 @@ const Inner = styled.View<SmallButton>`
     background ? theme.colors[background] : theme.colors.p600};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
   padding: 0 16px;
+`;
+
+const Icon = styled.View`
+  margin-right: 5px;
+  margin-left: -5px;
 `;
 
 export const SmallButton: React.FC<SmallButton & NativeButton> = (props) => {
@@ -34,12 +35,12 @@ export const SmallButton: React.FC<SmallButton & NativeButton> = (props) => {
         disabled={props.disabled}
       >
         {props.icon && (
-          <Svg src={props.icon} color={props.color} width="12px" />
+          <Icon>
+            <Svg src={props.icon} color={props.color} width="12px" />
+          </Icon>
         )}
 
-        <Fill>
-          <Label color={props.color}>{props.label}</Label>
-        </Fill>
+        <Label color={props.color}>{props.label}</Label>
       </Inner>
     </Container>
   );

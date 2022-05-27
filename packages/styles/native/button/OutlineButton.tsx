@@ -12,14 +12,15 @@ const Container = styled.TouchableOpacity``;
 const Inner = styled.View<OutlineButton>`
   position: relative;
   height: ${({ height }) => height || '50px'};
-  width: ${({ width }) => width || `${screen.width - 32}px`};
+  width: ${({ width }) => width || 'auto'};
+  max-width: ${`${screen.width - 32}px`};
   border-radius: ${theme.radius.xxs};
   flex-direction: row;
   align-items: center;
   justify-content: center;
   border-width: 1px;
   border-color: ${({ background }) =>
-    background ? theme.colors[background] : theme.colors.p600};
+    background ? theme.colors[background] : theme.colors.g200};
   opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
   padding: 0 16px;
 `;

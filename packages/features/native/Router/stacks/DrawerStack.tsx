@@ -1,117 +1,105 @@
 import * as React from 'react';
-import * as Native from 'react-native';
 import * as S from '@racket-styles/native';
-import {
-  createDrawerNavigator,
-  DrawerContentComponentProps,
-  DrawerContentScrollView,
-  DrawerItemList,
-} from '@react-navigation/drawer';
-import HomeStack from './HomeStack';
-import ProfileStack from './ProfileStack';
+import * as C from '@racket-components/native';
 import theme from '@racket-styles/core/theme';
-import Images from '@racket-styles/assets/images';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { ParamListBase, RouteProp } from '@react-navigation/native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-export enum Stack {
-  HomeStack = 'HomeStack',
-  ProfileStack = 'ProfileStack',
-}
+import MatchStack from './MatchStack';
+import ProfileStack from './ProfileStack';
+import ChatStack from './ChatStack';
+import CommunityStack from './CommunityStack';
+import NotificationStack from './NotificationStack';
+import { useChatFunctions, useChats } from '@racket-traits/api/chat';
+import { useNotifications } from '@racket-traits/api/notifications';
 
 export type DrawerParamList = {
-  [Stack.HomeStack]: undefined;
-  [Stack.ProfileStack]: undefined;
+  MatchStack: undefined;
+  ProfileStack: undefined;
+  ChatStack: undefined;
+  CommunityStack: undefined;
+  NotificationStack: undefined;
 };
 
 const Drawer = createDrawerNavigator();
 
-const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
-  const insets = useSafeAreaInsets();
-
-  return (
-    <Native.View style={{ flex: 1 }}>
-      <DrawerContentScrollView
-        {...props}
-        contentContainerStyle={{
-          backgroundColor: theme.colors.p800,
-        }}
-      >
-        <Native.ImageBackground source={Images.drawer}>
-          <S.Padding size="xs">
-            <S.Image src="TEST" width="80px" border="xxl" />
-            <S.Spacer size="xxs" />
-            <S.H3 color="g0">Jane Doe</S.H3>
-            <S.Spacer size="xxs" />
-            <S.Row>
-              <S.Svg src="star" width="14px" />
-              <S.Spacer size="xxs" />
-              <S.Body color="g0">420 Matches</S.Body>
-            </S.Row>
-          </S.Padding>
-        </Native.ImageBackground>
-        <Native.View style={{ flex: 1, backgroundColor: theme.colors.g0 }}>
-          <S.Spacer size="xs" />
-          <DrawerItemList {...props} />
-          <S.Spacer size="xs" />
-        </Native.View>
-      </DrawerContentScrollView>
-
-      <Native.View style={{ paddingBottom: insets.bottom }}>
-        <S.UnderLine />
-        <S.Padding size="s">
-          <S.Clickable>
-            <S.Row>
-              <S.Svg src="share" width="18px" color="g1000" />
-              <S.Spacer size="xxs" />
-              <S.Body color="g1000">Share with friends</S.Body>
-            </S.Row>
-
-            <S.Spacer size="s" />
-
-            <S.Row>
-              <S.Svg src="sad" width="18px" color="g1000" />
-              <S.Spacer size="xxs" />
-              <S.Body color="g1000">Logout</S.Body>
-            </S.Row>
-          </S.Clickable>
-        </S.Padding>
-      </Native.View>
-    </Native.View>
-  );
-};
-
-const icons = (color: keyof theme['colors']) => ({
-  [Stack.HomeStack]: <S.Svg src="homeFill" width="26px" color={color} />,
-  [Stack.ProfileStack]: <S.Svg src="profileFill" width="26px" color={color} />,
-});
-
 type ScreenOptions = { route: RouteProp<ParamListBase, string> };
 
-const BottomTabs = () => (
-  <Drawer.Navigator
-    screenOptions={({ route }: ScreenOptions) => ({
-      headerShown: false,
-      drawerLabelStyle: { marginLeft: -20 },
-      drawerInactiveTintColor: theme.colors.g400,
-      drawerActiveTintColor: theme.colors.p600,
-      drawerIcon: ({ color }: { color: string }) =>
-        icons(color as keyof theme['colors'])[route.name as Stack],
-    })}
-    drawerContent={(props) => <CustomDrawer {...props} />}
-  >
-    <Drawer.Screen
-      name={Stack.HomeStack}
-      component={HomeStack}
-      options={{ title: 'Discover' }}
-    />
+const BottomTabs = () => {
+  const { getReadStatus } = useChatFunctions();
+  const chats = useChats();
+  const notifications = useNotifications();
 
-    <Drawer.Screen
-      name={Stack.ProfileStack}
-      component={ProfileStack}
-      options={{ title: 'Profile' }}
-    />
-  </Drawer.Navigator>
-);
+  const isChatActive = chats.data
+    .filter((chat) => chat.users.length > 1)
+    .some((c) => !getReadStatus(c));
+
+  const isNotificationsActive = notifications.data.some((n) => !n.isRead);
+
+  const icons = (color: keyof theme['colors']) => ({
+    MatchStack: <S.Svg src="house" width="24px" color={color} />,
+    ProfileStack: <S.Svg src="profile" width="24px" color={color} />,
+    CommunityStack: <S.Svg src="community" width="24px" color={color} />,
+    ChatStack: (
+      <S.Svg
+        src={isChatActive ? 'chatActive' : 'chat'}
+        width="24px"
+        color={color}
+      />
+    ),
+    NotificationStack: (
+      <S.Svg
+        src={isNotificationsActive ? 'notificationActive' : 'notification'}
+        width="24px"
+        color={color}
+      />
+    ),
+  });
+
+  return (
+    <Drawer.Navigator
+      screenOptions={({ route }: ScreenOptions) => ({
+        headerShown: false,
+        drawerLabelStyle: { marginLeft: -20 },
+        drawerInactiveTintColor: theme.colors.g400,
+        drawerActiveTintColor: theme.colors.p600,
+        drawerIcon: ({ color }) =>
+          icons(color as keyof theme['colors'])[
+            route.name as keyof typeof icons
+          ],
+      })}
+      drawerContent={(props) => <C.Drawer {...props} />}
+    >
+      <Drawer.Screen
+        name="MatchStack"
+        component={MatchStack}
+        options={{ title: 'Discover' }}
+      />
+
+      <Drawer.Screen
+        name="ProfileStack"
+        component={ProfileStack}
+        options={{ title: 'Profile' }}
+      />
+
+      <Drawer.Screen
+        name="ChatStack"
+        component={ChatStack}
+        options={{ title: 'Chat' }}
+      />
+
+      <Drawer.Screen
+        name="CommunityStack"
+        component={CommunityStack}
+        options={{ title: 'Community' }}
+      />
+
+      <Drawer.Screen
+        name="NotificationStack"
+        component={NotificationStack}
+        options={{ title: 'Notifications' }}
+      />
+    </Drawer.Navigator>
+  );
+};
 
 export default BottomTabs;

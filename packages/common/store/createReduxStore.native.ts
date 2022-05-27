@@ -1,6 +1,6 @@
 import { Reducer, AnyAction, applyMiddleware, createStore, Store } from 'redux';
 import { createComposeWithDevTools } from './createComposeWithDevTools';
-import createFlipperDebygger from 'redux-flipper';
+import createFlipperDebugger from 'redux-flipper';
 
 export function createReduxStore<State, Action extends AnyAction>({
   name,
@@ -12,7 +12,7 @@ export function createReduxStore<State, Action extends AnyAction>({
   reducer: Reducer<State, Action>;
 }): Store<State, Action> {
   if (__DEV__) {
-    middleware.push(createFlipperDebygger());
+    middleware.push(createFlipperDebugger());
   }
   const storeEnhancers = [applyMiddleware(...middleware)];
   return createComposeWithDevTools({ name })(...storeEnhancers)(createStore)(

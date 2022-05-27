@@ -17,17 +17,31 @@
     "react-native-tab-view": "^3.1.1"
   },
   "devDependencies": {
+    "@racket-traits/api": "0.0.1",
+    "@racket-components/native": "0.0.1",
+    "@racket-traits/hooks": "0.0.1",
     "@racket-styles/core": "0.0.1",
     "@racket-styles/assets": "0.0.1",
     "@racket-styles/native": "0.0.1",
     "@racket-common/config": "0.0.1",
-    "@racket-native/auth": "0.0.1",
+    "@racket-native/notifications": "0.0.1",
+    "@racket-native/register": "0.0.1",
+    "@racket-native/login": "0.0.1",
     "@racket-native/discover": "0.0.1",
+    "@racket-native/create-match": "0.0.1",
+    "@racket-native/upcoming-matches": "0.0.1",
+    "@racket-native/update-match": "0.0.1",
+    "@racket-native/create-chat": "0.0.1",
+    "@racket-native/chats": "0.0.1",
+    "@racket-native/chat": "0.0.1",
+    "@racket-native/match": "0.0.1",
     "@racket-native/matches": "0.0.1",
-    "@racket-native/profile": "0.0.1"
-  },
-  "peerDependencies": {
-    "react": "*",
-    "react-native": "*"
+    "@racket-native/invite": "0.0.1",
+    "@racket-native/profile": "0.0.1",
+    "@racket-native/settings": "0.0.1",
+    "@racket-native/match-history": "0.0.1",
+    "@racket-native/centers": "0.0.1",
+    "@racket-native/center": "0.0.1",
+    "@racket-native/community": "0.0.1"
   }
 }

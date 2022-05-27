@@ -1,12 +1,16 @@
-type SpacerType = {
+type Background = {
+  color: keyof theme['colors'];
+};
+
+type Spacer = {
   size: keyof theme['space'];
 };
 
-type AlignType = {
+type Align = {
   type: keyof theme['align'];
 };
 
-type JustifyType = {
+type Justify = {
   type: keyof theme['justify'];
 };
 
@@ -21,3 +25,19 @@ type Col = {
   align?: keyof theme['align'];
   reversed?: boolean;
 };
+
+type AvoidKeyboard = {
+  behavior?: 'padding' | 'position' | 'height';
+  offset?: number;
+};
+
+type Space = {
+  size: keyof theme['space'];
+  flexBox?: boolean;
+  vertical?: boolean;
+  horizontal?: boolean;
+};
+
+type Padding = Space;
+
+type Margin = Space;

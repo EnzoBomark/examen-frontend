@@ -1,38 +1,22 @@
 import * as React from 'react';
-import styled from 'styled-components/native';
-import { Platform } from 'react-native';
-import { useHeaderHeight } from '@react-navigation/elements';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import * as Native from 'react-native';
 
-type Scroll = { headerHeight: number };
-
-const Container = styled.ScrollView<Scroll>`
-  flex-grow: 1;
-  padding-top: ${({ headerHeight }) => `${headerHeight}px`};
-`;
-
-const Inner = styled.View<Scroll>`
-  padding-bottom: ${({ headerHeight }) => `${headerHeight}px`};
-`;
-
-export const Scroll: React.FC<{ top?: boolean; bottom?: boolean }> = (
-  props
-) => {
-  const headerHeight = useHeaderHeight();
-  const insets = useSafeAreaInsets();
-
-  const platform = Platform.OS === 'ios';
-  const top = platform ? headerHeight + insets.top : insets.top;
-  const bottom = top - insets.top;
-
-  return (
-    <Container
-      headerHeight={props.top ? top : 0}
-      showsVerticalScrollIndicator={false}
-    >
-      <Inner headerHeight={props.bottom ? bottom + 20 : 20}>
-        {props.children}
-      </Inner>
-    </Container>
-  );
+type Scroll = {
+  onRefresh?: () => void;
 };
+
+export const Scroll: React.FC<Scroll> = ({ children, onRefresh }) => (
+  <Native.ScrollView
+    showsVerticalScrollIndicator={false}
+    showsHorizontalScrollIndicator={false}
+    refreshControl={
+      <Native.RefreshControl
+        refreshing={false}
+        tintColor={'transparent'}
+        onRefresh={onRefresh}
+      />
+    }
+  >
+    {children}
+  </Native.ScrollView>
+);

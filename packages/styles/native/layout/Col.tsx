@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 
 export const Col = styled.View<Col>`
   flex: 1;
+  width: 100%;
   justify-items: ${({ justify }) =>
     justify ? theme.justify[justify] : 'flex-start'};
   align-items: ${({ align }) => (align ? theme.align[align] : 'flex-start')};

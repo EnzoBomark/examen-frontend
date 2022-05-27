@@ -1,35 +1,33 @@
 import * as React from 'react';
+import * as Native from 'react-native';
 import styled from 'styled-components/native';
-import { Platform } from 'react-native';
 import { useHeaderHeight } from '@react-navigation/elements';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+const screen = Native.Dimensions.get('screen');
+
 type Screen = {
-  headerHeight: number;
-  bottomHeight: number;
+  headerHeight?: number;
+  bottomHeight?: number;
 };
 
 const Container = styled.View<Screen>`
   flex-grow: 1;
+  min-height: ${screen.height}px;
   padding-top: ${({ headerHeight }) => `${headerHeight}px`};
   padding-bottom: ${({ bottomHeight }) => `${bottomHeight}px`};
 `;
 
-export const Screen: React.FC<{ top?: boolean; bottom?: boolean }> = (
-  props
-) => {
+export const Screen: React.FC<Screen> = (props) => {
   const headerHeight = useHeaderHeight();
   const insets = useSafeAreaInsets();
 
-  const platform = Platform.OS === 'ios';
+  const platform = Native.Platform.OS === 'ios';
   const top = platform ? headerHeight + insets.top : insets.top;
-  const bottom = top - insets.top;
+  const bottom = insets.bottom || 20;
 
   return (
-    <Container
-      headerHeight={props.top ? top : 0}
-      bottomHeight={props.bottom ? bottom : 0}
-    >
+    <Container headerHeight={props.headerHeight || top} bottomHeight={bottom}>
       {props.children}
     </Container>
   );
